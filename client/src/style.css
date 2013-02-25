@@ -1,0 +1,131 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+body.wp-admin > .teacss-ui {
+    left: 147px !important;
+    top: 28px !important;
+}
+body.wp-admin.folded > .teacss-ui {
+    left: 34px !important;
+}
+
+.teacss-ui {
+    font-size: 12px !important;
+}
+
+.teacss-ui div fieldset {
+    font-size: 12px !important;
+    font-family: sans-serif !important;
+    border: none;
+}
+
+.teacss-ui div fieldset fieldset {
+    border: 1px solid #ccc;
+}
+        
+.teacss-ui div fieldset legend {
+    font-size: 13px !important;
+    font-weight: bold !important;
+    color: #777 !important;
+}
+        
+.teacss-ui .ui-button-text {
+    padding: 0.1em 0.1em 0.1em 1em;
+}
+        
+.teacss-ui .ui-button-text-only .ui-button-text {
+    padding: 0.1em 0.1em;
+    line-height: 2.0;
+}      
+
+.teacss-ui .ui-button {
+    background: #f4f4f4 !important;
+    border-radius: 0;
+}
+
+.teacss-ui .combo-group {
+    background: #eee !important;
+    font-size: 13px !important;
+    font-weight: bold !important;
+    color: #555;
+}
+
+.teacss-ui .ui-tabs.preview-tabs > .ui-tabs-nav {
+    border: none;
+}
+        
+.teacss-ui .ui-tabs.preview-tabs > .ui-tabs-nav > li {
+    border: none;
+    top: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding: 0 !important;
+}
+
+.teacss-ui input[type="checkbox"] {
+    margin: 0;
+    position: relative;
+    top: 2px;
+}
+
+
+.teacss-ui .ui-accordion .ui-accordion-header {
+    margin-top: 0 !important;
+}
+
+.teacss-ui .thumb {
+    width: 100px;
+    height: 100px;
+    float: left;
+    position: relative;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.teacss-ui .thumb svg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.component-form textarea {
+    width: 98%;
+}
+
+.component-form label {
+    width: 98%;
+}
+        
+.component-form input {
+    width: 98%;
+    margin-bottom: 10px;
+}
+
+.component-form select {
+    width: 98%;
+}
+
+
+.combo-item .ui-icon {
+    float: right;
+}
+
+.only-icons .combo-item {
+    position: relative;
+}
+
+.only-icons .combo-item .ui-icon {
+    background-color: rgba(255,255,255,0.5);
+    position: absolute;
+    float: none;
+    right: 0;
+    top: 0;
+}
+
+.combo-group .ui-icon {
+    float: right;
+}

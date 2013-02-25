@@ -1,0 +1,34 @@
+@ pages.blog = type_mixin();
+
+.pages.blog.default() {
+    .post {
+        overflow: hidden;
+        img {
+            float: left;
+            margin: 0 1em 1em 0;
+        }
+        margin-bottom: 1em;
+        
+        .post-header {
+            .date {
+                font-weight: bold;
+            }
+            margin-bottom: 5px;
+        }
+        
+        .post-footer {
+            span {
+                margin-right: 0.5em;
+            }
+        }
+    }
+    
+    .comments {
+        .comment {
+            padding: 1em;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            margin: 5px 0;
+        }
+    }    
+}

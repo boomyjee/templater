@@ -1,0 +1,89 @@
+@import "common/utils.js";
+@import "common/reset";
+@import "common/base";
+@import "common/gradient";
+@import "common/css3";
+@import "common/grid";
+@import "common/background";
+@import "common/effects";
+@import "common/icons";
+
+@import "content/typography";
+@import "content/columns";
+@import "content/table";
+@import "content/button";
+@import "content/person";
+@import "content/progress";
+@import "content/form";
+@import "content/reading_box";
+@import "content/pricing_table";
+
+@import "content/controls/tabs";
+@import "content/controls/alerts";
+@import "content/controls/toggle";
+@import "content/controls/slider";
+
+@import "theme/layout";
+@import "theme/logo";
+@import "theme/header";
+@import "theme/top_menu";
+@import "theme/sheet";
+@import "theme/footer";
+
+@import "theme/widgets/flickr";
+@import "theme/widgets/twitter";
+
+@import "theme/pages/home";
+@import "theme/pages/blog";
+@import "theme/pages/portfolio";
+
+@ global.donut_root = tea.dir+"../";
+
+.bake(data) {
+    @ data = extend({ sheet: { width: "940px" } },data);
+    @ global.sheetWidth = data.sheet.width;
+    
+    // js
+    @append donut_root+"js/jquery.js";
+    @append donut_root+"js/controls.js";
+    @ for (var i=1;i<=9;i++) global['color'+i] = data['color'+i];
+
+    // reset
+    .reset();
+    
+    // content
+    .typography(data.typography);
+    .table();
+    .form();
+    .columns();
+    
+    .button();
+    .person();
+    .progress();
+    .reading_box();
+    .pricing_table();
+    
+    // controls
+    .tabs();
+    .alerts();
+    .toggle();
+    
+    // theme
+    .layout(data);
+    .logo(data.logo);
+    .header(data.header);
+    .top_menu(data.menu);
+    .sheet();
+    .footer();
+    
+    // widgets
+    .widgets.flickr();
+    .widgets.twitter();
+    
+    // page specific
+    .pages.home();
+    .pages.blog();
+    .pages.portfolio();
+}
+
+

@@ -1,0 +1,44 @@
+@ global.alerts = type_mixin(".alert")
+
+.alerts.default() {
+    padding: 16px 35px 16px 14px;
+    text-shadow: 0 1px 0 rgba(255,255,255,.5);
+    background-color: #eee;
+    color: #333;
+    border: 1px solid #aaa;
+    .border_radius('4px');
+    font-size: 1.2em;
+  
+    .close {
+        position: relative;
+        top: -2px;
+        right: -21px;
+        line-height: 18px;
+        float: right;
+        
+        font-size: 0;
+        .icon('remove');
+        &:before {
+            color: #aaa;
+            font-size: 14px;
+        }
+    }
+    
+    &.error {
+        color: #900;
+        border-color: #a99;
+        background: #faa;
+    }
+    
+    &.notice {
+        color: #770;
+        border-color: #aa9;
+        background: #ffa;
+    }
+    
+    &.success {
+        color: #070;
+        border-color: #9a9;
+        background: #afa;
+    }
+}

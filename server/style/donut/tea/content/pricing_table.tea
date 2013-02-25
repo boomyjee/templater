@@ -1,0 +1,51 @@
+@ global.pricing_table = type_mixin("ul.plans");
+
+.pricing_table.default() {
+    margin: 0 0 1em 0;
+    display: table;
+    width: 100%;
+    font-size: 20px;
+    
+    button, a.button {
+        padding: 10px 20px;
+    }
+    
+    li {
+        display: table-cell;
+        width: 1%;
+        vertical-align: top;
+        padding: 0 0.5em;
+        
+        &:first-child {
+            padding-left: 0;
+        }
+    
+        &:last-child {
+            padding-right: 0;
+        }
+        
+        table {
+            th {
+                text-align: center;
+            }
+        
+            tr.price {
+                background: @color(1,7);
+                font-size: 24px;
+                font-weight: bold;
+            }
+            
+            td {
+                padding: 1.0em 0.5em;
+                text-align: center; 
+            }
+        }
+    }
+    
+    li.special table {
+        font-size: 25px;
+        position: relative;
+        top: -10px;
+        border: 3px solid @color(1,3);
+    }
+}

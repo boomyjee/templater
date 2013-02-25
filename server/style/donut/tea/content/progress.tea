@@ -1,0 +1,33 @@
+@ global.progress = type_mixin(".progress-bar");
+
+.progress.default() {
+	background: #ddd;
+	height: 37px;
+	border-bottom:1px solid #f0f1f1;
+	position: relative;
+	margin-bottom: 10px;
+    
+    .progress-bar-content {
+        background: @color(1,3);
+        height: 37px;
+        border-bottom:1px solid @color(1,1);
+    }
+    
+    .progress-title {
+        font-size: 13px;
+        color: #ffffff;
+        font-weight: normal;
+        position: absolute;
+        top: 10px;
+        left: 13px;
+    }
+    
+    .percentage {
+        font-size: 13px;
+        color: #626363;
+        font-weight: normal;
+        position: absolute;
+        top: 10px;
+        left: 90%;
+    }
+}
