@@ -197,13 +197,15 @@ ui.tabList = ui.Panel.extend({
             
             function submit() {
                 var tpl = me.treeTemplate.getValue();
-                var page = {
-                    title: me.textLabel.getValue() || tpl,
-                    template: tpl
-                }
-                if (!page.template) {
+                if (!tpl) {
                     alert("Please, select template first");
                     return;
+                }
+                
+                var page = {
+                    title: me.textLabel.getValue() || tpl.split("/").pop(),
+                    template: tpl,
+                    data: me.selectData ? me.selectData.getValue() : undefined
                 }
                 me.dialog.element.dialog("close");                            
 
@@ -222,8 +224,23 @@ ui.tabList = ui.Panel.extend({
             
             me.dialog.push(
                 ui.label("Page Label"),"<br>",
-                me.textLabel = ui.text({width:415}),"<br>",
+                me.textLabel = ui.text({width:415}),"<br>"
+            );
+            
+            if (app.settings.dataSources) {
+                var items = [{label:"No data",value:false}];
+                for (var value in app.settings.dataSources) {
+                    var label = app.settings.dataSources[value];
+                    items.push({ label: label, value: value });
+                }
+                if (items.length>1)
+                    me.dialog.push(
+                        ui.label("Page Data"),"<br>",
+                        me.selectData = ui.select({width:415,items:items}),"<br>"
+                    );
+            }
                 
+            me.dialog.push(                    
                 ui.label("Page Template"),"<br>",
                 me.treeTemplate = ui.templateTree({
                     width: 415,
@@ -242,7 +259,8 @@ ui.tabList = ui.Panel.extend({
         this.list.append(
             item = $("<li>").addClass("ui-state-default ui-corner-top")
             .append(
-                "<a href='#'>"+page.title+" ("+page.template+")"+"</a>",
+                // "<a href='#'>"+page.title+" ("+page.template+")"+"</a>",
+                "<a href='#'>"+page.title+"</a>",
                 "<span class='ui-icon ui-icon-close'>x</span>"
             )
         );

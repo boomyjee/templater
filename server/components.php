@@ -15,7 +15,7 @@ $components = array(
                     ."<label>Id</label><input name='nice_id' value='".htmlentities("".@$val['nice_id'])."'>"
                 ,
                 'value' => $val,
-                'html' => '<div id="'.$id.'"><div class="container"></div></div>'
+                'html' => '<div id="'.$id.'"><div class="container"><br class="component-area" /></div></div>'
             );
         }
     ),
@@ -26,29 +26,104 @@ $components = array(
         'html' => '<div class="logo"></div>'
     ),
     'menu' => array(
-        'name' => 'Vertical menu',
-        'description' => 'Website configurable menu',
+        'name' => 'Navigation bar',
+        'description' => 'Horizontal menu bar',
+        'category' => 'Layout',
+        'update' => function ($val,$dataSource,$for_editor) {
+            $items = @$val['items'] ? : array();
+            $val['items'] = $items = array_values($items);
+            
+            ob_start();
+            ?>
+                <div class="menu top_menu">
+                    <ul class="container">
+                        <? foreach ($items as $i=>$item): ?>
+                            <?
+                                $selected = false;
+                                if ($for_editor && $i==1) $selected = true;
+                            ?>
+                            <li class='menu-item <?=($selected ? "current-menu-item":"") ?>'>
+                                <a href="<?=$item['link']?>">
+                                    <?=$item['label']?>
+                                    <? if (@$item['sublabel']): ?>
+                                        <small><?=$item['sublabel']?></small>
+                                    <? endif ?>
+                                </a>
+                            </li>
+                        <? endforeach ?>
+                    </ul>
+                </div>
+            <?
+            $html = ob_get_clean();
+            return array(
+                'form' => '
+                    <table>
+                        <tr>
+                            <th>label</th>
+                            <th>sublabel</th>
+                            <th>link</th>
+                        </tr>
+                        <tr data-value="'.htmlspecialchars(json_encode($items)).'" data-name="items">
+                            <td><input name="label"></td>
+                            <td><input name="sublabel"></td>
+                            <td><input name="link"></td>
+                            <td><a class="remove" href="#">remove item</a></td>
+                        </tr>
+                    </table>
+                    <br>
+                    <a class="add" href="#" data-name="items">add menu item</a>
+                ',
+                'value' => $val,
+                'html' => $html
+            );            
+        }
+    ),
+    'vmenu' => array(
+        'name' => 'Navigation menu',
+        'description' => 'Vertical menu bar',
         'category' => 'Layout',
         'update' => function ($val) {
+            $items = @$val['items'] ? : array();
+            $val['items'] = $items = array_values($items);
+            
+            ob_start();
+            ?>
+                <div class="vmenu">
+                    <? if (@$val['heading']): ?>
+                        <h3><?=$val['heading']?></h3>
+                    <? endif ?>
+                    <ul class="container">
+                        <? foreach ($items as $item): ?>
+                            <li><a href="<?=$item['link']?>"><?=$item['label']?></a></li>
+                        <? endforeach ?>
+                    </ul>
+                </div>
+            <?
+            $html = ob_get_clean();
+            
             return array(
-                'html' => '
-                    <div class="menu top_menu"><ul class="container" id="top_menu-list">
-                        <li class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-2 current_page_item menu-item-28" id="menu-item-28"><a href="http://uxcandy.com/~wp/candy/">Home</a></li>
-                        <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-127" id="menu-item-127"><a href="http://uxcandy.com/~wp/candy/shortcodes/">Shortcodes</a>
-                            <ul class="sub-menu">
-                                <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-150" id="menu-item-150"><a href="http://uxcandy.com/~wp/candy/shortcodes/">Elements</a></li>
-                                <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-56" id="menu-item-56"><a href="http://uxcandy.com/~wp/candy/shortcodes/typography/">Typography</a></li>
-                                <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-163" id="menu-item-163"><a href="http://uxcandy.com/~wp/candy/shortcodes/media/">Media</a></li>
-                            </ul>
-                        </li>
-                        <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-52" id="menu-item-52"><a href="http://uxcandy.com/~wp/candy/portfolio/">Portfolio</a></li>
-                        <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-65" id="menu-item-65"><a href="http://uxcandy.com/~wp/candy/prices/">Prices</a></li>
-                        <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-64" id="menu-item-64"><a href="http://uxcandy.com/~wp/candy/blog/">Blog</a></li>
-                        <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-63" id="menu-item-63"><a href="http://uxcandy.com/~wp/candy/contacts/">Contacts</a></li>
-                    </ul></div>
-                '
+                'form' => '
+                    <label>Heading</label>
+                    <input name="heading" value="'.htmlspecialchars(@$val['heading']).'">
+                    <table>
+                        <tr>
+                            <th>label</th>
+                            <th>link</th>
+                        </tr>
+                        <tr data-value="'.htmlspecialchars(json_encode($items)).'" data-name="items">
+                            <td><input name="label"></td>
+                            <td><input name="link"></td>
+                            <td><a class="remove" href="#">remove item</a></td>
+                        </tr>
+                    </table>
+                    <br>
+                    <a class="add" href="#" data-name="items">add menu item</a>
+                ',
+                'value' => $val,
+                'html' => $html
             );
         }
+        
     ),
     'html' => array(
         'name' => 'HTML',

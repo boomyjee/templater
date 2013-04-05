@@ -1,0 +1,118 @@
+@ global.toggle = type_mixin(".toggle");
+
+.toggle.default() {
+    margin-bottom: 0.5em;
+
+    a {
+        border: 1px solid #ddd;
+        padding: 0.5em 1em;
+        border-radius: 0.3em;
+        display: block;
+        outline: none;
+    }
+    
+    & + .toggle-content {
+        border: 1px solid #ddd;
+        border-radius: 0 0 0.3em 0.3em;
+        border-top: none;
+        padding: 1em;
+        margin-bottom: 0.5em;
+    }
+    
+    &.active {
+        margin-bottom: 0;
+        a {
+            border-radius: 0.3em 0.3em 0 0;
+        }
+    }
+}
+
+.toggle.metro() {
+
+    margin-bottom: 0.5em;
+
+    a {
+        .icon('plus');
+        &:before {
+            border: 1px solid black;
+            font-size:1.1em;
+            width: 1.5em;
+            border-radius:0.75em;
+            text-align: center;
+            margin-right: 0.5em;
+        }          
+    
+        padding: 0.5em 1em 0.5em 0.5em;
+        background: #eee;
+        outline: none;
+        text-decoration: none; 
+        color:#333333;
+        display: block;
+        
+        &:hover {
+            background: #e2e2e2;
+        }
+    }
+    
+    & + .toggle-content {
+        border: 1px dotted #ccc;
+        padding: 1em;
+        margin: 0.5em 0;
+    }
+    
+    &.active {
+        a {
+            .icon('minus');
+            display: block;
+            background: #ddd;
+            &:hover {
+                background: #e2e2e2;
+            }
+        }
+    }
+}
+
+.toggle.apple(data)
+{
+    @ var bg = color(data.background || "#333");
+    @ var bg_top = lighten(bg,20);   
+    @ var inverse = lightness(bg)<40;
+
+    margin-bottom: 0.2em;
+    position: relative;
+    .effects.glare();
+
+    a {    
+        .gradient.vertical(bg_top,bg);
+        cursor:pointer;        
+        padding: 0.3em 0.5em;
+        border-radius: 0.8em;        
+        display: block;
+        outline: none;
+        text-decoration: none;                
+        color: @{inverse ? 'white' : 'black'};
+        text-shadow: 0 1px 1px rgba(255,255,255,.2);
+        
+        &:hover {
+            .gradient.vertical(lighten(bg_top,3),lighten(bg,3));
+        }        
+    }
+
+    
+    & + .toggle-content {
+        border: 1px solid #ddd;
+        border-radius: 0 0 0.3em 0.3em;
+        border-top: none;
+        padding: 0.5em;
+        margin-bottom: 0.2em;
+    }
+    
+    &.active {
+        margin-bottom: 0;
+        a {
+            border-radius: 0.8em 0.8em 0 0;
+        }
+    }    
+}
+
+

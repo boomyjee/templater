@@ -11,6 +11,40 @@ body.wp-admin.folded > .teacss-ui {
     left: 34px !important;
 }
 
+.teacss-ui .preview-toolbar fieldset {
+    display: inline-block;
+    height: 99px;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    padding: 0 10px;
+    text-align: center;
+}
+        
+.teacss-ui .preview-toolbar fieldset:after {
+    content: "";
+    position: absolute;
+    top: 10px; bottom: 10px;
+    right: 0; width: 0;
+    border-right: 1px solid #aaa;
+}
+        
+.teacss-ui .preview-toolbar fieldset legend {
+    bottom: 0;
+    font-size: 10px !important;
+    line-height: 14px !important;
+    left: 0;
+    position: absolute;
+    right: 0;
+    text-align: center;            
+}
+
+.preview-toolbar a {
+    text-decoration: none;
+    border-bottom: 1px dashed;
+    color: inherit;
+}
+        
 .teacss-ui {
     font-size: 12px !important;
 }
@@ -37,14 +71,36 @@ body.wp-admin.folded > .teacss-ui {
         
 .teacss-ui .ui-button-text-only .ui-button-text {
     padding: 0.1em 0.1em;
-    line-height: 2.0;
-}      
+    line-height: 1.8;
+}     
 
 .teacss-ui .ui-button {
     background: #f4f4f4 !important;
     border-radius: 0;
 }
+        
+.teacss-ui .component-overlay .ui-button-text {
+    line-height: 1.2;
+    padding: 0.1em 0.35em;    
+    color: blue;
+}
+                
+.teacss-ui .component-overlay .ui-button {
+    border: 1px solid blue;
+    background: white;
+    opacity: 0.8;
+}
 
+.teacss-ui .editorPanel-toolbar .ui-button {
+    background: #fff !important;
+    border: 1px solid #aaa;
+    font-size: 1.2em;
+}
+
+.teacss-ui .editorPanel-toolbar .ui-button:hover {
+    border-color: #777;
+}
+            
 .teacss-ui .combo-group {
     background: #eee !important;
     font-size: 13px !important;
@@ -94,10 +150,12 @@ body.wp-admin.folded > .teacss-ui {
 
 .component-form textarea {
     width: 98%;
+    margin-bottom: 10px;
 }
 
 .component-form label {
     width: 98%;
+    display: block;
 }
         
 .component-form input {
@@ -105,11 +163,45 @@ body.wp-admin.folded > .teacss-ui {
     margin-bottom: 10px;
 }
 
-.component-form select {
-    width: 98%;
+.component-form input[type="checkbox"], .component-form input[type="radio"]{
+    width: auto;
+    display: inline-block;
+    margin: 0 6px 0 0;
+    float: left;
 }
 
+.component-form select {
+    width: 98.5%;
+    margin-bottom: 10px;
+}
 
+.component-form p textarea,
+.component-form p select,
+.component-form p input {
+    margin-bottom: 0;
+}
+
+.component-form p {
+    margin-bottom: 10px;
+}
+
+.component-form table {
+    width: 98.5%;
+}
+        
+.component-form th {
+    font-weight: bold;
+}
+        
+.component-form table tr > * {
+    padding: 5px 10px 5px 0;
+}
+        
+.component-form table td input {
+    margin: 0;
+}
+
+        
 .combo-item .ui-icon {
     float: right;
 }

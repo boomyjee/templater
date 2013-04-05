@@ -1,0 +1,30 @@
+@ global.content_box = type_mixin("section.columns");
+
+.content_box.default() {
+    display: table;
+    margin-bottom: 2em;    
+    
+    .col {        
+        display: table-cell;
+        .heading {
+            i {
+                font-size: 2em;
+                margin-right: 0.2em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+                display: inline-block;
+            }
+        }
+        
+        > p{
+            padding: 0 0.5em 0 0;
+        }            
+    }
+    
+    a {
+        float: right;
+        padding-right: 2em;
+    }
+}

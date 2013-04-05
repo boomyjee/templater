@@ -1,0 +1,113 @@
+.sidebar(width,position,sidebar_sel,main_sel) {
+    @ sidebar_sel = sidebar_sel || "#sidebar";
+    @ main_sel = main_sel || "#main";
+    @ position = position || 'right';
+
+    !@{sidebar_sel} {
+        width: @width;
+        float: @position;
+    }
+    
+    !@{main_sel} {
+        margin-@{position}: @{parseFloat(width)+20}px;
+    }
+}
+
+@ global.layout = type_mixin();
+
+.layout.columns() {
+    display: inline-block; margin:0 2% 2% 0; vertical-align: top;
+}
+.layout.columns.of() {
+    .layout.columns(); width: 23%;
+}
+.layout.columns.ot() {
+    .layout.columns(); width: 31.33%;
+}
+.layout.columns.oh() {
+    .layout.columns(); width: 48%;
+}
+.layout.columns.tt() {
+    .layout.columns(); width: 64.66%;
+}
+.layout.columns.tf() {
+    .layout.columns(); width: 73%;
+}
+
+.layout.default(data) {
+    @{
+        data = extend({
+            header: {expand:true},
+            menu: {},
+            sheet: { width: "940px" },
+            column: {
+                width: "200px",
+                float: "right",
+                margin: 0
+            },
+            footer: {}
+        },data);
+        global.sheetWidth = data.sheet.width;
+    }
+    
+    body > div > .container {
+        @ container(sheetWidth);
+        @ clearfix();    
+    }
+    
+    @ for (var key in data.container) {
+        @ var sub = data.container[key];
+        #@{key} {
+            margin-top: @sub.margin;
+            padding: @sub.padding;
+            .background(sub.background);
+            
+            @ if (lightness(color(sub.background.color))<50) {
+                color: #eee;
+            @ } else {
+                color: #333;
+            @ }
+        }
+        
+        body > #@{key} {
+            @ if (sub.expand===false) container(sheetWidth);
+        }
+    @ }
+    
+    @ for (var key in data.layout) {
+        @ var sub = data.layout[key];
+        #@{key} {
+            @ var sub_f = global.layout.columns[sub];
+            @ if (sub_f) sub_f();
+        }
+    @ }
+
+    .header {
+        @ sheetContainer(data.header.expand);
+        margin-top: @data.header.margin;
+        
+        #top_menu {
+            margin: 0 0 @data.menu.margin;
+        }
+    }
+    
+    .top_menu {
+        @ sheetContainer(data.menu.expand);
+        margin-top: @data.menu.margin;
+    }
+    
+    .sheet {
+        @ sheetContainer(true);
+        margin-top: @data.sheet.margin;
+        
+        .container { 
+            padding: 20px 0; 
+        }
+        .sidebar(data.column.width,data.column.float);
+    }
+    
+    .footer {
+        @ sheetContainer(data.footer.expand);
+        margin-top: @data.footer.margin;
+    }
+}

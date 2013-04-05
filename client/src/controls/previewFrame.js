@@ -26,7 +26,10 @@ var Component = window.Component = $.Class.extend({
         this.position();
         
         var me = this;
-        Component.app.request("component",{values:[this.value]},function(data){
+        Component.app.request("component",{
+            values:[this.value],
+            dataSource: Component.previewFrame.value.data
+        },function(data){
             me.html = data[0].html;
             me.form = data[0].form;
             me.afterLoad();
@@ -63,7 +66,14 @@ var Component = window.Component = $.Class.extend({
         
         // create DOM for component
         if (!this.element) {
+            this.scripts = [];
+            var fragment = $.buildFragment([this.html],[document],this.scripts);
             this.element = $(this.html).eq(0);
+            
+            if (!this.element.attr("id"))
+                this.element.attr("id",this.value.id);
+            
+            this.element.find("br.component-area").remove();
             this.element.data("component",this);
         }
         
@@ -94,10 +104,57 @@ var Component = window.Component = $.Class.extend({
             })
         );
         
+        var timer;
+        function showOverlay() {
+            if (!me.controls || !me.controls.length) return;
+            if (!me.componentOverlay) {
+                me.componentOverlay = $("<div>").addClass("component-overlay");
+                me.componentOverlay.appendTo(teacss.ui.layer);
+                me.componentOverlay
+                    .mouseover(function() { clearTimeout(timer); })
+                    .mouseout(function() { timer = setTimeout(hideOverlay,1); })
+            }
+            
+            var off = me.element.offset();
+            var i_off = Component.previewFrame.frame.offset();
+            
+            me.componentOverlay.show();
+            me.componentOverlay.css({
+                position: 'absolute',
+                top: i_off.top + off.top,
+                left: i_off.left + off.left,
+                width: $(this).width(),
+                height: 0,
+                background: 'red',
+                zIndex: 900
+            });
+            
+            for (var i=0;i<me.controls.length;i++) {
+                var ctl = me.controls[i];
+                me.componentOverlay.append(ctl.element);
+                
+            }
+            me.componentHandle.addClass("hover");
+        }
+        
+        function hideOverlay() {
+            if (me.componentOverlay) me.componentOverlay.hide();
+            me.componentHandle.removeClass("hover");
+        }
+        
+        
         // extra div for dashed border and one for controls
         this.element.append(
-            $("<div class='component-handle'>"),
-            this.controls = $("<div class='controls-handle'>")
+            me.componentHandle = $("<div class='component-handle'>")
+                .mouseover(function() { clearTimeout(timer); showOverlay(); })
+                .mouseout(function() { timer = setTimeout(hideOverlay,1); })
+                .click(function (){
+                    Component.previewFrame.$f(".component-handle").removeClass("selected");
+                    me.componentHandle.addClass("selected");
+                })
+            .append(
+                this.controls = $("<div class='controls-handle visible'>")
+            )
         );
         
         // for inherited components we can redefine them in current template
@@ -109,13 +166,22 @@ var Component = window.Component = $.Class.extend({
             $("<div class='undefine-handle'>").click(function(){ me.undefine(); })
         );
         
+        // drag to drop somewhere later
+        if (this.parent && !this.inherited && !this.parent.inherited)
+            this.element.children(".component-handle").each(function(){
+                this.draggable = true;
+                this.ondragstart = function (e) { return Component.app.previewFrame.dragStart(e,me); }
+                this.ondragend = function (e) { Component.app.previewFrame.dragEnd(); }
+                $(this).addClass("drag-handle");
+            })
+        
         // we can edit component parameters in separate dialog
-        if (this.form && !this.inherited && this.parent && !this.parent.inherited) this.controls.append(
+        /*if (this.form && !this.inherited && this.parent && !this.parent.inherited) this.controls.append(
             $("<div class='edit-handle visible'>").click(function(){ me.edit(); })
-        );
+        );*/
         
         if (this.parent) {
-            if (!this.inherited && !this.parent.inherited) this.controls.append(
+            if (!this.inherited && !this.parent.inherited) this.element.append(
                 // drop in to append before or after
                 this.initDroppable("<div class='sort-handle'>",function(e){
                     var draggable = ui.previewFrame.draggable;
@@ -124,27 +190,19 @@ var Component = window.Component = $.Class.extend({
                     if (draggable.create) {
                         var cmp = new Component({type:draggable.type.id});
                         cmp.load(me.parent,index);
+                        Component.previewFrame.componentsHash[cmp.value.id] = cmp;
                     } else {
                         draggable.position(me.parent,index);
                     }
                 })
             )
             
-            // drag to drop somewhere later
-            if (!this.inherited && !this.parent.inherited) this.controls.append(
-                $("<div class='drag-handle visible'>").each(function(){
-                    this.draggable = true;
-                    this.ondragstart = function (e) { return Component.app.previewFrame.dragStart(e,me); }
-                    this.ondragend = function (e) { Component.app.previewFrame.dragEnd(); }
-                })
-            )                
-                
             // remove component    
-            if (!this.inherited && !this.parent.inherited) this.controls.append(
-                $("<div class='close-handle visible'>").click(function(){
+            /*if (!this.inherited && !this.parent.inherited) this.controls.append(
+                $("<div class='close-handle'>").click(function(){
                     me.remove();
                 })
-            )                
+            )*/                
 
             if (this.element.css("position")!="absolute") this.element.css("position","relative");
             this.element.css({minHeight:20});
@@ -175,6 +233,36 @@ var Component = window.Component = $.Class.extend({
         if (this.index===undefined) {
             this.parent.children.push(this);
             this.parent.area.append(this.element);
+            
+            if (this.scripts && this.scripts.length) {
+                var me = this;
+                setTimeout(function(){
+                    var doc = Component.previewFrame.frame[0].contentWindow.document;
+                    var head = doc.head || doc.getElementsByTagName('head')[0];
+                    var loader = teacss.LazyLoad_f(doc);
+                    
+                    var q = teacss.queue(1);
+                    for (var s=0;s<me.scripts.length;s++) {
+                        var script = me.scripts[s];
+                        if (script.src) {
+                            q.defer(function(what,done){
+                                loader.js([what],function(){
+                                    done();
+                                });
+                            },script.src);
+                        } else {
+                            q.defer(function (code,done){
+                                el = doc.createElement("script");
+                                el.innerHTML = code;
+                                head.appendChild(el);
+                                done();
+                            },script.innerHTML);                            
+                        }
+                    }
+                    q.await(function(){});
+                    me.scripts = [];
+                },1);
+            }
         } else {
             var i = this.parent.children.indexOf(this.index.before || this.index.after);
             if (this.index.before) {
@@ -223,35 +311,32 @@ var Component = window.Component = $.Class.extend({
     edit: function () {
         var me = this;
         if (!me.dialog) {
+            
+            var width = 600;
+            if (me.form && me.form.control && me.form.width)
+                width = me.form.width;
+            
             me.dialog = teacss.ui.dialog({
                 modal: true,
                 resizable: false,
-                width: 600,
+                width: width,
                 title: me.type.name,
                 dialogClass: "component-form",
                 buttons: {
                     "Save" : function () {
-                        var value = $.extend({},me.value);
-                        
-                        // grab data from form controls
-                        me.dialog.element.find("input,select,textarea").each(function(){
-                            var name = $(this).attr("name");
-                            if (name) {
-                                name = name.split("[").pop().replace(/]$/,'');
-                                if ($(this).is("input[type=checkbox]")) {
-                                    value[name] = $(this).attr("checked");
-                                } else if ($(this).is("input[type=radio]")) {
-                                    if ($(this).attr("checked")) value[name] = $(this).val();
-                                } else {
-                                    value[name] = $(this).val();
-                                }
-                            }
-                        });
+                        if (me.dialog.control) {
+                            var value = me.dialog.control.getValue();
+                        } else {
+                            var value = $.extend({id:me.value.id,type:me.value.type},me.dialog.element.find(":input").serializeObject());
+                        }
                         
                         $(this).dialog("close");
                         
                         // send request to server to get new form and html
-                        Component.app.request("component",{values:[value]},function(data){
+                        Component.app.request("component",{
+                            values:[value],
+                            dataSource: Component.previewFrame.value.data
+                        },function(data){
                             me.html = data[0].html;
                             me.form = data[0].form;
                             me.value = data[0].value;
@@ -270,10 +355,53 @@ var Component = window.Component = $.Class.extend({
                     }
                 }
             });
+            
+            if (me.form && me.form.control) {
+                me.dialog.control = eval(me.form.control)();
+                me.dialog.push(me.dialog.control);
+            }
         }
         
-        me.dialog.element.html("");
-        me.dialog.push(me.form);
+        if (me.dialog.control) {
+            me.dialog.control.form = me.form;
+            me.dialog.control.setValue(me.value);
+        } else {
+            me.dialog.element.html("");
+            me.dialog.push(me.form);
+            me.dialog.element.each(function(){
+                var dlg = this;
+                $(dlg).find("[data-value]").each(function(){
+                    var value = $.parseJSON($(this).attr("data-value"));
+                    var name = $(this).attr("data-name");
+                    var tpl = $(this);
+                    var dummy = $("<span>");
+                    tpl.removeAttr("data-value");
+                    tpl.replaceWith(dummy);
+
+                    var cnt = 0;
+                    function addItem(value) {
+                        var item = tpl.clone();
+                        dummy.before(item);
+                        item.find("[name]").each(function(){
+                            var s = $(this).attr("name");
+                            $(this).attr("name", name+"[item_"+cnt+"]["+s+"]");
+                            if (value && value[s]) $(this).val(value[s]);
+                        });
+                        item.find(".remove").click(function(e){
+                            e.preventDefault();
+                            item.remove();
+                        });
+                        cnt++;
+                    }
+                    
+                    for (var i=0;i<value.length;i++) addItem(value[i]);
+                    $(dlg).find(".add[data-name='"+name+"']").click(function(e){
+                        e.preventDefault();
+                        addItem();
+                    });
+                });
+            });
+        }
         me.dialog.open();
     }    
 });
@@ -286,31 +414,33 @@ ui.previewFrame = ui.panel.extend({
     init: function (o) {
         var me = this;
         this._super(o);
-        Component.app = o.app;
         Component.previewFrame = this;
         
         var blank = dayside.url+"/plugins/live_preview/blank.htm";
         
         this.toolbar = $("<div>")
-            .css({position:"absolute",left:0,right:0,top:0,height:29,lineHeight:"29px",
-                  borderBottom:"1px solid #aaa",padding:"0 10px",color:"#555"})
+            .addClass("preview-toolbar")
+            .css({position:"absolute",left:0,right:0,top:0,height:99,lineHeight:"18px",
+                  borderBottom:"1px solid #aaa",padding:"0",color:"#555"})
             .appendTo(this.element);
         
+        var fs;
         this.toolbar.append(
-            this.templateStatus = $("<span>"),
-            $("<a href='#'>").text("edit").css({
-                textDecoration: "none",
-                borderBottom: "1px dashed",
-                margin: "0 10px",
-                color: "inherit"
-            }).click(function(e){
+            fs = $("<fieldset>").append(
+                $("<legend>").html("Template")
+            )
+        );
+        
+        fs.append(
+            $("<label>").html("Template parent:").css({marginTop:20,display:'block'}),
+            this.templateStatus = $("<a href='#' class='template-status'>").click(function(e){
                 e.preventDefault();
                 me.editParentTemplate();
             })
         );
             
         this.frameWrapper = $("<div>")
-            .css({position:"absolute",left:0,right:0,top:30,bottom:0})
+            .css({position:"absolute",left:0,right:0,top:100,bottom:0})
             .appendTo(this.element);
         
         this.frame = $("<iframe>")
@@ -325,11 +455,13 @@ ui.previewFrame = ui.panel.extend({
         var curr = this.root.value.parentTemplate||"";
         var ext = prompt("Enter template name in form /some/path/name",curr);
         if (ext!==null && ext!==curr) {
-            this.setValue({
+            var value = this.value;
+            value.template = {
                 value: {
                     parentTemplate: ext || undefined
                 }
-            });
+            };
+            this.setValue(value);
             this.trigger("change");
         }
     },
@@ -339,9 +471,14 @@ ui.previewFrame = ui.panel.extend({
         var me = this;
         var frame = this.frame;
         
-        teacss.process(this.options.app.options.makefile, function() {
+        var makefile = "";
+        for (var i=0;i<me.options.styles.length;i++) {
+            makefile += '@import "'+me.options.styles[i]+'";\n';
+        }
+        teacss.files["templater_makefile.tea"] = makefile;
+        teacss.process("templater_makefile.tea", function() {
             teacss.tea.Style.insert(frame[0].contentWindow.document);
-            // teacss.tea.Script.insert(frame[0].contentWindow.document);
+            teacss.tea.Script.insert(frame[0].contentWindow.document);
             
             if (teacss.image.getDeferred()) {
                 teacss.image.update = function () { me.reloadTea(callback); }
@@ -365,7 +502,7 @@ ui.previewFrame = ui.panel.extend({
     // val - single template data
     setValue: function (val) {
         this._super(val);
-        
+
         var me = this;
         me.componentsHash = {};
         var win = this.frame[0].contentWindow;
@@ -374,21 +511,23 @@ ui.previewFrame = ui.panel.extend({
         var $f = this.$f = function (what) { return teacss.jQuery(what,context); }
             
         // add style for component controls
+        $f("head").find("script").remove();
         $f("#template_styles").remove();
-        $f("head").append($("<link>",{rel:"stylesheet",type:"text/css",href:this_url+"/../frame.css"}))
+        $f("head").append($("<link>",{id:"template_styles",rel:"stylesheet",type:"text/css",href:this_url+"/../frame.css"}))
         $f("body").html("");
+        $f("body").click(function(e){e.preventDefault();});
         
         this.toolbar.hide();
-        if (!val) return;
+        if (!val || !val.template) return;
         this.toolbar.show();
         
         // create root element and DOM for it manually (it stands for body)
-        var root = me.root = new Component(val.value);
+        var root = me.root = new Component(val.template.value);
         root.element = $f("body");
         root.area = $f("body");
         root.afterLoad();
         
-        var hash = false, root_data = val, inherit = false;
+        var hash = false, root_data = val.template, inherit = false;
         
         // if template has a parent then load parent template and create substitution has from current one
         if (me.root.value.parentTemplate) {
@@ -405,7 +544,7 @@ ui.previewFrame = ui.panel.extend({
                     root_data = data;
                 }
             }
-            findRoot(val,false);
+            findRoot(val.template,false);
             inherit = root.inherited = true;
         } else {
             this.templateStatus.text("Standalone template");
@@ -438,9 +577,16 @@ ui.previewFrame = ui.panel.extend({
             }
         }
         createComponents(root,root_data,inherit);
-
+        
+        var request = me.request = {};
         if (components.length) {
-            this.options.app.request("component",{values:component_values},function(data){
+            me.setLoading(true);
+            this.options.app.request("component",{
+                values:component_values,
+                dataSource: Component.previewFrame.value.data
+            },function(data){
+                if (me.request!=request) return;
+                me.setLoading(false);
                 $.each(components,function(i){
                     this.html = data[i].html;
                     this.form = data[i].form;
@@ -452,6 +598,14 @@ ui.previewFrame = ui.panel.extend({
         } else {
             me.reloadTea();
             me.trigger("loaded");
+        }
+    },
+    
+    setLoading: function (flag) {
+        if (flag) {
+            this.$f("body").append("<div class='loading-handle'>");
+        } else {
+            this.$f(".loading-handle").remove();
         }
     },
     
@@ -490,7 +644,7 @@ ui.previewFrame = ui.panel.extend({
         } else {
             ret = get(this.root);
         }
-        return ret;
+        return {template:ret,data:this.value.data};
     },
     
     // drag scroll is a mechanism to scroll page up/down when dragging towards screen borders
@@ -550,9 +704,7 @@ ui.previewFrame = ui.panel.extend({
         event.dataTransfer.setData('text/plain',"componentDraggable");
         event.dataTransfer.effectAllowed = 'link';
         
-        me.$f(".drag-handle").removeClass("visible");
-        me.$f(".close-handle").removeClass("visible");
-        me.$f(".edit-handle").removeClass("visible");
+        me.$f(".controls-handle").removeClass("visible");
         me.$f(".sort-handle").each(function(){
             if (what && what.element && $(this).parents().index(what.element) >= 0) return;
             $(this).addClass("visible");
@@ -570,9 +722,7 @@ ui.previewFrame = ui.panel.extend({
     // hide drag ui
     dragEnd: function () {
         var me = this;
-        me.$f(".drag-handle").addClass("visible");
-        me.$f(".edit-handle").addClass("visible");
-        me.$f(".close-handle").addClass("visible");
+        me.$f(".controls-handle").addClass("visible");
         me.$f(".sort-handle").removeClass("visible");
         me.$f(".drop-handle").removeClass("visible");
         if (me.dragScroll) me.dragScroll.both.hide();

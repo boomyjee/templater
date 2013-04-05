@@ -1,0 +1,153 @@
+@{
+    teacss.functions.switcherMixin = function (def) {
+        var func = function (data) {
+            var f;
+            if (data && data.type) f = func[data.type];
+            if (f) 
+                f.apply(this,arguments); 
+            else if (def) 
+                func[def].apply(this,arguments);
+        }
+        return func;
+    }
+}
+
+.effects(list) {
+    @{
+        if (list) for (var i=0;i<list.length;i++) {
+            var data = list[i];
+            if (data && data.type && effects[data.type]) effects[data.type].call(this,data.value);
+        }
+    }
+}
+
+@ effects.shadow = switcherMixin();
+
+.effects.shadow.ears(data) {
+    position: relative;
+    
+    @ var place = (data.position=="bottom") ? "after":"before";
+    &:@{place} {
+        content: "";
+        display: block;
+        position: absolute;
+        z-index: 10;
+        
+        @ if (place=="before")
+            top: 0;
+        @ else
+            bottom: 0;
+        
+        left: 0; right: 0;
+        height: 150px;
+        background: 50% 50% no-repeat;
+        
+        @{
+            if (teacss.cache(data) && !teacss.building) return;
+        
+            var width = parseFloat(sheetWidth);
+            var canvas = new Canvas(width,150);
+            canvas.draw2D(function(ctx){
+                
+                ctx.shadowOffsetX = 0;  
+                ctx.shadowOffsetY = 10;  
+                ctx.shadowBlur = 10;  
+                ctx.shadowColor = "rgba(0, 0, 0, 1.0)";
+                
+                if (place=="after") ctx.transform(1,0,0,-1,0,150);
+                
+                var half = width / 2;
+                
+                ctx.beginPath();
+                ctx.lineTo(0,-30);
+                ctx.lineTo(half,30);
+                ctx.lineTo(width,-30);
+                ctx.closePath();
+                
+                ctx.fill();
+                
+                var grad = ctx.createLinearGradient(0, 0, width, 0);
+                grad.addColorStop(0,'transparent');
+                grad.addColorStop(0.5,'#000');
+                grad.addColorStop(1,'transparent');
+                
+                ctx.globalCompositeOperation = "destination-out";
+                ctx.fillStyle = grad;
+                ctx.fillRect(0,-20,width,150);
+            
+            });
+            canvas.background();
+        }
+    }
+}
+
+.effects.shadow.round(data) {
+    position: relative;
+    @ var place = (data.position=="bottom") ? "after":"before";
+    &:@{place} {
+        content: "";
+        display: block;
+        position: absolute;
+        z-index: 10;
+        
+        @ if (place=="before")
+            top: 0;
+        @ else
+            bottom: 0;
+        
+        left: 0; right: 0;
+        height: 50px;
+        background: 50% 50% no-repeat;
+        
+        @{
+            if (teacss.cache(data) && !teacss.building) return;
+        
+            var width = parseFloat(sheetWidth)+400;
+            var canvas = new Canvas(width,50);
+            canvas.draw2D(function(ctx){
+                ctx.shadowOffsetX = 0;  
+                ctx.shadowOffsetY = 0;  
+                ctx.shadowBlur = 20;  
+                ctx.shadowColor = "rgba(0, 0, 0, 0.5)";
+                
+                if (place=="after") ctx.transform(1,0,0,-1,0,50);
+                
+                ctx.beginPath();
+                ctx.moveTo(0,-20);
+                ctx.bezierCurveTo(30,0,width-30,0,width-30,-20);
+                ctx.closePath();
+                
+                ctx.fill();
+            
+            });
+            canvas.background();
+        }
+    }
+}
+
+
+.effects.glare(data){
+    position: relative;
+    
+    &:before{
+        @{
+            var left = data && data.margin && data.margin.left != undefined;
+            var right = data && data.margin && data.margin.right != undefined;
+            var marginLeft = left ? data.margin.left : '3px';
+            var marginRight = right ? data.margin.right : '3px';
+            var radiusLeft = (left && data.margin.left == 0) ? ['0', '0'] : ['2em', '2em'];
+            var radiusRight = (right && data.margin.right == 0) ? ['0', '0'] : ['2em', '2em'];
+            var borderRadius = radiusLeft[0] + ' ' + radiusRight[0] + ' ' + radiusRight[1] + ' ' + radiusLeft[1];
+        }
+        
+        content: "";
+        position: absolute;                
+        left: @marginLeft;
+        right: @marginRight;
+        top: 2px;
+        height: 0.6em;
+        border-radius: @borderRadius;
+        .gradient.vertical( rgba(255,255,255,.4), rgba(255,255,255,0.2));
+        background-color: rgba(0, 0, 0, 0);
+    }
+}

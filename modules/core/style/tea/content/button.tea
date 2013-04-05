@@ -1,0 +1,185 @@
+@ global.button = type_mixin("button, a.button, input[type=button], input[type=submit]");
+
+.button.base() {
+    display: inline-block;
+    padding: 0.3em 0.7em;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    outline: none;
+    white-space:nowrap;
+    margin: 2px;
+    
+    &.small {
+        font-size: 0.9em;
+    }
+    
+    &.large {
+        font-size: 1.4em;
+    }    
+    
+    &.disabled, &[disabled] {
+        cursor: default;
+    }
+}
+
+.button.colors(data) {
+    @ var color = data.color;
+    @ var color_2 = data.color_2 || color;
+    @ var text = data.text;
+    @ if (!text) text = ((lightness(color) + lightness(color_2)) / 2 > 67) ? "#333" : "#fff";
+    
+    color: @text;
+    @ if ((lightness(text)) < 67) {
+        text-shadow: 0 1px 1px rgba(255,255,255,.75);
+    @ } else {
+        text-shadow: 0 -1px 0 rgba(0,0,0,.25);
+    @ }
+    
+    @ if (color==color_2) 
+        background: @color;
+    @ else {
+        .gradient.bar(color,color_2);
+        .reset_filter();    
+    @ }
+    
+    @ if (data.opacity) opacity(data.opacity);
+}
+
+
+.button.default(data) {
+    .button.base();
+    
+    border: 1px solid #ccc;
+    border-bottom-color: #bbb;
+    border-radius: 0.3em;
+    .box_shadow('inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05)');
+    
+    .button.colors({color:'#eee', color_2:'#ddd'});
+    &:hover { 
+        .button.colors({color:darken('#fff', 10)});
+    }
+    &.active, &:active {
+        .button.colors({color:darken('#fff', 10),text:rgba(0,0,0,0.5)});
+    }
+    &.disabled, &[disabled] {
+        .button.colors({color:darken('#fff', 10),opacity:65});
+        .box_shadow('none');        
+    }
+    
+    @{
+        var extra = {
+            green     :{ color: '#62c462',             color_2:'#51a351' },
+            darkgreen :{ color: darken('#62c462',20),  color_2:darken('#51a351',20) },
+            orange    :{ color: lighten('orange', 15), color_2:'orange' },
+            blue      :{ color: '#5bc0de',             color_2:'#2f96b4' },
+            red       :{ color: '#ee5f5b',             color_2:'#bd362f' },
+            pink      :{ color: lighten('pink', 15),   color_2:'pink' },
+            darkgray  :{ color: "#999",                color_2:"#777" },
+            lightgray :{ color: "#eee",                color_2:"#ccc" }        
+        }
+        for (key in extra) {
+            @{
+                &.@key {
+                    .button.colors(extra[key]);
+                    &:hover {
+                        .button.colors({ color:extra[key].color_2 });
+                    }
+                    &.active, &:active {
+                        .button.colors({ color:lighten(extra[key].color_2,10) });
+                    }
+                }
+            }
+        }
+    }
+}
+
+.button.metro(data) {
+    .button.base();
+    
+    .button.colors({color:"#eee"});
+    &.active, &:active {
+        .button.colors({color:darken('#eee', 10),text:rgba(0,0,0,0.5)});
+    }
+    &.disabled, &[disabled] {
+        .button.colors({color:darken('#eee', 10),opacity:65});
+    }    
+    
+    @{
+        var extra = {
+            green:     "#00a300",
+            darkgreen: darken('#62c462',20),
+            orange:    lighten('orange', 15),
+            blue:      '#3A5498',
+            red:       lighten('#BA141A', 20),
+            pink:      'pink',
+            darkgray:  "#999",
+            lightgray: darken("#eee", 10)
+        }
+        for (key in extra) {
+            @{
+                &.@key {
+                    .button.colors({color:extra[key]});
+                    &:hover {
+                        .button.colors({ color:darken(extra[key],20) });
+                    }
+                    &.active, &:active {
+                        .button.colors({ color:lighten(extra[key],10) });
+                    }
+                }
+            }
+        }        
+    }
+}
+
+.button.apple(data){
+    .button.base();   
+    border-top: 1px solid #bbb;
+    border-bottom: 1px solid #bbb;
+    border-radius: 2em;
+    .box_shadow('inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05)');
+    
+    .button.colors({color:'#eee', color_2:'#ddd'});
+    .effects.glare({margin:{left: '0.3em', right: '0.3em'}});    
+    
+    &.small {
+        .effects.glare({margin:{left: '0.6em', right: '0.6em'}});    
+    }
+    
+    &:hover { 
+        .button.colors({color:darken('#fff', 10)});
+    }
+    &.active, &:active {
+        .button.colors({color:darken('#fff', 10),text:rgba(0,0,0,0.5)});
+    }
+    &.disabled, &[disabled] {
+        .button.colors({color:darken('#fff', 10),opacity:65});
+        .box_shadow('none');
+    }
+    
+    @{
+        var extra = {
+            green     :{ color: '#62c462',             color_2:'#51a351' },
+            darkgreen :{ color: darken('#62c462',20),  color_2:darken('#51a351',20) },
+            orange    :{ color: lighten('orange', 15), color_2:'orange' },
+            blue      :{ color: '#5bc0de',             color_2:'#2f96b4' },
+            red       :{ color: '#ee5f5b',             color_2:'#bd362f' },
+            pink      :{ color: lighten('pink', 15),   color_2:'pink' },
+            darkgray  :{ color: "#999",                color_2:"#777" },
+            lightgray :{ color: "#eee",                color_2:"#ccc" }        
+        }
+        for (key in extra) {
+            @{
+                &.@key {
+                    .button.colors(extra[key]);
+                    &:hover {
+                        .button.colors({ color:extra[key].color_2 });
+                    }
+                    &.active, &:active {
+                        .button.colors({ color:lighten(extra[key].color_2,10) });
+                    }
+                }
+            }
+        }
+    }
+}

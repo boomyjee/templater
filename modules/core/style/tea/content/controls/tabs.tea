@@ -1,0 +1,224 @@
+@ global.tabs = type_mixin(".tabs")
+
+.tabs.default() {
+    border: 1px solid #ddd;
+    border-radius: 0.3em;
+    padding: 1em;
+    background: white;
+    
+    > ul {
+        height: 40px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        border-bottom: 1px solid #ddd;
+        
+        li {
+            margin: 0;
+            padding: 0;
+            height: 40px;
+            display: inline-block;
+            position: relative;
+            top: 1px;
+            
+            a {
+                border: 0;
+                height: 40px;
+                line-height: 40px;
+                padding: 0 1em;
+                display: inline-block;
+                outline: none;
+                &:hover {
+                    background: #eee;
+                    border-radius: 0.3em; 
+                }
+            }
+        }
+        
+        li.active a {
+            color: #333;
+            background: white;
+            text-decoration: none;
+            border: 1px solid #ddd;
+            border-bottom: 1px solid white;
+            border-radius: 0.3em;           
+        }        
+    }
+    
+    > div {
+        padding: 1em;
+    }
+}
+
+.tabs.metro() {
+/*
+    border:1px solid #eaeaea;
+    
+    > ul {
+        height: 40px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        
+        li {
+            margin: 0;
+            padding: 0;
+            border-right: 1px solid #d9d9d9;
+            height: 39px;
+            display: inline-block;
+            
+            a {
+                background: #eee;
+                border: 0;
+                height: 39px;
+                line-height: 39px;
+                color: #333333;
+                padding: 0 15px;
+                border-bottom: 1px solid #dcdcdc;
+                display: inline-block;
+                outline: none;
+            }
+        }
+        
+        li:last-child {
+            border-right: 0;
+        }
+        
+        li.active a {
+            background: none;
+            border-top: 3px solid #777;
+            height: 36px;
+            line-height: 36px;
+            border-bottom: 0;
+        }        
+    }
+    
+    > div {
+        padding: 2em;
+    }
+    */   
+    
+    border: none;
+    
+    > ul {    
+        height: 40px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    
+        li {
+            border: none;
+            display: inline-block;
+           
+            a { 
+                color: #333333;
+                border: none;
+                background: #fff;
+                padding: 0 15px;
+                height: 40px;
+                line-height: 40px;
+                outline: none;
+                display: inline-block;                
+            }
+        }
+        
+        li:last-child {
+            border-right: 0;
+        }
+        
+        li.active a {
+            background: #eee;
+            border: none;
+            height: 40px;
+            line-height: 40px;
+        }        
+    }
+    
+    > div {
+        background: #eee;
+        padding: 2em;
+    }    
+}
+
+.tabs.apple(data)
+{
+    @{
+        if (!data)
+            data = {};
+        
+        var bg = color(data.header_color || "#333");
+        var dark = lightness(bg)<40;        
+        var bg_top = dark ? lighten(bg, 20) : darken(bg, 20);
+        var active_bg = dark ? lighten(bg, 20) : darken(bg, 20);
+        var active_bg_top = dark ? lighten(bg_top, 20) : darken(bg_top, 20);
+    }
+
+    border-radius: 0.5em;
+    //border: 1px solid #ddd;        
+    box-shadow: 0 0 0.1em;
+    margin: 1em;
+    background-color: rgb(250,250,250);
+    
+    .tabs-nav {
+        list-style: none;
+        display: block;
+        position: relative;
+        top: -1em;
+        text-align: center;
+        margin: 0;
+               
+        li {
+            display: inline-block;
+            position: relative;            
+            border-left: 1px solid #eee;
+            border-right: 1px solid #eee;
+            .gradient.vertical(bg_top, bg);
+            .effects.glare({margin: {left: 0, right: 0}});
+            
+            a {
+                display: block;
+                line-height: 1em;
+                color: @{dark ? 'white' : 'black'};
+                padding: 0.5em 0.8em;                
+                overflow: hidden;
+                
+                &:hover {
+                    text-decoration: none;
+                }
+            }
+        }   
+                
+        li:hover {
+            .gradient.vertical(lighten(bg_top, 3), lighten(bg, 3));
+        }
+        
+        li.active {
+            &:before {
+                display: none;
+            }
+            .gradient.vertical(active_bg, active_bg_top);
+            box-shadow: inset 0 0 0.3em;
+            
+            a {
+                color: @{dark ? 'black' : 'white'};
+            }
+        }                
+        
+        li:first-child {
+            border-left: none;
+            border-radius: 0.8em 0 0 0.8em;
+            .effects.glare({margin: {right: 0}});
+        }
+        li:last-child {       
+            border-right: none;
+            border-radius: 0 0.8em 0.8em 0;
+            .effects.glare({margin: {left: 0}});
+        }                        
+    }    
+    
+    > div {
+        padding: 0 1em 1em 1em;
+    }
+}
