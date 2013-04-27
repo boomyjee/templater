@@ -13,27 +13,32 @@
     }
 }
 
-@ global.layout = type_mixin();
-
-.layout.columns() {
+@ global.sublayout = type_mixin();
+.sublayout.default(data) {
+    @ if (data.part=="of")
+        width: 23%;
+    @ else if (data.part=="ot")
+        width: 31.33%;
+    @ else if (data.part=="oh")
+        width: 48%;
+    @ else if (data.part=="tt")
+        width: 64.66%;
+    @ else if (data.part=="tf")
+        width: 73%;
+    @ else 
+        @ return;
+        
     display: inline-block; margin:0 2% 2% 0; vertical-align: top;
 }
-.layout.columns.of() {
-    .layout.columns(); width: 23%;
-}
-.layout.columns.ot() {
-    .layout.columns(); width: 31.33%;
-}
-.layout.columns.oh() {
-    .layout.columns(); width: 48%;
-}
-.layout.columns.tt() {
-    .layout.columns(); width: 64.66%;
-}
-.layout.columns.tf() {
-    .layout.columns(); width: 73%;
+.sublayout.absolute(data) {
+    position: absolute !important;
+    @ if (data.position) {
+        left: @{data.position.x};
+        top: @{data.position.y};
+    @ }
 }
 
+@ global.layout = type_mixin();
 .layout.default(data) {
     @{
         data = extend({
@@ -62,11 +67,19 @@
             padding: @sub.padding;
             .background(sub.background);
             
-            @ if (lightness(color(sub.background.color))<50) {
+            @ if (sub.height && sub.height!="auto")
+                height: @sub.height;
+            
+            @ if (sub.background && lightness(color(sub.background.color))<50) {
                 color: #eee;
             @ } else {
                 color: #333;
             @ }
+            
+            
+            > .container {
+                position: relative;
+            }
         }
         
         body > #@{key} {
@@ -77,8 +90,7 @@
     @ for (var key in data.layout) {
         @ var sub = data.layout[key];
         #@{key} {
-            @ var sub_f = global.layout.columns[sub];
-            @ if (sub_f) sub_f();
+            .global.sublayout(sub);
         }
     @ }
 

@@ -6,6 +6,7 @@ require("./style.css");
 require("./controls/tabList.js");
 require("./controls/sortPanel.js");
 require("./controls/previewFrame.js");
+require("./controls/buttonTabs.js");
 require("./controls/serializeObject.js");
 
 exports = ui.Control.extend({
@@ -17,6 +18,9 @@ exports = ui.Control.extend({
         
         if (this.options.makefile)
             this.options.makefile = teacss.path.absolute(this.options.makefile);
+        
+        if (!this.options.sidebarWidth) 
+            this.options.sidebarWidth = 220;
         
         Component.app = this;
                 
@@ -90,7 +94,7 @@ exports = ui.Control.extend({
         teacss.functions.theme = me.settings.theme;
         
         var previewFrame = me.previewFrame = ui.previewFrame({app:this,styles:me.styles});
-        previewFrame.element.css({position:'absolute',left:me.options.sidebarWidth+1,right:0,top:28,bottom:0,margin:0,zIndex:1});
+        previewFrame.element.css({position:'absolute',left:1,right:0,top:28,bottom:0,margin:0,zIndex:1});
         previewFrame.bind("change",function(){
             var pages = me.settings.pages;
             var page = pages.list[pages.selected];
@@ -104,7 +108,7 @@ exports = ui.Control.extend({
         
         var previewTabs = ui.tabList({app:this});
         previewTabs.element.addClass("preview-tabs");
-        previewTabs.element.css({position:'absolute',left:me.options.sidebarWidth,right:0,top:0,bottom:0,margin:0,
+        previewTabs.element.css({position:'absolute',left:me.options.sidebarWidth+1,right:0,top:0,height:58,margin:0,
                                  borderTop:"none",borderBottom:"none",borderRight:"none"});
         previewTabs.bind("change",function(){
             me.settings.pages = this.getValue();
@@ -113,37 +117,32 @@ exports = ui.Control.extend({
         });
         
         var sidebar = ui.panel();
-        sidebar.element.css({position:'absolute',left:0,width:me.options.sidebarWidth,top:0,bottom:0});
+        sidebar.element.css({position:'absolute',left:15,width:0,top:72,bottom:0,zIndex:999});
         
         var toolbar = ui.panel();
         toolbar.element.addClass("editorPanel-toolbar");
-        toolbar.element.css({position:'absolute',left:0,right:0,top:0,height:45,padding:0,margin:0});
+        toolbar.element.css({zIndex:2,position:'absolute',left:0,width:me.options.sidebarWidth,top:0,height:57,padding:0,margin:0,border:'1px solid #aaa',borderTop:"none"});
         
         if (me.options.closeLink) toolbar.push(
             ui.button({
-                label:"Close", margin: "7px 0 0 10px",
+                label:"Close", margin: "15px 0 0 15px",
                 icons:{ primary: "ui-icon-close" },
                 click: function () { location.href = me.options.closeLink; }
             })
         );
         toolbar.push(
             me.publishButton = ui.button({
-                label:"Publish", margin: "7px 10px 0 0",
+                label:"Publish", margin: "15px 15px 0 0",
                 icons:{ primary: "ui-icon-circle-triangle-e" },
                 click: function () { me.publish(); }
             })
         );
         me.publishButton.element.css({float:'right'});
-        sidebar.push(toolbar); 
         
-        var sidebarTabs = me.sidebarTabs = ui.tabPanel({height:"auto"});
-        sidebarTabs.element.css({position:'absolute',left:0,right:0,top:45,bottom:0,margin:0,border:"none"});
-        sidebar.push(sidebarTabs);
-
         var panel = ui.panel();
         panel.element.css({position:'fixed',left:0,top:0,right:0,bottom:0,margin:0});
         panel.element.appendTo("body").addClass("teacss-ui");
-        panel.push(sidebar,previewTabs,previewFrame);
+        panel.push(sidebar,toolbar,previewTabs,previewFrame);
         
         // load initial values
         me.settings.pages = me.settings.pages || { list: [{ title: "Home", template: "index.liquid" }],selected: 0 }
@@ -151,23 +150,47 @@ exports = ui.Control.extend({
         
         me.settings.layout = me.settings.layout || [];
         me.previewFrame.frame.on("load",function() {
-            me.styleTab = ui.panel("Style");
-            me.sidebarTabs.push(me.styleTab);
-            me.styleTab.element.css({position:'absolute',left:0,right:0,top:31,bottom:0,margin:0,height:"auto"});
-            
-            var sortPanel = ui.sortPanel({app:me,label:"Components"});
-            sidebarTabs.push(sortPanel);
-            sortPanel.element.css({position:'absolute',left:0,right:0,top:31,bottom:0,height:"auto"});
-            sidebarTabs.bind("select",function(b,tab){
-                previewFrame.layoutMode(tab==sortPanel);
+            var previewCheck = ui.check({
+                label: "Preview",
+                width: 100, margin: 0,
+                change: function () {
+                    previewFrame.layoutMode(!this.value);
+                    var action = this.value ? "hide" : "show";
+                    
+                    sidebarTabs.element[action]();
+                    $.each(sidebarTabs.panels,function(){
+                        if (action=="hide")
+                            this.element.parent().addClass("dialog-hide");
+                        else
+                            this.element.parent().removeClass("dialog-hide");
+                    });
+                }
             });
+            sidebar.push(previewCheck);
             
+            
+            var sidebarTabs = ui.buttonTabs({margin:"5px 0 0 0"});
+            sidebarTabs.push(
+                ui.sortPanel({
+                    label:"Add",icons: { primary: "ui-icon-plus" },
+                    width: 350, height: 600, app: me
+                })
+            );
+            sidebarTabs.push(
+                me.stylePanel = ui.panel({
+                    label:"Style", icons: { primary: "ui-icon-lightbulb" },
+                    width: 350, height: 600
+                })
+            );
+            sidebar.push(sidebarTabs);
             me.updatePreview();
         });
         
         me.previewFrame.bind("loaded",function(){
-            if (me.frameLoaded) return;
-            me.frameLoaded = true;
+            if (!me.frameLoaded) {
+                me.frameLoaded = true;
+                me.previewFrame.layoutMode(true);
+            }
             me.updateUI();
         });
     },
@@ -194,6 +217,7 @@ exports = ui.Control.extend({
             var cmps = me.previewFrame.componentsHash;
             for (var id in cmps) {
                 cmps[id].controls = [];
+                cmps[id].overlayControls = [];
             }
             
             $.each(me.ui,function(){
@@ -220,20 +244,21 @@ exports = ui.Control.extend({
             },500);
         });
         
-        var styleTab = me.styleTab;
-        styleTab.element.empty();
+        var stylePanel = me.stylePanel;
+        stylePanel.element.empty();
         
         if (panelList.length) {
-            var sidebarAccordion = ui.accordion({width:"100.0%",margin:0,height:"100.0%"});
-            styleTab.push(sidebarAccordion);
+            var sidebarAccordion = ui.tabPanel({width:"100.0%",margin:0,height:me.stylePanel.element.height() });
+            stylePanel.push(sidebarAccordion);
             
             $.each(panelList,function(){
                 sidebarAccordion.push(this);
+                this.element.css({padding:"10px 5px",display:"block",width:""});
             });
             
             setTimeout(function(){
-                sidebarAccordion.element.find(".ui-accordion").accordion("resize");
-                sidebarAccordion.inner.accordion("option",{animated:false});
+                //sidebarAccordion.element.find(".ui-accordion").accordion("resize");
+                //sidebarAccordion.inner.accordion("option",{animated:false});
             },1);
         }        
     },

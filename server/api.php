@@ -266,7 +266,7 @@ class Component {
         
         $me = $this;
         if ($me->value->id) $html = preg_replace_callback(
-            '|^<(\w+)(.*?)>|',
+            '|^\s*<(\w+)(.*?)>|',
             function ($matches) use (&$me) {
                 if (!preg_match('|id\s*=\s*|',$matches[0])) {
                     return "<".$matches[1].' id="'.$me->value->id.'"'.$matches[2].">";

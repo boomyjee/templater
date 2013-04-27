@@ -1,44 +1,42 @@
 @ pages.home = type_mixin();
 
 .pages.home.default() {
-    #slider {
+    .flexslider {   
         .slider({
             type: 'flexslider',
             slideshow: false,
             animation: "slide",
             controlNav: false
         });
-        
-        border-top: 1px solid #aaa;
-        border-bottom: 1px solid #aaa;
-        margin: 0;
-        background: #eee;
+             
+        border-top: 1px solid rgba(0, 0, 0, 0.2);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.2);               
+        .box_shadow('inset 0 0 3em rgba(0,0,0,.2)');
+        background-color: #eee;
         
         li > div {
             .container(sheetWidth);
-            padding: 20px 0;
+            
             .clearfix();
-        }
-        img {
-            float: left;
-            margin-right: 20px;
-        }
+        }       
+        
         p {
-            margin: 20px 0;
+            margin: 1em;
+        }        
+        
+        h2,h3 {
+            margin-top: 1em;
         }
+    }      
+    
+    .reading-box {
+        margin-bottom: 5em;
     }   
     
-    #recent-works {
-        .slider({
-            type: 'flexslider',
-            slideshow: false,
-            animation: "slide",
-            animationLoop: false,
-            itemWidth: 200,
-            move: 1,
-            directionNav: false
-        });
-    }
+    .columns {
+        .content_box();
+        margin-bottom: 5em;
+    }        
     
     .work {
         position: relative;

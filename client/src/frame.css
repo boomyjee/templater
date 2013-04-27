@@ -1,36 +1,77 @@
 .sort-handle.visible, 
-.drop-handle.visible
+.drop-handle.visible,
+.area-handle.visible
 {
     display: block;
+    visibility: visible;
 }
         
-body.edit-layout .component-handle
-{
+body.edit-layout .handle-container {
     display: block;
 }
-        
-.loading-handle {
-    position: fixed;
-    left: 0; top: 0; right: 0; bottom: 0;
-    background: #eee url(images/loading.gif) no-repeat 50% 50%;
+
+body.edit-layout {
+    position: relative !important;
 }
-                
+
+.handle-container {
+    position: absolute;
+    left: 0; right: 0;
+    top: 0; bottom: 0;
+    display: none;
+    overflow: hidden;
+}
+        
+.move-handle {
+    width: 32px;
+    height: 32px;
+    padding: 2px;
+    background: #fff url(images/move_32x32.png) 2px 2px no-repeat;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+    cursor: move;
+    box-shadow: 0px 0px 10px #000;
+    -moz-box-shadow: 0px 0px 10px #000;
+    -webkit-box-shadow: 0px 0px 10px #000;
+}
+        
 .component-handle {
     position: absolute;
-    left: 0; top: 0; right: 0; bottom: 0;
-    border: 1px dashed #aaa;
-    display: none;
+    /*border: 1px solid blue;*/
+}
+
+.component-handle > * {
+    visibility: hidden;
 }
 
 .component-handle:hover, .component-handle.hover  {
-    border: 1px solid blue;
-    background: rgba(0,0,255,0.1);
+    /*border: 2px solid rgba(0,136,255,0.5);
+    background: rgba(0,136,255,0.2);*/
+    box-shadow: 0px 0px 5px #0088ff inset;
+    -moz-box-shadow: 0px 0px 5px #0088ff inset;
+    -webkit-box-shadow: 0px 0px 5px #0088ff inset;
 }
-
                 
 .component-handle.selected {
-    border: 1px solid green;
-    background: rgba(0,255,0,0.1);
+    /*border: 2px solid #0088ff;
+    background: none;*/
+    /*box-shadow: 0px 0px 5px #0088ff inset;
+    -moz-box-shadow: 0px 0px 5px #0088ff inset;
+    -webkit-box-shadow: 0px 0px 5px #0088ff inset;*/
+}
+
+.component-handle.selected[draggable] {
+    cursor: move;
+}
+
+.component-handle.selected > * {
+    visibility: visible;
+}
+
+.area-handle {
+    position: absolute;
+    display: none;
+    /*border: 1px solid red;*/
 }
 
 body.edit-layout .component-handle:hover > .controls-handle.visible {
@@ -44,37 +85,15 @@ body.edit-layout .component-handle:hover > .controls-handle.visible {
     display: none;
 }
 
-.control-handle {
-    border: 1px solid blue;
-    background: white;
-    opacity: 0.8;
-    color: blue;
-    padding: 0;
-    padding: 0 10px;
-    text-align: center;
-    font-size: 12px;
-    line-height: 14px;
-    height: 16px;
-    z-index: 1;
-    float: left;
-    margin-right: 2px;    
-    cursor: pointer;
-}
-
 .drop-handle {
     position: absolute;
     left: 15px; top: 15px; right: 15px; bottom: 15px; z-index: 3;
     border: 2px solid red;
     min-height: 40px;
     color: red;
-    display: none;
+    /*display: none;*/
 }
 
-.area-handle {
-    z-index: 4;
-    position: relative;
-}
-        
 .drop-handle.drag-over {
     background: rgba(255,0,0,0.3);
 }
@@ -91,88 +110,3 @@ body.edit-layout .component-handle:hover > .controls-handle.visible {
 .sort-handle.drag-over {
     background: rgba(0,0,255,0.3);
 }
-
-.drag-handle {
-    cursor: move;
-}
-        
-.close-handle {
-    width: 16px; height: 16px; 
-    border: 1px solid blue;
-    background: white;
-    opacity: 0.8;
-    color: blue;
-    padding: 0;
-    text-align: center;
-    font-size: 12px;
-    line-height: 14px;
-    z-index: 1;
-    cursor: pointer;
-    float: left;
-    margin-right: 2px;
-}
-        
-.close-handle:before {
-    content: "x";
-}     
-
-
-.edit-handle {
-    height: 16px; width: 40px; 
-    border: 1px solid blue;
-    background: white;
-    opacity: 0.8;
-    color: blue;
-    padding: 0;
-    text-align: center;
-    font-size: 12px;
-    line-height: 14px;
-    z-index: 1;
-    cursor: pointer;    
-    float: left;
-    margin-right: 2px;
-}
-        
-.edit-handle:before {
-    content: "edit";
-}           
-
-.redefine-handle {
-    height: 16px;
-    border: 1px solid green;
-    background: white;
-    opacity: 0.8;
-    color: green;
-    padding: 0 5px;
-    text-align: center;
-    font-size: 12px;
-    line-height: 14px;
-    z-index: 1;
-    cursor: pointer;    
-    float: left;
-    margin-right: 2px;
-}
-        
-.redefine-handle:before {
-    content: "redefine";
-}    
-
-.undefine-handle {
-    height: 16px;
-    border: 1px solid green;
-    background: white;
-    opacity: 0.8;
-    color: green;
-    padding: 0 5px;
-    text-align: center;
-    font-size: 12px;
-    line-height: 14px;
-    z-index: 1;
-    cursor: pointer;    
-    float: left;
-    margin-right: 2px;
-}
-        
-.undefine-handle:before {
-    content: "undefine";
-}   

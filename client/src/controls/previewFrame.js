@@ -6,6 +6,7 @@ var Component = window.Component = $.Class.extend({
     init: function (val) {
         this.value = val || {};
         this.styleControls = [];
+        this.zIndex = 100;
         
         // unique id
         if (!this.value.id) 
@@ -15,6 +16,8 @@ var Component = window.Component = $.Class.extend({
         // save link to component type
         if (val && val.type) {
             this.type = Component.app.settings.components[val.type];
+        } else {
+            this.type = {};
         }
     },
     
@@ -55,6 +58,7 @@ var Component = window.Component = $.Class.extend({
                 if (e.dataTransfer.getData("text/plain")!="componentDraggable") return;
                 if (drop) drop.call(this,e);
                 Component.previewFrame.trigger("change");
+                Component.previewFrame.root.setHandleIndex();
             }                        
         });
         return el;
@@ -75,6 +79,7 @@ var Component = window.Component = $.Class.extend({
             
             this.element.find("br.component-area").remove();
             this.element.data("component",this);
+            this.menu = $("<div>").append("<div class='combo-group'>"+this.type.name+"</div>");
         }
         
         // and get container for child components
@@ -86,13 +91,24 @@ var Component = window.Component = $.Class.extend({
             else
                 this.area = this.element.find(this.type.area).eq(0);
         }
-        if (this.area)
-            this.area.data("area-component",this);
         
         var me = this;
+        
+        // extra div for selection and other handles
+        Component.previewFrame.handleContainer.append(
+            me.componentHandle = $("<div class='component-handle'>").data("component",this)
+            .click(function(e){
+                Component.previewFrame.select(me);
+                Component.previewFrame.showContextMenu(me,e);
+            })
+            .append(
+                this.controlPanel = $("<div class='controls-handle visible'>")
+            ),
+            me.areaHandle = $("<div class='area-handle'>")
+        );
     
         // we can drop components on this area
-        if (this.area && !this.inherited) this.area.addClass("area-handle").append(
+        if (this.area && !this.inherited) this.areaHandle.data("component",this).append(
             this.initDroppable("<div class='drop-handle'>",function(){
                 var draggable = ui.previewFrame.draggable;
                 if (draggable.create) {
@@ -104,71 +120,24 @@ var Component = window.Component = $.Class.extend({
             })
         );
         
-        var timer;
-        function showOverlay() {
-            if (!me.controls || !me.controls.length) return;
-            if (!me.componentOverlay) {
-                me.componentOverlay = $("<div>").addClass("component-overlay");
-                me.componentOverlay.appendTo(teacss.ui.layer);
-                me.componentOverlay
-                    .mouseover(function() { clearTimeout(timer); })
-                    .mouseout(function() { timer = setTimeout(hideOverlay,1); })
-            }
-            
-            var off = me.element.offset();
-            var i_off = Component.previewFrame.frame.offset();
-            
-            me.componentOverlay.show();
-            me.componentOverlay.css({
-                position: 'absolute',
-                top: i_off.top + off.top,
-                left: i_off.left + off.left,
-                width: $(this).width(),
-                height: 0,
-                background: 'red',
-                zIndex: 900
-            });
-            
-            for (var i=0;i<me.controls.length;i++) {
-                var ctl = me.controls[i];
-                me.componentOverlay.append(ctl.element);
-                
-            }
-            me.componentHandle.addClass("hover");
-        }
-        
-        function hideOverlay() {
-            if (me.componentOverlay) me.componentOverlay.hide();
-            me.componentHandle.removeClass("hover");
-        }
-        
-        
-        // extra div for dashed border and one for controls
-        this.element.append(
-            me.componentHandle = $("<div class='component-handle'>")
-                .mouseover(function() { clearTimeout(timer); showOverlay(); })
-                .mouseout(function() { timer = setTimeout(hideOverlay,1); })
-                .click(function (){
-                    Component.previewFrame.$f(".component-handle").removeClass("selected");
-                    me.componentHandle.addClass("selected");
-                })
-            .append(
-                this.controls = $("<div class='controls-handle visible'>")
-            )
-        );
-        
         // for inherited components we can redefine them in current template
-        if (this.area && this.inherited) this.controls.append(
-            $("<div class='redefine-handle'>").click(function(){ me.redefine(); })
+        if (this.area && this.inherited) this.menu.append(
+            $("<div class='combo-item'>").html("Redefine").click(function(){ 
+                Component.app.previewFrame.contextMenu.hide();
+                me.redefine(); 
+            })
         );
         // or cancel this redefine to get original children
-        if (this.area && !this.inherited && this.parent && this.parent.inherited) this.controls.append(
-            $("<div class='undefine-handle'>").click(function(){ me.undefine(); })
+        if (this.area && !this.inherited && this.parent && this.parent.inherited) this.menu.append(
+            $("<div class='combo-item'>").html("Undefine").click(function(){ 
+                Component.app.previewFrame.contextMenu.hide();
+                me.undefine(); 
+            })
         );
         
         // drag to drop somewhere later
         if (this.parent && !this.inherited && !this.parent.inherited)
-            this.element.children(".component-handle").each(function(){
+            me.componentHandle.each(function(){
                 this.draggable = true;
                 this.ondragstart = function (e) { return Component.app.previewFrame.dragStart(e,me); }
                 this.ondragend = function (e) { Component.app.previewFrame.dragEnd(); }
@@ -176,12 +145,15 @@ var Component = window.Component = $.Class.extend({
             })
         
         // we can edit component parameters in separate dialog
-        /*if (this.form && !this.inherited && this.parent && !this.parent.inherited) this.controls.append(
-            $("<div class='edit-handle visible'>").click(function(){ me.edit(); })
-        );*/
+        if (this.form && !this.inherited && this.parent && !this.parent.inherited) this.menu.append(
+            $("<div class='combo-item'>").html("Edit").click(function(){ 
+                Component.app.previewFrame.contextMenu.hide();
+                me.edit(); 
+            })
+        );
         
         if (this.parent) {
-            if (!this.inherited && !this.parent.inherited) this.element.append(
+            if (!this.inherited && !this.parent.inherited) me.componentHandle.append(
                 // drop in to append before or after
                 this.initDroppable("<div class='sort-handle'>",function(e){
                     var draggable = ui.previewFrame.draggable;
@@ -198,11 +170,12 @@ var Component = window.Component = $.Class.extend({
             )
             
             // remove component    
-            /*if (!this.inherited && !this.parent.inherited) this.controls.append(
-                $("<div class='close-handle'>").click(function(){
+            if (!this.inherited && !this.parent.inherited) this.menu.append(
+                $("<div class='combo-item'>").html("Remove").click(function(){
+                    Component.app.previewFrame.contextMenu.hide();
                     me.remove();
                 })
-            )*/                
+            )
 
             if (this.element.css("position")!="absolute") this.element.css("position","relative");
             this.element.css({minHeight:20});
@@ -217,7 +190,44 @@ var Component = window.Component = $.Class.extend({
                 }
             } else
                 this.position();
+            
+            this.setHandleIndex();
         }
+    },
+    
+    setHandleIndex: function () {
+        if (this.parent)
+            this.zIndex = this.parent.zIndex + this.parent.children.indexOf(this) + 3;
+        else
+            this.zIndex = 100;
+        
+        var me = this;
+        if (me.element) setTimeout(function(){
+            var off = me.element.offset();
+            if (!off) off = {};
+            me.componentHandle.css({
+                zIndex:me.zIndex,
+                left: off.left,
+                top: off.top,
+                width: me.element.outerWidth(),
+                height: me.element.outerHeight()
+            });
+            
+            if (me.areaHandle && me.area) {
+                var off = me.area.offset();
+                me.areaHandle.css({
+                    zIndex: me.zIndex + 1,
+                    left: off.left,
+                    top: off.top,
+                    width: Math.max(0,me.area.outerWidth()-2),
+                    height: Math.max(0,me.area.outerHeight()-2)
+                })
+            }
+        },1);
+        
+        $.each(this.children,function(){
+            this.setHandleIndex();
+        });
     },
     
     // reposition component in tree, if parent is set then it will be used
@@ -305,6 +315,8 @@ var Component = window.Component = $.Class.extend({
         if (i>=0) this.parent.children.splice(i,1);
         this.element.detach();
         Component.previewFrame.trigger("change");
+        this.componentHandle.remove();
+        if (this.areaHandle) this.areaHandle.remove();
     },
     
     // show dialog for component edit
@@ -403,7 +415,7 @@ var Component = window.Component = $.Class.extend({
             });
         }
         me.dialog.open();
-    }    
+    }
 });
 
 var this_url = require.dir;
@@ -420,27 +432,21 @@ ui.previewFrame = ui.panel.extend({
         
         this.toolbar = $("<div>")
             .addClass("preview-toolbar")
-            .css({position:"absolute",left:0,right:0,top:0,height:99,lineHeight:"18px",
-                  borderBottom:"1px solid #aaa",padding:"0",color:"#555"})
+            .css({position:"absolute",left:this.options.app.options.sidebarWidth,right:0,top:0,height:29,lineHeight:"29px",
+                  borderBottom:"1px solid #aaa",padding:"0 10px",color:"#555"})
             .appendTo(this.element);
         
-        var fs;
         this.toolbar.append(
-            fs = $("<fieldset>").append(
-                $("<legend>").html("Template")
-            )
-        );
-        
-        fs.append(
-            $("<label>").html("Template parent:").css({marginTop:20,display:'block'}),
             this.templateStatus = $("<a href='#' class='template-status'>").click(function(e){
                 e.preventDefault();
                 me.editParentTemplate();
             })
         );
-            
+        
+        this.controlGroups = {};
+        
         this.frameWrapper = $("<div>")
-            .css({position:"absolute",left:0,right:0,top:100,bottom:0})
+            .css({position:"absolute",left:0,right:0,top:30,bottom:0})
             .appendTo(this.element);
         
         this.frame = $("<iframe>")
@@ -515,7 +521,9 @@ ui.previewFrame = ui.panel.extend({
         $f("#template_styles").remove();
         $f("head").append($("<link>",{id:"template_styles",rel:"stylesheet",type:"text/css",href:this_url+"/../frame.css"}))
         $f("body").html("");
-        $f("body").click(function(e){e.preventDefault();});
+        $f("body").append(
+            me.handleContainer = $("<div>").addClass("handle-container")
+        );
         
         this.toolbar.hide();
         if (!val || !val.template) return;
@@ -525,6 +533,20 @@ ui.previewFrame = ui.panel.extend({
         var root = me.root = new Component(val.template.value);
         root.element = $f("body");
         root.area = $f("body");
+        
+        if (!me.sendEvents) {
+            me.sendEvents = true;
+            $f("body").mousedown(function(e){
+                me.frame.parent().trigger('mousedown');
+            });
+            $f("body").mousemove(function(e){
+                me.frame.parent().trigger(e);
+            });
+            $f("body").click(function(e){e.preventDefault();});
+            setInterval(function(e){
+                if (me.root) me.root.setHandleIndex();
+            },1000);
+        }
         root.afterLoad();
         
         var hash = false, root_data = val.template, inherit = false;
@@ -601,6 +623,71 @@ ui.previewFrame = ui.panel.extend({
         }
     },
     
+    select: function (cmp,e) {
+        var me = this;
+        if (this.$f)
+            this.$f(".component-handle").removeClass("selected");
+        
+        for (var key in me.controlGroups) {
+            var g = me.controlGroups[key];
+            g.hide().find(">*:not(legend)").detach();
+        }
+        
+        if (cmp) {
+            cmp.componentHandle.addClass("selected");
+            $.each(cmp.overlayControls,function(){
+                cmp.componentHandle.append(this.element);
+            });
+        }
+    },
+    
+    showContextMenu: function (cmp,e) {
+        var me = this;
+        if (!me.contextMenu) {
+            me.contextMenu = $("<div>").css({width:150,zIndex:500,position:"absolute"}).addClass("button-select-panel");
+            me.contextMenu.appendTo(teacss.ui.layer);
+            
+            var f_off = me.frame.offset();
+            me.$f("body").mousemove(function(e){
+                if (me.contextMenu.is(":visible")) {
+                    var off = me.contextMenu.offset();
+                    var delta = 50;
+                    e.pageY -= $(me.frame[0].contentWindow).scrollTop();
+                    if (
+                        e.pageX + f_off.left - off.left < -delta ||
+                        e.pageY + f_off.top  - off.top  < -delta ||
+                        e.pageX + f_off.left - off.left - me.contextMenu.width() > delta ||
+                        e.pageY + f_off.top  - off.top  - me.contextMenu.height() > delta
+                    ) {
+                        me.contextMenu.fadeOut();
+                    }
+                }
+            });
+        }
+        
+        if (cmp) {
+            me.contextMenu.stop(true,true).fadeIn(0);
+            me.contextMenu.offset({
+                left:e.pageX + 20,
+                top:e.pageY + 20 + me.frame.offset().top - $(me.frame[0].contentWindow).scrollTop()
+            });
+            
+            me.contextMenu.children().detach();
+            me.contextMenu.append(cmp.menu);
+            
+            var list = cmp.controls;
+            if (cmp.controls.length) {
+                me.contextMenu.append($("<div class='combo-group'>").html("Styles"));
+                $.each(cmp.controls,function(){
+                    me.contextMenu.append(this.element);
+                    if (this.options.comboDirection=='default') this.options.comboDirection = 'right';
+                });            
+            }
+        } else {
+            me.contextMenu.fadeOut(0);
+        }
+    },
+    
     setLoading: function (flag) {
         if (flag) {
             this.$f("body").append("<div class='loading-handle'>");
@@ -617,7 +704,8 @@ ui.previewFrame = ui.panel.extend({
             if (cmp.children.length) {
                 res.children = [];
                 $.each(cmp.children,function(){
-                    res.children.push(get(this));
+                    if (this && this.type && this.type.name)
+                        res.children.push(get(this));
                 });
             }
             return res;
@@ -691,6 +779,7 @@ ui.previewFrame = ui.panel.extend({
         var me = this;
         if (!me.$f) return;
         me.initDragScroll();
+        me.showContextMenu(false);
         me.Class.draggable = me.draggable = what;
         
         var canvas = document.createElement("canvas");
@@ -704,18 +793,29 @@ ui.previewFrame = ui.panel.extend({
         event.dataTransfer.setData('text/plain',"componentDraggable");
         event.dataTransfer.effectAllowed = 'link';
         
+        console.debug(what);
+        
         me.$f(".controls-handle").removeClass("visible");
         me.$f(".sort-handle").each(function(){
-            if (what && what.element && $(this).parents().index(what.element) >= 0) return;
+            var cmp = $(this).parent().data("component");
+            if (what instanceof Component) {
+                while (cmp) {
+                    if (cmp==what) return;
+                    cmp = cmp.parent;
+                }
+            }
             $(this).addClass("visible");
         });
         me.$f(".drop-handle").each(function(){
-            var cmp = $(this).parent().data("area-component");
+            var cmp = $(this).parent().data("component");
             if (cmp.children.length) return;
-            if (what && what.element && $(this).parents().index(what.element) >= 0) return;
-            
-            $(this).addClass("visible");
-            if ($(this).parent().css("position")!="absolute") $(this).parent().css("position","relative");
+            if (what instanceof Component) {
+                while (cmp) {
+                    if (cmp==what) return;
+                    cmp = cmp.parent;
+                }
+            }
+            $(this).parent().addClass("visible");
         });
     },
     
@@ -724,7 +824,8 @@ ui.previewFrame = ui.panel.extend({
         var me = this;
         me.$f(".controls-handle").addClass("visible");
         me.$f(".sort-handle").removeClass("visible");
-        me.$f(".drop-handle").removeClass("visible");
+        // me.$f(".drop-handle").removeClass("visible");
+        me.$f(".area-handle").removeClass("visible");
         if (me.dragScroll) me.dragScroll.both.hide();
     }
 });

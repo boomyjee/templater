@@ -38,11 +38,42 @@
     }
     
     .comments {
+        margin-bottom: 1em;
+    
         .comment {
-            padding: 1em;
-            border: 1px solid #eee;
-            border-radius: 10px;
             margin: 5px 0;
-        }
+            
+            .comment-body {                
+                border-top: 1px solid #EEEEEE;
+                padding: 0.5em 0.5em 0.5em 1em;
+            }
+        }       
     }    
+    
+    .logged-in-as {
+        float: right;
+        margin-bottom:0.5em;
+    }      
+    
+    #reply-title{
+        border-bottom: 2px solid #ddd;
+    }
+    
+    #commentform {
+        label {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom:0;
+        }
+    }
+    
+    .comment-form-comment {
+        margin: 0;
+    }
+    
+    .form-allowed-tags {        
+        border: 1px solid #EEEEEE;
+        box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2) inset;
+        padding: 0.3em 1.5em;
+    }
 }

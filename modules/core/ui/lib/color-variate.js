@@ -16,7 +16,7 @@ teacss.functions.color8 = false;
 teacss.functions.color9 = false;
     
 teacss.functions.color = function(color,c2) {
-    if (color && color.constructor==Array)
+    if (color && color.constructor==Array && color.length >= 2)
         color = teacss.functions.variate(teacss.functions["color"+color[0]],color[1]-1);
     if (color && c2)
         color = teacss.functions.variate(teacss.functions["color"+color],c2-1);

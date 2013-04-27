@@ -11,14 +11,23 @@ body.wp-admin.folded > .teacss-ui {
     left: 34px !important;
 }
 
+.teacss-ui .button-tab .ui-dialog-content {
+    padding: 0;
+}
+
+.teacss-ui .dialog-hide {
+    display: none !important;
+}
+
 .teacss-ui .preview-toolbar fieldset {
     display: inline-block;
-    height: 99px;
+    height: 79px;
     margin: 0;
     padding: 0;
     position: relative;
-    padding: 0 10px;
+    padding: 10px 10px;
     text-align: center;
+    vertical-align: top;
 }
         
 .teacss-ui .preview-toolbar fieldset:after {
@@ -37,6 +46,11 @@ body.wp-admin.folded > .teacss-ui {
     position: absolute;
     right: 0;
     text-align: center;            
+}
+        
+.teacss-ui .preview-toolbar fieldset .ui-button-text {
+    font-size: 12px;
+    line-height: 1;
 }
 
 .preview-toolbar a {
@@ -64,8 +78,11 @@ body.wp-admin.folded > .teacss-ui {
     font-weight: bold !important;
     color: #777 !important;
 }
-        
-.teacss-ui .ui-button-text {
+
+.teacss-ui .ui-button-text, 
+.teacss-ui .ui-button-text-icon-primary .ui-button-text,
+.teacss-ui .ui-button-text-icons .ui-button-text
+{
     padding: 0.1em 0.1em 0.1em 1em;
 }
         

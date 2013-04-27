@@ -93,26 +93,27 @@
 
 .top_menu.text(data) {
     .top_menu.base(data);
+    font-size: 1.3em;
     
     > ul { 
         list-style: none;
-        padding: 1em 0;
         
         > li {
             display: inline-block;
-            padding: 0 0.5em;
+            padding: 2em 0.5em;                        
             
-            border-right: 1px solid;
-            
-            &:first-child {
-                padding-left: 0;
-            }
-            
-            &:last-child {
-                border: none;
-                padding-right: 0;
+            :hover {
+                text-decoration: none;
+                color: @color(1,9);
             }
         }
+        
+        .current-menu-item {
+            border-top: 3px solid @color(1,8);
+            a {
+                color: @color(1,8);
+            }
+        }        
     
         ul {
             display: none;
@@ -155,8 +156,7 @@
     @ var bg = color(data.background || "#333");
     @ var inverse = lightness(bg)<40;
     @ var bg_top = lighten(bg,20);
-    .gradient.vertical(bg_top,bg);
-    
+    .gradient.vertical(bg_top,bg);    
     
     > ul {
         > li {

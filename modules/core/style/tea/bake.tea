@@ -20,6 +20,7 @@
 @import "content/pricing_table";
 @import "content/icons";
 
+
 @import "content/controls/tabs";
 @import "content/controls/alerts";
 @import "content/controls/toggle";
@@ -33,12 +34,18 @@
 @import "theme/sheet";
 @import "theme/footer";
 
+@import "theme/widgets/common";
 @import "theme/widgets/flickr";
 @import "theme/widgets/twitter";
+@import "theme/widgets/tagcloud";
+@import "theme/widgets/categories";
+@import "theme/widgets/recent_posts";
+@import "theme/widgets/pages";
 
 @import "theme/pages/home";
 @import "theme/pages/blog";
 @import "theme/pages/portfolio";
+
 
 @ global.donut_root = tea.dir+"../";
 
@@ -58,13 +65,13 @@
     // content
     .typography(data.typography);
     .table(data.table);
-    .form();
+    .form(data.form);
     
     .button(data.button);
     .person(data.person);
     .progress(data.progress);
     .reading_box(data.reading_box);
-    .content_box(data.content_box);
+    .content_box();
     .pricing_table(data.pricing_table);
     
     // controls
@@ -81,14 +88,16 @@
     .sheet();
     .footer();
     
-    // widgets
+    // widgets    
     .widgets.flickr();
     .widgets.twitter();
+    .widgets.tagcloud();
+    .widgets.categories();
+    .widgets.recentPosts();
+    .widgets.pages();
     
     // page specific
     .pages.home();
     .pages.blog();
-    .pages.portfolio();
+    .pages.portfolio();    
 }
-
-

@@ -1,0 +1,23 @@
+@ widgets.categories = type_mixin(".widget.widget_categories");
+
+.widgets.categories.default() {    
+    .widgets.common.sidebar();
+    
+    ul {
+        margin: 0;
+        
+        li {
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+            padding: 0.5em 0;
+            list-style: none;
+            width: 100%;
+            
+            .icon('list-alt');
+            
+            a {
+                margin-left: 0.5em;
+            }
+        }
+    }   
+}

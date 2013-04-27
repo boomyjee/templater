@@ -9,13 +9,16 @@
     outline: none;
     white-space:nowrap;
     margin: 2px;
+    width: auto;
+    height: auto;
+    
     
     &.small {
         font-size: 0.9em;
     }
     
-    &.large {
-        font-size: 1.4em;
+    &.large {        
+        padding: 0.7em 1.5em;
     }    
     
     &.disabled, &[disabled] {
@@ -27,10 +30,10 @@
     @ var color = data.color;
     @ var color_2 = data.color_2 || color;
     @ var text = data.text;
-    @ if (!text) text = ((lightness(color) + lightness(color_2)) / 2 > 67) ? "#333" : "#fff";
+    @ if (!text) text = ((lightness(color) + lightness(color_2)) / 2 > 54) ? "#333" : "#fff";    
     
     color: @text;
-    @ if ((lightness(text)) < 67) {
+    @ if ((lightness(text)) < 54) {
         text-shadow: 0 1px 1px rgba(255,255,255,.75);
     @ } else {
         text-shadow: 0 -1px 0 rgba(0,0,0,.25);
@@ -56,12 +59,14 @@
     .box_shadow('inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05)');
     
     .button.colors({color:'#eee', color_2:'#ddd'});
+    
     &:hover { 
         .button.colors({color:darken('#fff', 10)});
     }
     &.active, &:active {
         .button.colors({color:darken('#fff', 10),text:rgba(0,0,0,0.5)});
     }
+    
     &.disabled, &[disabled] {
         .button.colors({color:darken('#fff', 10),opacity:65});
         .box_shadow('none');        
@@ -69,8 +74,8 @@
     
     @{
         var extra = {
-            green     :{ color: '#62c462',             color_2:'#51a351' },
-            darkgreen :{ color: darken('#62c462',20),  color_2:darken('#51a351',20) },
+            green     :{ color: '#d1e990'/*'#62c462'*/,             color_2:darken('#d1e990',30)/*'#51a351'*/ },
+            darkgreen :{ color: darken('#62c462',20),  color_2:darken('#51a351',10) },
             orange    :{ color: lighten('orange', 15), color_2:'orange' },
             blue      :{ color: '#5bc0de',             color_2:'#2f96b4' },
             red       :{ color: '#ee5f5b',             color_2:'#bd362f' },
@@ -82,10 +87,10 @@
             @{
                 &.@key {
                     .button.colors(extra[key]);
-                    &:hover {
+                    &:hover:not(.disabled) {
                         .button.colors({ color:extra[key].color_2 });
                     }
-                    &.active, &:active {
+                    &.active:not(.disabled), &:active:not(.disabled) {
                         .button.colors({ color:lighten(extra[key].color_2,10) });
                     }
                 }

@@ -137,7 +137,7 @@ ui.tabList = ui.Panel.extend({
             this.list = $("<ul>").addClass("ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all")
         );
         this.element.css({padding:0});
-        this.list.css({zIndex:1});
+        this.list.css({zIndex:10});
         
         this.element.on("click","li > span.ui-icon-close",function(e){
             e.preventDefault();

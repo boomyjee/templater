@@ -121,7 +121,55 @@ ui.logoDialog = ui.dialog.extend({
         tabs.element.css({"-webkit-box-sizing":"border-box"});
         this.push(tabs);
         
-        var choosePanel = ui.panel("Choose");
+        var choosePanel = ui.tabPanel({label:"Choose"});
+        var layoutPanel = ui.panel("Layout");
+        
+        tabs.push(choosePanel);
+        tabs.push(layoutPanel);
+        
+        $.ajax({
+            dataType: "json",
+            url: assets + "/logoMaker/symbols.json", 
+            success: function(json) {
+                var count = 0, pagePanel;
+                for (var key in json) {
+                    var list = json[key];
+                    var thumb = $("<div>").addClass("thumb");
+    
+                    if (count%28==0) {
+                        pagePanel = ui.panel((count/28+1).toString());
+                        choosePanel.push(pagePanel);
+                    }
+                    count++;
+    
+                    thumb.appendTo(pagePanel.element);
+                    
+                    for (var i=0;i<list.length;i++) {
+                        var svg = $(list[i]);
+                        thumb.append(svg);
+                        svg.find("rect").remove();
+                    }
+                    
+                    thumb.click(function(){
+                        var el = me.el("symbol")[0];
+                        while (el.firstChild) el.removeChild(el.firstChild);
+                        
+                        var clone = $(this).clone();
+                        clone.find("> svg").each(function(){
+                            var g = document.createElementNS(svgns,'g');
+                            el.appendChild(g);
+                            $(this).children().each(function(){
+                                g.appendChild(this);
+                            });
+                        });
+                        tabs.selectTab(layoutPanel);
+                        me.initSymbolColors();
+                    });                
+                }
+            }
+        });           
+        
+        /*var choosePanel = ui.panel("Choose");
         choosePanel.element.css({overflow:'auto'});
         
         var layoutPanel = ui.panel("Layout");
@@ -165,7 +213,7 @@ ui.logoDialog = ui.dialog.extend({
                     });                
                 }
             }
-        });        
+        });      */  
         
         var svgns = "http://www.w3.org/2000/svg";
         var configPanel = ui.panel({margin:0});
@@ -181,7 +229,7 @@ ui.logoDialog = ui.dialog.extend({
             var tx,cl,sz,fn;
             me.controls[name] = [
                 tx = ui.text({margin:"0px 5px"}),
-                cl = ui.fillCombo({width:20,label:" ",height:18}),
+                cl = ui.fillCombo({width:26,label:" ",height:18}),
                 sz = ui.slider({margin:"5px 15px 0px",min:8,max:60}),
                 fn = ui.logoFontCombo({margin:"5px 0 5px 5px",width:182})
             ];
@@ -235,7 +283,7 @@ ui.logoDialog = ui.dialog.extend({
         
         me.el("symbol").find("> g").each(function(N){
             var group = this;
-            var cp = ui.fillCombo({label:" ",width:20});
+            var cp = ui.fillCombo({label:" ",width:26});
             cp.setValue(me.colors['symbol_'+N] || $(group).find("path").last().attr("fill"));
             me.colorsPanel.push(cp);
             cp.change(function(){
@@ -284,17 +332,26 @@ ui.logoDialog = ui.dialog.extend({
         for (var key in this.colors)
             this.canvas.find("."+key).find("path").andSelf().attr("fill",teacss.functions.color(this.colors[key]));
         
+        var dragging = false;
+        var initial = false;
+        
         this.el("symbol,.heading,.slogan")
-        .mousedown(function(){
+        .mousedown(function(e){
             var m = this.transform.baseVal.getItem(0).matrix;
-            $(this).css({left:m.e,top:m.f});
+            initial = {left:m.e,top:m.f,e:e};
+            dragging = this;
         })
-        .draggable({
-            cursor: "move",
-            drag: function (e,ui) {
-                this.transform.baseVal.getItem(0).setTranslate(ui.position.left,ui.position.top);
+        .mouseup(function(e){
+            dragging = false;
+        });
+        $(document).mousemove(function(e){
+            if (dragging) {
+                dragging.transform.baseVal.getItem(0).setTranslate(
+                    initial.left + e.pageX - initial.e.pageX,
+                    initial.top + e.pageY - initial.e.pageY
+                );
             }
-        })
+        });
     },
     
     getValue: function () {
