@@ -30,10 +30,10 @@
     @ var color = data.color;
     @ var color_2 = data.color_2 || color;
     @ var text = data.text;
-    @ if (!text) text = ((lightness(color) + lightness(color_2)) / 2 > 54) ? "#333" : "#fff";    
+    @ if (!text) text = ((lightness(color) + lightness(color_2)) / 2 > 74) ? "#333" : "#fff";    
     
     color: @text;
-    @ if ((lightness(text)) < 54) {
+    @ if ((lightness(text)) < 74) {
         text-shadow: 0 1px 1px rgba(255,255,255,.75);
     @ } else {
         text-shadow: 0 -1px 0 rgba(0,0,0,.25);
@@ -74,7 +74,7 @@
     
     @{
         var extra = {
-            green     :{ color: '#d1e990'/*'#62c462'*/,             color_2:darken('#d1e990',30)/*'#51a351'*/ },
+            green     :{ color: '#d1e990',             color_2:darken('#d1e990',30) },
             darkgreen :{ color: darken('#62c462',20),  color_2:darken('#51a351',10) },
             orange    :{ color: lighten('orange', 15), color_2:'orange' },
             blue      :{ color: '#5bc0de',             color_2:'#2f96b4' },
@@ -84,8 +84,12 @@
             lightgray :{ color: "#eee",                color_2:"#ccc" }        
         }
         for (key in extra) {
+            var sel = "."+key;
+            if (data && data.preset) {
+                if (data.preset==key) sel = ""; else continue;
+            }
             @{
-                &.@key {
+                &@sel {
                     .button.colors(extra[key]);
                     &:hover:not(.disabled) {
                         .button.colors({ color:extra[key].color_2 });
@@ -122,8 +126,12 @@
             lightgray: darken("#eee", 10)
         }
         for (key in extra) {
+            var sel = "."+key;
+            if (data && data.preset) {
+                if (data.preset==key) sel = ""; else continue;
+            }
             @{
-                &.@key {
+                &@sel {
                     .button.colors({color:extra[key]});
                     &:hover {
                         .button.colors({ color:darken(extra[key],20) });
@@ -174,8 +182,12 @@
             lightgray :{ color: "#eee",                color_2:"#ccc" }        
         }
         for (key in extra) {
+            var sel = "."+key;
+            if (data && data.preset) {
+                if (data.preset==key) sel = ""; else continue;
+            }
             @{
-                &.@key {
+                &@sel {
                     .button.colors(extra[key]);
                     &:hover {
                         .button.colors({ color:extra[key].color_2 });

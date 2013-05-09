@@ -9,5 +9,25 @@
             float:left;
             margin-right: 1em;
         }
+        
+        li {
+            border-top: 1px solid #222;
+            position: relative;
+            
+            &:before {
+                position: absolute;
+                content: "";
+                border-top: 1px solid #666161;
+                left: 0;
+                right: 0;
+            }
+            
+            a {
+                padding: 0.5em 0;
+            }
+        }
+        
+        
+        
     }
 }

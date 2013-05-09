@@ -1,5 +1,7 @@
 <?php
 
+if (!class_exists('Liquid')) require_once __DIR__."/lib/Liquid/Liquid.class.php";
+
 class TemplaterApi {
     
     function __construct($lock=true) {
@@ -36,6 +38,7 @@ class TemplaterApi {
     }
     
     function getComponents() {
+        $components = array();
         include "components.php";
         return $components;
     }
@@ -54,13 +57,21 @@ class TemplaterApi {
                 if (isset($components[$type]['html'])) {
                     $upd['html'] = $components[$type]['html'];
                 } else {
-                    $upd = $components[$type]['update']($val,@$_REQUEST['dataSource'],true);
+                    $upd = $components[$type]['update']($val,@$_REQUEST['dataSource'],$this,true);
                 }
             }
             $res[] = $upd;
         }
         $this->compress(json_encode($res));
     }
+    
+    function liquid($template,$dataSource) {
+        $data = array();
+        $liquid = new \LiquidTemplate();
+        $liquid->registerFilter("LiquidThemeFilters");
+        $tpl = $liquid->parse($template);
+        return $tpl->render($data);        
+    }    
     
     function upload() {
         $name = @$_REQUEST['name'];
@@ -156,6 +167,7 @@ class TemplaterApi {
         $settings = $this->getSettings(false);
         $tpl = $settings->templates->$name;
         
+        Component::$api = $this;
         Component::$dataSource = $dataSource;
         Component::$settings &= $settings;
 
@@ -164,6 +176,8 @@ class TemplaterApi {
         
         $hash = array();
         $inherit = false;
+        
+        $title = false;
         
         // if template has a parent then load parent template and create substitution has from current one
         if (@$root_data->value->parentTemplate) {
@@ -177,6 +191,7 @@ class TemplaterApi {
                     $root_data = $data;
                 }
             };
+            
             $findRoot($tpl,false);
             $inherit = @$root->parentTemplate ? true : false;
         }
@@ -220,6 +235,7 @@ class Component {
     static $settings;
     static $components = false;
     static $dataSource = false;
+    static $api = false;
     
     function __construct($val,$parent=false) {
         $this->value = $val ?: (object)array();
@@ -230,7 +246,7 @@ class Component {
     }
     
 	function objectToArray($d) {
-		if (is_object($d)) {
+		if (is_object($d) && !$d instanceof Closure) {
 			$d = get_object_vars($d);
 		}
 		if (is_array($d)) {
@@ -243,8 +259,7 @@ class Component {
     
     function render() {
         if (!self::$components) {
-            $api = new CandyTemplaterApi;    
-            self::$components = $api->getComponents();
+            self::$components = self::$api->getComponents();
         }
         
         $type = $this->value->type;
@@ -258,7 +273,7 @@ class Component {
                     $upd['html'] = self::$components[$type]['html'];
                 } else {
                     $f = self::$components[$type]['update'];
-                    $upd = $f($this->objectToArray($this->value),self::$dataSource,false);
+                    $upd = $f($this->objectToArray($this->value),self::$dataSource,self::$api,false);
                 }
                 $html = $upd['html'];
             }
@@ -270,6 +285,16 @@ class Component {
             function ($matches) use (&$me) {
                 if (!preg_match('|id\s*=\s*|',$matches[0])) {
                     return "<".$matches[1].' id="'.$me->value->id.'"'.$matches[2].">";
+                }
+                return $matches[0];
+            },
+            $html
+        );
+        if ($me->value->class) $html = preg_replace_callback(
+            '|^\s*<(\w+)(.*?)>|',
+            function ($matches) use (&$me) {
+                if (!preg_match('|class\s*=\s*?|',$matches[0])) {
+                    return "<".$matches[1].' class="'.$me->value->class.'"'.$matches[2].">";
                 }
                 return $matches[0];
             },

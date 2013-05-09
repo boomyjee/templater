@@ -2,15 +2,16 @@
 .typography.default(data) {
     @{
         data = data || {};
+        
         var textFont = data.textFont || '"Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif';
         var headingsFont = data.headingsFont || '"Helvetica Neue", "Helvetica", Arial, Verdana, sans-serif';
         
         var fontSize = parseFloat(data.fontSize) || 12;
         var lineHeight = parseFloat(data.lineHeight) || 1.5;
         
-        var textColor = color(data.textColor) || '#333';
-        var linkColor = color(data.linkColor) || '#337';
-        var linkColorHover = color(data.linkColorHover) || darken(linkColor,10);
+        var textColor = data.textColor ? color(data.textColor) : '#333';
+        var linkColor = data.linkColor ? color(data.linkColor) : '#337';
+        var linkColorHover = data.linkColorHover ? color(data.linkColorHover) : darken(linkColor,10);
     }
     
     body {

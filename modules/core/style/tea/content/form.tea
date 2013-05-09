@@ -64,6 +64,18 @@
         .tab_focus();
     }    
     
+    span.error {
+        color: @darken('red',10);
+        position: relative;
+        display: block;
+        top: -0.8em;
+        font-style: italic;
+    }
+    
+    input.error {
+        background: @lighten('red',40);
+    }
+    
     .control-group {
         margin-bottom: 0.8em;
         label {
@@ -87,6 +99,24 @@
         }
         > input, > textarea, > select, > .control-group {
             margin-left: 210px;
+        }
+    }
+    
+    input + fieldset {
+        margin-top: 1em;
+    }
+    
+    fieldset {
+        .legend, legend {
+            display: block;
+            width: 100%;
+            padding: 0;
+            margin-bottom: 0.4em;
+            font-size: 1.3em;
+            line-height: 1.3em;
+            color: #333333;
+            border: 0;
+            border-bottom: 1px solid #e5e5e5;        
         }
     }
 }
