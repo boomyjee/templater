@@ -1,423 +1,3 @@
-// Component is representation of template chunk with it's data and DOM
-var Component = window.Component = $.Class.extend({
-    baseId: (new Date()).getTime()
-},{
-    // constructor, children added later
-    init: function (val) {
-        this.value = val || {};
-        this.styleControls = [];
-        this.zIndex = 100;
-        
-        // unique id
-        if (!this.value.id) 
-            this.value.id = "id" + Component.baseId++;
-            
-        this.children = [];
-        // save link to component type
-        if (val && val.type) {
-            this.type = Component.app.settings.components[val.type];
-        } else {
-            this.type = {};
-        }
-    },
-    
-    // load single component data (used when user DnDs new component)
-    load: function (parent,index) {
-        this.parent = parent;
-        this.index = index;
-        // position before load, so we can get valid data from component
-        this.position();
-        
-        var me = this;
-        Component.app.request("component",{
-            values:[this.value],
-            dataSource: Component.previewFrame.value.data
-        },function(data){
-            me.html = data[0].html;
-            me.form = data[0].form;
-            me.afterLoad();
-        });
-    },
-    
-    // common code for all droppables (drop-handle and sort-handle)
-    initDroppable: function (el,drop) {
-        el = $(el);
-        el.each(function(){
-            this.ondragenter = function () {
-                $(this).addClass("drag-over");
-            }
-            this.ondragover = function (e) {
-                e.preventDefault();
-            }
-            this.ondragleave = function () {
-                $(this).removeClass("drag-over");
-            }
-            this.ondrop = function (e) {
-                e.preventDefault();
-                $(this).removeClass("drag-over");
-                if (e.dataTransfer.getData("text/plain")!="componentDraggable") return;
-                if (drop) drop.call(this,e);
-                Component.previewFrame.trigger("change");
-                Component.previewFrame.root.setHandleIndex();
-            }                        
-        });
-        return el;
-    },
-    
-    // run on component change or directly after data is loaded to create DOM and controls
-    // old_element - true if no reposition is done or $ selector if element needs to be substituted
-    afterLoad: function (old_element) {
-        
-        // create DOM for component
-        if (!this.element) {
-            this.scripts = [];
-            var fragment = $.buildFragment([this.html],[document],this.scripts);
-            this.element = $(this.html).eq(0);
-            
-            if (!this.element.attr("id"))
-                this.element.attr("id",this.value.id);
-            
-            this.element.find("br.component-area").remove();
-            this.element.data("component",this);
-            this.menu = $("<div>").append("<div class='combo-group'>"+this.type.name+"</div>");
-        }
-        
-        // and get container for child components
-        if (!this.area && this.type && this.type.area) {
-            // if type param is just true, then container is the element itself
-            if (this.type.area===true) 
-                this.area = this.element;
-            // else it's an a selector
-            else
-                this.area = this.element.find(this.type.area).eq(0);
-        }
-        
-        var me = this;
-        
-        // extra div for selection and other handles
-        Component.previewFrame.handleContainer.append(
-            me.componentHandle = $("<div class='component-handle'>").data("component",this)
-            .click(function(e){
-                Component.previewFrame.select(me);
-                Component.previewFrame.showContextMenu(me,e);
-            })
-            .append(
-                this.controlPanel = $("<div class='controls-handle visible'>")
-            ),
-            me.areaHandle = $("<div class='area-handle'>")
-        );
-    
-        // we can drop components on this area
-        if (this.area && !this.inherited) this.areaHandle.data("component",this).append(
-            this.initDroppable("<div class='drop-handle'>",function(){
-                var draggable = ui.previewFrame.draggable;
-                if (draggable.create) {
-                    var cmp = new Component({type:draggable.type.id});
-                    cmp.load(me);
-                } else {
-                    draggable.position(me,undefined);
-                }
-            })
-        );
-        
-        // for inherited components we can redefine them in current template
-        if (this.area && this.inherited) this.menu.append(
-            $("<div class='combo-item'>").html("Redefine").click(function(){ 
-                Component.app.previewFrame.contextMenu.hide();
-                me.redefine(); 
-            })
-        );
-        // or cancel this redefine to get original children
-        if (this.area && !this.inherited && this.parent && this.parent.inherited) this.menu.append(
-            $("<div class='combo-item'>").html("Undefine").click(function(){ 
-                Component.app.previewFrame.contextMenu.hide();
-                me.undefine(); 
-            })
-        );
-        
-        // drag to drop somewhere later
-        if (this.parent && !this.inherited && !this.parent.inherited)
-            me.componentHandle.each(function(){
-                this.draggable = true;
-                this.ondragstart = function (e) { return Component.app.previewFrame.dragStart(e,me); }
-                this.ondragend = function (e) { Component.app.previewFrame.dragEnd(); }
-                $(this).addClass("drag-handle");
-            })
-        
-        // we can edit component parameters in separate dialog
-        if (this.form && !this.inherited && this.parent && !this.parent.inherited) this.menu.append(
-            $("<div class='combo-item'>").html("Edit").click(function(){ 
-                Component.app.previewFrame.contextMenu.hide();
-                me.edit(); 
-            })
-        );
-        
-        if (this.parent) {
-            if (!this.inherited && !this.parent.inherited) me.componentHandle.append(
-                // drop in to append before or after
-                this.initDroppable("<div class='sort-handle'>",function(e){
-                    var draggable = ui.previewFrame.draggable;
-                    var before = e.clientY - $(this).offset().top < $(this).height()*0.5;
-                    var index = before ? {before:me} : {after:me};
-                    if (draggable.create) {
-                        var cmp = new Component({type:draggable.type.id});
-                        cmp.load(me.parent,index);
-                        Component.previewFrame.componentsHash[cmp.value.id] = cmp;
-                    } else {
-                        draggable.position(me.parent,index);
-                    }
-                })
-            )
-            
-            // remove component    
-            if (!this.inherited && !this.parent.inherited) this.menu.append(
-                $("<div class='combo-item'>").html("Remove").click(function(){
-                    Component.app.previewFrame.contextMenu.hide();
-                    me.remove();
-                })
-            )
-
-            if (this.element.css("position")!="absolute") this.element.css("position","relative");
-            this.element.css({minHeight:20});
-
-            // replace DOM if needed
-            if (old_element) {
-                if (old_element.replaceWith) {
-                    old_element.replaceWith(this.element);
-                    $.each(this.children,function(){
-                        me.area.append(this.element);
-                    });
-                }
-            } else
-                this.position();
-            
-            this.setHandleIndex();
-        }
-    },
-    
-    setHandleIndex: function () {
-        if (this.parent)
-            this.zIndex = this.parent.zIndex + this.parent.children.indexOf(this) + 3;
-        else
-            this.zIndex = 100;
-        
-        var me = this;
-        if (me.element) setTimeout(function(){
-            var off = me.element.offset();
-            if (!off) off = {};
-            me.componentHandle.css({
-                zIndex:me.zIndex,
-                left: off.left,
-                top: off.top,
-                width: me.element.outerWidth(),
-                height: me.element.outerHeight()
-            });
-            
-            if (me.areaHandle && me.area) {
-                var off = me.area.offset();
-                me.areaHandle.css({
-                    zIndex: me.zIndex + 1,
-                    left: off.left,
-                    top: off.top,
-                    width: Math.max(0,me.area.outerWidth()-2),
-                    height: Math.max(0,me.area.outerHeight()-2)
-                })
-            }
-        },1);
-        
-        $.each(this.children,function(){
-            this.setHandleIndex();
-        });
-    },
-    
-    // reposition component in tree, if parent is set then it will be used
-    position: function (parent,index) {
-        var i = this.parent.children.indexOf(this);
-        if (i>=0) this.parent.children.splice(i,1);
-        
-        if (parent) {
-            this.parent = parent;
-            this.index = index;
-        }
-        
-        if (this.index===undefined) {
-            this.parent.children.push(this);
-            this.parent.area.append(this.element);
-            
-            if (this.scripts && this.scripts.length) {
-                var me = this;
-                setTimeout(function(){
-                    var doc = Component.previewFrame.frame[0].contentWindow.document;
-                    var head = doc.head || doc.getElementsByTagName('head')[0];
-                    var loader = teacss.LazyLoad_f(doc);
-                    
-                    var q = teacss.queue(1);
-                    for (var s=0;s<me.scripts.length;s++) {
-                        var script = me.scripts[s];
-                        if (script.src) {
-                            q.defer(function(what,done){
-                                loader.js([what],function(){
-                                    done();
-                                });
-                            },script.src);
-                        } else {
-                            q.defer(function (code,done){
-                                el = doc.createElement("script");
-                                el.innerHTML = code;
-                                head.appendChild(el);
-                                done();
-                            },script.innerHTML);                            
-                        }
-                    }
-                    q.await(function(){});
-                    me.scripts = [];
-                },1);
-            }
-        } else {
-            var i = this.parent.children.indexOf(this.index.before || this.index.after);
-            if (this.index.before) {
-                this.parent.children.splice(i,0,this);
-                this.index.before.element.before(this.element);
-            } else {
-                if (i==this.parent.children.length-1)
-                    this.parent.children.push(this);
-                else
-                    this.parent.children.splice(i+1,0,this);
-                this.index.after.element.after(this.element);
-            }
-        }
-    },
-    
-    // redefine component in child template
-    redefine: function () {
-        // just empty children and mark inherited as false
-        this.inherited = false;
-        this.children = [];
-        this.area.empty();
-        this.afterLoad(true);
-        this.element.find(".redefine-handle").remove();
-        Component.previewFrame.trigger("change");
-    },
-    
-    // cancel component redefine
-    undefine: function () {
-        // completely reload template because some data from parent template may be missing
-        this.remove();
-        Component.previewFrame.trigger("change");
-        var pf = Component.previewFrame;
-        pf.setValue(pf.getValue());
-    },
-    
-    // remove component
-    remove: function() {
-        // just remove from parent.children and remove DOM
-        var i = this.parent.children.indexOf(this);
-        if (i>=0) this.parent.children.splice(i,1);
-        this.element.detach();
-        Component.previewFrame.trigger("change");
-        this.componentHandle.remove();
-        if (this.areaHandle) this.areaHandle.remove();
-    },
-    
-    // show dialog for component edit
-    edit: function () {
-        var me = this;
-        if (!me.dialog) {
-            
-            var width = 600;
-            if (me.form && me.form.control && me.form.width)
-                width = me.form.width;
-            
-            me.dialog = teacss.ui.dialog({
-                modal: true,
-                resizable: false,
-                width: width,
-                title: me.type.name,
-                dialogClass: "component-form",
-                buttons: {
-                    "Save" : function () {
-                        if (me.dialog.control) {
-                            var value = me.dialog.control.getValue();
-                        } else {
-                            var value = $.extend({id:me.value.id,type:me.value.type},me.dialog.element.find(":input").serializeObject());
-                        }
-                        
-                        $(this).dialog("close");
-                        
-                        // send request to server to get new form and html
-                        Component.app.request("component",{
-                            values:[value],
-                            dataSource: Component.previewFrame.value.data
-                        },function(data){
-                            me.html = data[0].html;
-                            me.form = data[0].form;
-                            me.value = data[0].value;
-                            var old_element = me.element;
-                            
-                            delete me.element;
-                            delete me.area;
-                            
-                            // if all is OK, recreate element and replace old DOM with a new one
-                            me.afterLoad(old_element);
-                            Component.previewFrame.trigger("change");
-                        });                        
-                    },
-                    "Cancel": function () {
-                        $(this).dialog("close");
-                    }
-                }
-            });
-            
-            if (me.form && me.form.control) {
-                me.dialog.control = eval(me.form.control)();
-                me.dialog.push(me.dialog.control);
-            }
-        }
-        
-        if (me.dialog.control) {
-            me.dialog.control.form = me.form;
-            me.dialog.control.setValue(me.value);
-        } else {
-            me.dialog.element.html("");
-            me.dialog.push(me.form);
-            me.dialog.element.each(function(){
-                var dlg = this;
-                $(dlg).find("[data-value]").each(function(){
-                    var value = $.parseJSON($(this).attr("data-value"));
-                    var name = $(this).attr("data-name");
-                    var tpl = $(this);
-                    var dummy = $("<span>");
-                    tpl.removeAttr("data-value");
-                    tpl.replaceWith(dummy);
-
-                    var cnt = 0;
-                    function addItem(value) {
-                        var item = tpl.clone();
-                        dummy.before(item);
-                        item.find("[name]").each(function(){
-                            var s = $(this).attr("name");
-                            $(this).attr("name", name+"[item_"+cnt+"]["+s+"]");
-                            if (value && value[s]) $(this).val(value[s]);
-                        });
-                        item.find(".remove").click(function(e){
-                            e.preventDefault();
-                            item.remove();
-                        });
-                        cnt++;
-                    }
-                    
-                    for (var i=0;i<value.length;i++) addItem(value[i]);
-                    $(dlg).find(".add[data-name='"+name+"']").click(function(e){
-                        e.preventDefault();
-                        addItem();
-                    });
-                });
-            });
-        }
-        me.dialog.open();
-    }
-});
-
 var this_url = require.dir;
 
 // iframe to display template preview
@@ -481,10 +61,13 @@ ui.previewFrame = ui.panel.extend({
         for (var i=0;i<me.options.styles.length;i++) {
             makefile += '@import "'+me.options.styles[i]+'";\n';
         }
+        
         teacss.files["templater_makefile.tea"] = makefile;
         teacss.process("templater_makefile.tea", function() {
             teacss.tea.Style.insert(frame[0].contentWindow.document);
             teacss.tea.Script.insert(frame[0].contentWindow.document);
+            
+            me.updateHandles();
             
             if (teacss.image.getDeferred()) {
                 teacss.image.update = function () { me.reloadTea(callback); }
@@ -508,7 +91,7 @@ ui.previewFrame = ui.panel.extend({
     // val - single template data
     setValue: function (val) {
         this._super(val);
-
+        
         var me = this;
         me.componentsHash = {};
         var win = this.frame[0].contentWindow;
@@ -524,6 +107,11 @@ ui.previewFrame = ui.panel.extend({
         $f("body").append(
             me.handleContainer = $("<div>").addClass("handle-container")
         );
+        me.handleContainer[0].ondragover = function(e) { me.dragOver(e); }
+        me.handleContainer[0].ondrop = function (e) { me.drop(e); }
+        me.handleContainer[0].ondragenter = function () {}
+        me.handleContainer[0].ondragleave = function () {};
+        me.dropHandle = false;
         
         this.toolbar.hide();
         if (!val || !val.template) return;
@@ -536,18 +124,36 @@ ui.previewFrame = ui.panel.extend({
         
         if (!me.sendEvents) {
             me.sendEvents = true;
-            $f("body").mousedown(function(e){
+            $f(doc).mousedown(function(e){
                 me.frame.parent().trigger('mousedown');
             });
-            $f("body").mousemove(function(e){
+            $f(doc).mousemove(function(e){
                 me.frame.parent().trigger(e);
             });
-            $f("body").click(function(e){e.preventDefault();});
+            $f("body").click(function(e){
+                e.preventDefault();
+            });
+            
+            function document_click(e) {
+                if (me.contextMenu && me.contextMenu.panelClick) {
+                    setTimeout(function() {
+                        me.contextMenu.panelClick = false; 
+                    },1);
+                } else {
+                    me.select(false);
+                    me.showContextMenu(false);
+                }
+            }
+            
+            $f(doc).click(document_click);
+            $(document).click(document_click);
+            
             setInterval(function(e){
-                if (me.root) me.root.setHandleIndex();
+                me.updateHandles();
             },1000);
         }
         root.afterLoad();
+        root.componentHandle.detach();
         
         var hash = false, root_data = val.template, inherit = false;
         
@@ -623,10 +229,18 @@ ui.previewFrame = ui.panel.extend({
         }
     },
     
+    updateHandles: function () {
+        if (this.root) this.root.setHandleIndex();
+    },
+    
     select: function (cmp,e) {
         var me = this;
+        if (e) e.stopPropagation();
+        
         if (this.$f)
             this.$f(".component-handle").removeClass("selected");
+        
+        if (cmp==me.root) return;        
         
         for (var key in me.controlGroups) {
             var g = me.controlGroups[key];
@@ -635,7 +249,7 @@ ui.previewFrame = ui.panel.extend({
         
         if (cmp) {
             cmp.componentHandle.addClass("selected");
-            $.each(cmp.overlayControls,function(){
+            $.each(cmp.overlayControls || [],function(){
                 cmp.componentHandle.append(this.element);
             });
         }
@@ -643,40 +257,26 @@ ui.previewFrame = ui.panel.extend({
     
     showContextMenu: function (cmp,e) {
         var me = this;
+        if (cmp==me.root) cmp = false;
+        
+        var app = me.options.app;
         if (!me.contextMenu) {
-            me.contextMenu = $("<div>").css({width:150,zIndex:500,position:"absolute"}).addClass("button-select-panel");
-            me.contextMenu.appendTo(teacss.ui.layer);
-            
-            var f_off = me.frame.offset();
-            me.$f("body").mousemove(function(e){
-                if (me.contextMenu.is(":visible")) {
-                    var off = me.contextMenu.offset();
-                    var delta = 50;
-                    e.pageY -= $(me.frame[0].contentWindow).scrollTop();
-                    if (
-                        e.pageX + f_off.left - off.left < -delta ||
-                        e.pageY + f_off.top  - off.top  < -delta ||
-                        e.pageX + f_off.left - off.left - me.contextMenu.width() > delta ||
-                        e.pageY + f_off.top  - off.top  - me.contextMenu.height() > delta
-                    ) {
-                        me.contextMenu.fadeOut();
-                    }
-                }
+            me.contextMenu = $("<div>").addClass("button-select-panel");
+            me.contextMenu.appendTo(app.componentPanel.element);
+            me.contextMenu.click(function(e){
+                e.stopPropagation();
             });
+            me.contextMenu.data("combo",me.contextMenu);
+            me.contextMenu.getParentCombo = function () { return false; }
         }
         
         if (cmp) {
-            me.contextMenu.stop(true,true).fadeIn(0);
-            me.contextMenu.offset({
-                left:e.pageX + 20,
-                top:e.pageY + 20 + me.frame.offset().top - $(me.frame[0].contentWindow).scrollTop()
-            });
-            
+            app.sidebarTabs.select(app.componentPanel);
             me.contextMenu.children().detach();
             me.contextMenu.append(cmp.menu);
             
             var list = cmp.controls;
-            if (cmp.controls.length) {
+            if (cmp.controls && cmp.controls.length) {
                 me.contextMenu.append($("<div class='combo-group'>").html("Styles"));
                 $.each(cmp.controls,function(){
                     me.contextMenu.append(this.element);
@@ -684,7 +284,7 @@ ui.previewFrame = ui.panel.extend({
                 });            
             }
         } else {
-            me.contextMenu.fadeOut(0);
+            app.sidebarTabs.hide(app.componentPanel);
         }
     },
     
@@ -778,8 +378,8 @@ ui.previewFrame = ui.panel.extend({
     dragStart: function (event,what) {
         var me = this;
         if (!me.$f) return;
+        me.dragging = true;
         me.initDragScroll();
-        me.showContextMenu(false);
         me.Class.draggable = me.draggable = what;
         
         var canvas = document.createElement("canvas");
@@ -792,8 +392,6 @@ ui.previewFrame = ui.panel.extend({
         event.dataTransfer.setDragImage(canvas,0,0);
         event.dataTransfer.setData('text/plain',"componentDraggable");
         event.dataTransfer.effectAllowed = 'link';
-        
-        console.debug(what);
         
         me.$f(".controls-handle").removeClass("visible");
         me.$f(".sort-handle").each(function(){
@@ -819,12 +417,144 @@ ui.previewFrame = ui.panel.extend({
         });
     },
     
+    dragOver: function (e) {
+        if (!this.dragging) return;
+        e.preventDefault();
+        
+        function sqr(x) { return x * x }
+        function dist2(v, w) { return sqr(v.x - w.x) + sqr(v.y - w.y) }
+        function distToSegmentSquared(p, v, w) {
+          var l2 = dist2(v, w);
+          if (l2 == 0) return dist2(p, v);
+          var t = ((p.x - v.x) * (w.x - v.x) + (p.y - v.y) * (w.y - v.y)) / l2;
+          if (t < 0) return dist2(p, v);
+          if (t > 1) return dist2(p, w);
+          return dist2(p, { x: v.x + t * (w.x - v.x),
+                            y: v.y + t * (w.y - v.y) });
+        }
+        
+        var min = false;
+        function check_min(test) {
+            var dist = distToSegmentSquared({x:e.pageX,y:e.pageY},{x:test.x0,y:test.y0},{x:test.x1,y:test.y1});
+            if (!min || dist < min.dist) {
+                test.dist = dist;
+                min = test;
+            }
+        }
+        
+        var me = this;
+        $.each(me.componentsHash,function(){
+            if (me.draggable==this) return;
+            
+            var cmp = this;
+            var el = this.componentHandle;
+            var off = el.offset();
+            var x0 = off.left;
+            var y0 = off.top;
+            var x1 = off.left + el.width();
+            var y1 = off.top + el.height();
+            
+            check_min({x0:x0,y0:y0,x1:x1,y1:y0,cmp:cmp,type:"top"});
+            check_min({x0:x0,y0:y0,x1:x0,y1:y1,cmp:cmp,type:"left"});
+            check_min({x0:x1,y0:y0,x1:x1,y1:y1,cmp:cmp,type:"right"});
+            check_min({x0:x0,y0:y1,x1:x1,y1:y1,cmp:cmp,type:"bottom"});
+        });
+        
+        var list = [me.root];
+        $.each(me.componentsHash,function(){list.push(this)});
+        $.each(list,function(){
+            var cmp = this;
+            if (this.areaHandle && this.children.length==0) {
+                var el = this.areaHandle.children().eq(0);
+                var off = el.offset();
+                if (!off) return;
+                
+                var w = el.outerWidth();
+                var h = el.outerHeight();
+                var x0 = off.left;
+                var y0 = off.top;
+                var x1 = off.left + w;
+                var y1 = off.top + h;
+                
+                if (e.pageX > x0 && e.pageY > y0 && e.pageX < x1 && e.pageY < y1) {
+                    var dist = w * h;
+                    if (!min || min.type!="inside" || dist < min.dist) {
+                        min = {type:"inside",cmp:cmp,dist:dist,x0:x0,y0:y0,x1:x1,y1:y1};
+                    }
+                }
+            }
+        });
+
+        
+        if (min) {
+            if (!me.dropHandle) {
+                me.dropHandle = $("<div>")
+                    .addClass('drop-marker')
+                    .appendTo(me.handleContainer);
+            }
+            me.dropHandle.stop().show().css({opacity:1,left:min.x0,top:min.y0,width:min.x1-min.x0,height:min.y1-min.y0});
+            me.dropHandle.min = min;
+        }
+    },
+    
+    drop: function (e) {
+        var me = this;
+        me.dragging = false;
+        e.preventDefault();
+        if (e.dataTransfer.getData("text/plain")!="componentDraggable") return;
+        if (!me.dropHandle || !me.dropHandle.min) return;
+        
+        var min = me.dropHandle.min;
+        var cmp = min.cmp;
+        if (me.draggable==cmp) return;
+        
+        var parent = cmp.parent, index;
+        if (min.type=="inside") {
+            parent = cmp;
+        }
+        if (min.type=="left" || min.type=="top") {
+            index = {before:cmp};
+        }
+        if (min.type=="right") {
+            index = {after:cmp};
+        }
+        if (min.type=="bottom") {
+            index = {after:cmp};
+            var i = parent.children.indexOf(cmp) + 1;
+            for (;i<parent.children.length;i++) {
+                var ch = parent.children[i];
+                if (ch==me.draggable) continue;
+                var el = ch.componentHandle;
+                if (el.offset().top + el.height() > min.y0) break;
+                index = {after:ch};
+            }
+        }
+        
+        var draggable = me.draggable;
+        if (draggable.create) {
+            var cmp_new = new Component({type:draggable.type.id});
+            cmp_new.load(parent,index);
+            me.componentsHash[cmp_new.value.id] = cmp_new;
+        } else {
+            cmp_new = draggable;
+            draggable.position(parent,index);
+        }
+        
+        var el = cmp_new.element;
+        var off = el.offset();
+        me.dropHandle.stop().animate({left:off.left,top:off.top,width:el.outerWidth(),height:el.outerHeight()},600,function(){
+            me.trigger("change");
+        });
+        me.root.setHandleIndex();
+    },
+    
     // hide drag ui
     dragEnd: function () {
         var me = this;
+        if (me.dropHandle) me.dropHandle.animate({opacity:0},600,function(){ $(this).hide() });
+        me.dragging = false;
         me.$f(".controls-handle").addClass("visible");
         me.$f(".sort-handle").removeClass("visible");
-        // me.$f(".drop-handle").removeClass("visible");
         me.$f(".area-handle").removeClass("visible");
         if (me.dragScroll) me.dragScroll.both.hide();
     }

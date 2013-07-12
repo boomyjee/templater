@@ -16,7 +16,7 @@ ui.sortPanel = ui.panel.extend({
             by_cat[type.category].push(type);
         }   
         
-        this.element.css({padding:"10px 5px","-moz-box-sizing":"border-box","-webkit-box-sizing":"border-box","overflow-y":"scroll"});
+        this.element.css({padding:"0px 5px","-moz-box-sizing":"border-box","-webkit-box-sizing":"border-box","overflow-y":"scroll"});
         
         for (var cat in by_cat) {
             var f = $("<fieldset>");

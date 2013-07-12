@@ -9,9 +9,7 @@
 }
 
 .top_menu.base(data) {
-
     @ data = data || {};
-
     > ul {
         margin: 0;
         padding: 0;
@@ -31,7 +29,6 @@
 .top_menu.default(data) {
 
     .top_menu.base(data);
-    
     @{ 
         if (data.inverse) {
             var bg = "#1b1b1b";

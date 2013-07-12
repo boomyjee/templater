@@ -47,10 +47,11 @@ class TemplaterApi {
         return array();
     }
     
-    function component() {
+    function component($values = false,$ret = false) {
+        if (!$values) $values = $_REQUEST['values'];
         $components = $this->getComponents();
         $res = array();
-        foreach ($_REQUEST['values'] as $val) {
+        foreach ($values as $val) {
             $upd = array('html'=>'');
             $type = $val['type'];
             if (@$components[$type]) {
@@ -62,13 +63,15 @@ class TemplaterApi {
             }
             $res[] = $upd;
         }
+        if ($ret) return $res;
         $this->compress(json_encode($res));
     }
     
     function liquid($template,$dataSource) {
         $data = array();
         $liquid = new \LiquidTemplate();
-        $liquid->registerFilter("LiquidThemeFilters");
+        if (class_exists("LiquidThemeFilters"))
+            $liquid->registerFilter("LiquidThemeFilters");
         $tpl = $liquid->parse($template);
         return $tpl->render($data);        
     }    
@@ -117,7 +120,7 @@ class TemplaterApi {
     function getSettings($assoc=true) {
         $key = 'settings'.($assoc ? '_array':'');
         if (!$this->$key) {
-            $this->$key = file_get_contents($this->settingsPath);
+            $this->$key = @file_get_contents($this->settingsPath);
             if ($this->$key) {
                 $this->$key = json_decode($this->$key,$assoc);
             } else {
@@ -137,6 +140,9 @@ class TemplaterApi {
             unset($one['update']);
             $res['components'][$key] = $one;
             $res['components'][$key]['id'] = $key;
+            
+            $comps = $this->component(array(array('type'=>$key)),true);
+            $res['components'][$key]['new'] = $comps[0];
         }
         
         $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(realpath(__DIR__."/../modules"),

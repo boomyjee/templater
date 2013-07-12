@@ -5,6 +5,7 @@ require("./style.css");
 
 require("./controls/tabList.js");
 require("./controls/sortPanel.js");
+require("./controls/component.js");
 require("./controls/previewFrame.js");
 require("./controls/buttonTabs.js");
 require("./controls/serializeObject.js");
@@ -60,7 +61,7 @@ exports = ui.Control.extend({
     
     request: function(action,data,callback) {
         var me = this;
-        me.pending_request = true;
+        me.pending_request = action;
         $.ajax({
             url: this.options.ajax_url,
             type: "POST",
@@ -100,10 +101,8 @@ exports = ui.Control.extend({
             var page = pages.list[pages.selected];
             var layout = this.getValue().template;
             me.settings.templates[page.template] = layout;
+            me.updateUI();      
             me.trigger("change");
-            me.ready(function(){
-                me.updateUI();      
-            });
         });
         
         var previewTabs = ui.tabList({app:this});
@@ -117,7 +116,7 @@ exports = ui.Control.extend({
         });
         
         var sidebar = ui.panel();
-        sidebar.element.css({position:'absolute',left:15,width:0,top:72,bottom:0,zIndex:999});
+        sidebar.element.css({position:'absolute',left:0,width:0,top:57,bottom:0,zIndex:999});
         
         var toolbar = ui.panel();
         toolbar.element.addClass("editorPanel-toolbar");
@@ -150,39 +149,29 @@ exports = ui.Control.extend({
         
         me.settings.layout = me.settings.layout || [];
         me.previewFrame.frame.on("load",function() {
-            var previewCheck = ui.check({
-                label: "Preview",
-                width: 100, margin: 0,
-                change: function () {
-                    previewFrame.layoutMode(!this.value);
-                    var action = this.value ? "hide" : "show";
-                    
-                    sidebarTabs.element[action]();
-                    $.each(sidebarTabs.panels,function(){
-                        if (action=="hide")
-                            this.element.parent().addClass("dialog-hide");
-                        else
-                            this.element.parent().removeClass("dialog-hide");
-                    });
-                }
-            });
-            sidebar.push(previewCheck);
-            
-            
-            var sidebarTabs = ui.buttonTabs({margin:"5px 0 0 0"});
+            var sidebarTabs = me.sidebarTabs = ui.buttonTabs({margin:"0"});
             sidebarTabs.push(
                 ui.sortPanel({
-                    label:"Add",icons: { primary: "ui-icon-plus" },
-                    width: 350, height: 600, app: me
+                    label:"New component",icons: { primary: "ui-icon-large ui-icon-add" }, app: me
                 })
             );
             sidebarTabs.push(
                 me.stylePanel = ui.panel({
-                    label:"Style", icons: { primary: "ui-icon-lightbulb" },
-                    width: 350, height: 600
+                    label:"Colors and styles", icons: { primary: "ui-icon-large ui-icon-style" }
                 })
             );
+            sidebarTabs.push(
+                me.componentPanel = ui.panel({
+                    label:"Component settings", icons: { primary: "ui-icon-large ui-icon-config" }
+                })
+            );
+            sidebarTabs.hide(me.componentPanel);
+            
             sidebar.push(sidebarTabs);
+            sidebarTabs.element.css({
+                position: "absolute", top:0 ,bottom: 0, left: 0, height: ""
+            });
+            sidebarTabs.pin();
             me.updatePreview();
         });
         
@@ -213,13 +202,11 @@ exports = ui.Control.extend({
         var panelHash = {};
         
         var form = ui.form(function(){
-            
             var cmps = me.previewFrame.componentsHash;
             for (var id in cmps) {
                 cmps[id].controls = [];
                 cmps[id].overlayControls = [];
             }
-            
             $.each(me.ui,function(){
                 var panelsConfig = this(me);
                 $.each(panelsConfig,function(){
@@ -243,23 +230,20 @@ exports = ui.Control.extend({
                 me.trigger("change");
             },500);
         });
+        me.previewFrame.reloadTea();
         
         var stylePanel = me.stylePanel;
         stylePanel.element.empty();
         
         if (panelList.length) {
-            var sidebarAccordion = ui.tabPanel({width:"100.0%",margin:0,height:me.stylePanel.element.height() });
+            var sidebarAccordion = ui.tabPanel({width:"100.0%",margin:0,height:"100%" });
             stylePanel.push(sidebarAccordion);
             
             $.each(panelList,function(){
                 sidebarAccordion.push(this);
-                this.element.css({padding:"10px 5px",display:"block",width:""});
+                this.element.css({padding:"10px 5px",display:"block",
+                      width:"auto",height:"auto",position:"absolute",left:0,top:0,right:0,bottom:0});
             });
-            
-            setTimeout(function(){
-                //sidebarAccordion.element.find(".ui-accordion").accordion("resize");
-                //sidebarAccordion.inner.accordion("option",{animated:false});
-            },1);
         }        
     },
     

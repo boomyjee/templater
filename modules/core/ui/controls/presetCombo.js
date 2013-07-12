@@ -92,6 +92,7 @@ ui.presetCombo = ui.combo.extend({
 ui.presetSwitcherCombo = ui.presetCombo.extend({
     init: function (o) {
         var me = this;
+        if (o && o.inline && o.height) o.comboHeight = o.height;
         this._super($.extend({
             types: false,
             repository: false,
@@ -103,7 +104,7 @@ ui.presetSwitcherCombo = ui.presetCombo.extend({
                 var labelF = this.options.repository[type].switcherLabel;
                 return $("<div class='combo-item'>").append(
                     type,
-                    labelF ? ":&nbsp;"+labelF(item.value,this) : ""
+                    labelF ? ":&nbsp;"+labelF.call(this.options.repository[type],item.value,this) : ""
                 );
             },
             items: function () {
@@ -121,16 +122,22 @@ ui.presetSwitcherCombo = ui.presetCombo.extend({
                     me.trigger("change");
                     me.changeFromSwitcher = false;
                 });
+                
+                //this.panel.css({height:this.options.comboHeight});
+                
+                var panel = me.options.inline ? me.element : me.panel;
+                
+                panel.css({height:this.options.comboHeight});
                 this.switcher.element
                     .css({position:'absolute',left:0,top:0})
-                    .appendTo(this.panel);
-                this.panel.css({height:this.options.comboHeight});
+                    .appendTo(panel);
+                
                 this.itemPanel.css({marginLeft:me.options.switcherWidth});
                 
                 var savePresetButton = ui.button({label:"Create Preset",margin:0,click:function(){me.savePreset()}});
                 savePresetButton.element
                     .css({position:"absolute",left:1,width:me.options.switcherWidth-1,bottom:1,height:26})
-                    .appendTo(this.panel);
+                    .appendTo(panel);
                 
                 this.initPresets();
                 return this.getItems();

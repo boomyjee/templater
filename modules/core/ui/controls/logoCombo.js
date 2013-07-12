@@ -155,8 +155,9 @@ ui.logoDialog = ui.dialog.extend({
                         while (el.firstChild) el.removeChild(el.firstChild);
                         
                         var clone = $(this).clone();
-                        clone.find("> svg").each(function(){
+                        clone.find("> svg").each(function(N){
                             var g = document.createElementNS(svgns,'g');
+                            g.setAttribute("class","symbol_"+N);
                             el.appendChild(g);
                             $(this).children().each(function(){
                                 g.appendChild(this);

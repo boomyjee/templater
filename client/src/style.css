@@ -165,6 +165,10 @@ body.wp-admin.folded > .teacss-ui {
     height: 100%;
 }
 
+.component-form a.remove {
+    white-space: nowrap;
+}
+
 .component-form textarea {
     width: 98%;
     margin-bottom: 10px;
@@ -214,7 +218,9 @@ body.wp-admin.folded > .teacss-ui {
     padding: 5px 10px 5px 0;
 }
         
-.component-form table td input {
+.component-form table td input, 
+.component-form table td select 
+{
     margin: 0;
 }
 
@@ -237,4 +243,179 @@ body.wp-admin.folded > .teacss-ui {
 
 .combo-group .ui-icon {
     float: right;
+}
+
+.teacss-ui .ui-button-tabs {
+    position: relative;
+}
+
+.teacss-ui .ui-button-tabs.ui-non-active {
+    width: 0 !important;
+}
+
+.teacss-ui .ui-preview.ui-button-tabs {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.teacss-ui .ui-preview.ui-button-tabs > * {
+    display: none !important;
+}
+
+.teacss-ui .ui-preview.ui-button-tabs > .ui-button-tabs-buttons {
+    display: block !important;
+}
+
+.teacss-ui .ui-button-tabs.ui-state-default {
+    border: none;
+    background: #eee;
+}
+
+.teacss-ui .ui-button-tabs.ui-active {
+    /*box-shadow: 3px 5px 7px #777;*/
+}
+
+.teacss-ui .ui-button-tabs-title {
+    position: absolute;
+    font-size: 18px;
+    color: #777;
+    line-height: 20px;
+    left: 72px;
+    top: 5px; height: 20px;
+    right: 10px;
+    display: none;
+}
+
+.teacss-ui .ui-button-tabs.ui-active .ui-button-tabs-title {
+    display: block;
+}
+
+.teacss-ui .ui-button-tabs-close {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    cursor: pointer;
+    display: none;
+}
+
+.teacss-ui .ui-button-tabs.ui-active .ui-button-tabs-close {
+    display: block;
+}
+
+.teacss-ui .ui-button-tabs-pin {
+    position: absolute;
+    top: 7px;
+    right: 25px;
+    cursor: pointer;
+    display: none;
+}
+
+.teacss-ui .ui-button-tabs.ui-active .ui-button-tabs-pin {
+    display: block;
+}
+
+.teacss-ui .ui-button-tabs.ui-pinned .ui-button-tabs-pin {
+    background-color: orange;
+}
+
+.teacss-ui .ui-button-tabs-buttons {
+    position: absolute;
+    left: 5px;
+    width: 0px;
+    bottom: 0; top: 5px;
+}
+
+.teacss-ui .ui-button-tabs-content {
+    position: absolute;
+    left: 60px;
+    right: 0;
+    bottom: 0; top: 0px;
+    background: white;
+    border: 1px solid #d3d3d3;
+    display: none;
+}
+
+.teacss-ui .ui-button-tabs-content > div .button-select-panel {
+    cursor: default;
+}
+
+.teacss-ui .ui-button-tabs-content > div > .button-select-panel > .button-select-panel {
+    border: 1px solid #eee;
+}
+
+.teacss-ui .ui-button-tabs.ui-active .ui-button-tabs-content {
+    display: block;
+}
+
+.teacss-ui .ui-button-tabs-content .ui-tabs {
+    border: none;
+}
+
+.teacss-ui .ui-button-tabs-content > div > .button-select-panel {
+    position: absolute !important;
+    border: none;
+    top: 0; bottom: 0;
+    right: 0; left: 0;
+}
+
+.teacss-ui .ui-button-tabs-content .ui-tabs > .ui-tabs-panel {
+    overflow-y: auto;
+    top: 32px;
+}
+
+.teacss-ui .ui-icon-large {
+    background: #f4f4f4 9px 9px no-repeat;
+    border: 1px solid #D3D3D3;
+    padding: 0;
+    margin: 0;
+    width: 0px;
+    height: 50px;
+    color: #555;
+    line-height: 50px;
+    font-size: 14px;
+    display: block;
+    padding-left: 50px;
+    text-indent: -999em;
+    cursor: pointer;
+    position: relative;
+    z-index: 2;
+}
+
+.teacss-ui .ui-preview .ui-icon-large {
+    display: none !important;
+}
+
+.teacss-ui .ui-button-tabs.ui-active .ui-icon-large.ui-active {
+    border-right: white !important;
+    background-color: white;
+    padding-left: 55px;
+    cursor: auto;
+}
+
+.teacss-ui .ui-icon-large:hover {
+    /*text-indent: 0;
+    width: 50px;
+    border: 1px solid #999;*/
+}
+
+.teacss-ui .ui-icon-add {
+    background-image: url(images/add_32x32.png);
+}
+
+.teacss-ui .ui-icon-style {
+    background-image: url(images/style_32x32.png);
+}
+
+.teacss-ui .ui-icon-config {
+    background-image: url(images/config_32x32.png);
+}
+
+.teacss-ui .ui-icon-view {
+    background-image: url(images/view_32x32.png);
+}
+
+.teacss-ui .ui-preview .ui-icon-large.ui-icon-view {
+    background-color: orange;
+    display: block !important;
 }

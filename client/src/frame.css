@@ -12,6 +12,8 @@ body.edit-layout .handle-container {
 
 body.edit-layout {
     position: relative !important;
+    margin-top: -1px;
+    padding-top: 1px;
 }
 
 .handle-container {
@@ -20,6 +22,7 @@ body.edit-layout {
     top: 0; bottom: 0;
     display: none;
     overflow: hidden;
+    min-height: 100px;
 }
         
 .move-handle {
@@ -37,7 +40,13 @@ body.edit-layout {
         
 .component-handle {
     position: absolute;
-    /*border: 1px solid blue;*/
+    /*box-shadow: 0px 0px 5px #0088ff inset;
+    -moz-box-shadow: 0px 0px 5px #0088ff inset;
+    -webkit-box-shadow: 0px 0px 5px #0088ff inset;*/
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    min-height: 20px;
+    min-width: 20px;
 }
 
 .component-handle > * {
@@ -45,19 +54,16 @@ body.edit-layout {
 }
 
 .component-handle:hover, .component-handle.hover  {
-    /*border: 2px solid rgba(0,136,255,0.5);
-    background: rgba(0,136,255,0.2);*/
-    box-shadow: 0px 0px 5px #0088ff inset;
-    -moz-box-shadow: 0px 0px 5px #0088ff inset;
-    -webkit-box-shadow: 0px 0px 5px #0088ff inset;
+    box-shadow: 0px 0px 5px #ff8800 inset;
+    -moz-box-shadow: 0px 0px 5px #ff8800 inset;
+    -webkit-box-shadow: 0px 0px 5px #ff8800 inset;
 }
                 
 .component-handle.selected {
-    /*border: 2px solid #0088ff;
-    background: none;*/
-    /*box-shadow: 0px 0px 5px #0088ff inset;
-    -moz-box-shadow: 0px 0px 5px #0088ff inset;
-    -webkit-box-shadow: 0px 0px 5px #0088ff inset;*/
+    border: 2px solid #ff8800;
+    box-shadow: 0px 0px 5px #ff8800 inset;
+    -moz-box-shadow: 0px 0px 5px #ff8800 inset;
+    -webkit-box-shadow: 0px 0px 5px #ff8800 inset;
 }
 
 .component-handle.selected[draggable] {
@@ -71,7 +77,16 @@ body.edit-layout {
 .area-handle {
     position: absolute;
     display: none;
+    min-height: 40px;
     /*border: 1px solid red;*/
+}
+
+.drop-marker {
+    border: 2px dashed black;
+    position: absolute;
+    z-index:1000;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 }
 
 body.edit-layout .component-handle:hover > .controls-handle.visible {
@@ -87,9 +102,9 @@ body.edit-layout .component-handle:hover > .controls-handle.visible {
 
 .drop-handle {
     position: absolute;
-    left: 15px; top: 15px; right: 15px; bottom: 15px; z-index: 3;
-    border: 2px solid red;
-    min-height: 40px;
+    left: 2px; top: 2px; right: 2px; bottom: 2px; z-index: 3;
+    border: 2px solid rgba(255,0,0,0.3);
+    /*min-height: 40px;*/
     color: red;
     /*display: none;*/
 }
@@ -101,8 +116,8 @@ body.edit-layout .component-handle:hover > .controls-handle.visible {
 .sort-handle {
     position: absolute;
     left: 0; top: 0; right: 0; bottom: 0; z-index: 2;
-    border: 2px solid blue;
-    min-height: 40px;
+    border: 2px solid rgba(0,0,255,0.3);
+    /*min-height: 40px;*/
     color: blue;
     display: none;
 }

@@ -4,9 +4,9 @@ $components['post_title'] = array(
     'name' => 'Post Title',
     'description' => 'Post or page title',
     'category' => 'Content',
-    'update' => function ($val,$dataSource) use ($me) {
+    'update' => function ($val,$dataSource,$api) {
         return array(
-            'html' => '<div>'.$me->liquid('<h2 class="page-title">{{ post.title }}</h2>',$dataSource)."</div>"
+            'html' => '<div>'.$api->liquid('<h2 class="page-title">{{ post.title }}</h2>',$dataSource)."</div>"
         );
     }
 );
@@ -58,6 +58,7 @@ $components['blog_posts'] = array(
     'name' => 'Blog Posts',
     'description' => 'Latest posts',
     'category' => 'Content',
+    'static' => true,
     'update' => function ($val,$dataSource,$api) {
         $template = '
             {% assign posts = "post_type=post&post_count=10&post_status=publish" | posts %}
@@ -100,12 +101,12 @@ $components['portfolio_list'] = array(
     'name' => 'Portfolio list',
     'description' => 'Portfolio works with tags',
     'category' => 'Content',
-    'update' => function ($val,$dataSource) use ($me) {
+    'update' => function ($val,$dataSource,$api) {
         
         $columns = (int)$val['columns'];
         if (!$columns) $columns = 4;
         
-        $settings = $me->getSettings();
+        $settings = $api->getSettings();
         $width = ((int)$settings['theme']['sheet']['width']);
         $thumbWidth = (int)(($width - 10*($columns-1)) / $columns);
         
@@ -135,7 +136,7 @@ $components['portfolio_list'] = array(
                 <label>Number of columns</label>
                 <input name="columns" value="'.$columns.'">
             ',
-            'html' => '<div>'.$me->liquid($template,$dataSource)."</div>",
+            'html' => '<div>'.$api->liquid($template,$dataSource)."</div>",
             'value' => $val
         );
     }
@@ -145,11 +146,10 @@ $components['slider'] = array(
     'name' => 'Slider',
     'description' => 'Slider based on user data',
     'category' => 'Content',
+    'static' => true,    
     'update' => function ($val,$dataSource,$api) {
-        
         $source = @$val['source'];
         if (!$source) $source = "post.images";
-        
         
         $template = '
             <div class="flexslider">
@@ -178,7 +178,8 @@ $components['google_map'] = array(
     'name' => 'Google map',
     'description' => 'Map for certain location',
     'category' => 'Content',
-    'update' => function ($val,$dataSource) use ($me) {
+    'static' => true,
+    'update' => function ($val,$dataSource,$api) {
         $id = $val['id'];
         $map_id = $id."_map";
         
@@ -205,7 +206,7 @@ $components['google_map'] = array(
         ';
         
         return array(
-            'html' => '<div>'.$me->liquid($template,$dataSource)."</div>"
+            'html' => '<div>'.$api->liquid($template,$dataSource)."</div>"
         );
     }
 );

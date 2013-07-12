@@ -4,6 +4,7 @@ $components['logo'] = array(
     'name' => 'Site logo',
     'description' => 'Website logo',
     'category' => 'Website',
+    'static' => true,
     'html' => '<div class="logo"></div>'
 );
 
@@ -11,8 +12,25 @@ $components['menu'] = array(
     'name' => 'Navigation bar',
     'description' => 'Horizontal menu bar',
     'category' => 'Website',
-    'update' => function ($val,$dataSource,$for_editor) {
-        $items = @$val['items'] ? : array();
+    'static' => true,
+    'update' => function ($val,$dataSource,$api,$for_editor) {
+        $items = @$val['items'] ? : array(
+            array(
+                'label' => 'Menu Item 1',
+                'sublabel' => 'Sublabel 1',
+                'link' => 'link-1'
+            ),
+            array(
+                'label' => 'Menu Item 2',
+                'sublabel' => 'Sublabel 2',
+                'link' => 'link-2'
+            ),
+            array(
+                'label' => 'Menu Item 3',
+                'sublabel' => 'Sublabel 3',
+                'link' => 'link-3'
+            )
+        );
         $val['items'] = $items = array_values($items);
         ob_start();
         ?>
@@ -64,6 +82,7 @@ $components['vmenu'] = array(
     'name' => 'Navigation menu',
     'description' => 'Vertical menu bar',
     'category' => 'Website',
+    'static' => true,
     'update' => function ($val) {
         $items = @$val['items'] ? : array();
         $val['items'] = $items = array_values($items);

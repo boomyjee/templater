@@ -37,7 +37,6 @@ ui.switcher = ui.control.extend({
                 var type = me.options.types[i];
                 var cls = me.options.repository[type];
                 if (cls && (typeof(cls)=="string" || cls.extend)) {
-                    console.debug(type,cls);
                     var panel = cls.call ? new cls({}) : teacss.ui.panel(cls);
                     panel.type = type;
                     me.tabPanel.push(panel);
@@ -70,6 +69,8 @@ ui.switcherCombo = ui.combo.extend({
     init: function (options) {
         var label = options.label;
         delete options.label;
+        
+        if (options && options.inline && options.height) options.comboHeight = options.height;
         this._super($.extend({
             types: false,
             repository: false,

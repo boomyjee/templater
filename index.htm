@@ -14,7 +14,7 @@
         <script>
             require("client/src/app.js",function (templater){
                 templater({
-                    ajax_url: "server/demo.php",
+                    ajax_url: "server/demo.php" + window.location.search,
                     ui: "server/style/ui.js",
                     makefile: "server/style/makefile.tea",
                     sidebarWidth: 220,

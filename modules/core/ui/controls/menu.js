@@ -6,7 +6,7 @@ ui.menuWidthCombo = ui.lengthCombo.extendOptions({
 })
 
 ui.menu = ui.presetSwitcherCombo.extendOptions({
-    width: "100.0%", margin: 0,
+    width: "100%", margin: 0,
     label: "Menu"
 });
 

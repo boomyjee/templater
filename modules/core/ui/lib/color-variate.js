@@ -16,14 +16,17 @@ teacss.functions.color8 = false;
 teacss.functions.color9 = false;
     
 teacss.functions.color = function(color,c2) {
-    if (color && color.constructor==Array && color.length >= 2)
+    if (color && color.constructor==Array) {
+        if (color.length<2) color = [1,1];
         color = teacss.functions.variate(teacss.functions["color"+color[0]],color[1]-1);
+    }
     if (color && c2)
         color = teacss.functions.variate(teacss.functions["color"+color],c2-1);
     return color;
 }
     
 function color_variations(color,brightness,saturation) {
+    if (!color) color = 'white';
     var hash = color.toString()+"_"+brightness+"_"+saturation;
     if (variations_cache[hash]) return variations_cache[hash];
     

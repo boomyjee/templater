@@ -33,14 +33,21 @@ ui.panel.prototype.push = function (what) {
     }
     return old_push.apply(this,arguments);
 }
+
+var old_addTab = ui.tabPanel.prototype.addTab;
+ui.tabPanel.prototype.addTab = function (tab) {
+    var ret = old_addTab.apply(this,arguments);
+    tab.element.css({overflow:'auto'});
+    return ret;
+}
     
 $.each_deep = function (parent,f) {
-    $.each(parent.children,function(i){
+    if (parent && parent.children) $.each(parent.children,function(i){
         f.call(this,i,parent);
         if (this && this.children) $.each_deep(this,f);
     });
 }
-    
+
 Component.app.ui.push(
     require("./ui/ui.js")
 );

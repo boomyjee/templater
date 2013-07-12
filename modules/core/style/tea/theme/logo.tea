@@ -1,17 +1,23 @@
 @ global.logo = type_mixin(".logo");
 
 .logo.default(data) {
-    display: inline-block;
-    background: gray;
-    width: 100px;
-    height: 100px;
-    border: 1px solid black;
+    display: block;
+    
+    &:after {
+        content: "";
+        display: block;
+        background: gray;
+        width: 100px;
+        height: 100px;
+        border: 1px solid black;
+    }
 }
 
 .logo.image(data) {
     @ var img = image(data.image);
-    display: inline-block;
-    background: url(@img.src) no-repeat 50% 50%;
+    display: block;
+    @ if (img.src)
+        background: url(@img.src) no-repeat 50% 50%;
     width: @{img.width}px;
     height: @{img.height}px;
 }
@@ -24,8 +30,10 @@
             var canvas = new Canvas(w = item.bbox.width, h = item.bbox.height);
             var svg_el = teacss.jQuery(item.svg);
             var svg = svg_el;
-            for (var key in item.colors)
+            for (var key in item.colors) {
                 svg.find("."+key).find("path").andSelf().attr("fill",teacss.functions.color(item.colors[key]));
+            }
+                
             svg = (new XMLSerializer).serializeToString(svg[0]);
             canvas.draw2D(function(ctx){
                 ctx.drawSvg(svg,-item.bbox.x,-item.bbox.y);

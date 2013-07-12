@@ -1,19 +1,19 @@
 ui.typography = ui.presetSwitcherCombo.extendOptions({
     width: "100.0%", margin: 0,
     types: ["basic"],
-    itemTpl:[
-        "{{if group}}",
-          "<div class='combo-group'>${group}</div>",
-        "{{else}}",
-          "<div class='combo-item'>",
-            "{{if value}}",
-                "<div style='font-family:${value.headingsFont};font-size:14px;'>${value.headingsFont}</div>",
-                "<div style='font-family:${value.textFont};font-size:12px;'>${value.textFont}</div>",
-                "<div style='font-size:12px;'>${value.fontSize}px / ${value.lineHeight}em</div>",
-            "{{/if}}",
-          "</div>",
-        "{{/if}}"
-    ]
+    itemTpl: function () {
+        if (this.group) return "<div class='combo-group'>"+this.group+"</div>";
+        var s = "<div class='combo-item'>";
+        if (this.value) {
+            var hfont = this.headingsFont;
+            var tfont = this.textfont;
+            s += "<div style='font-family:"+hfont+";font-size:14px;'>"+hfont+"</div>";
+            s += "<div style='font-family:"+tfont+";font-size:12px;'>"+tfont+"</div>";
+            s += "<div style='font-size:12px;'>"+this.fontSize+"px / "+this.lineHeight+"em</div>";
+        }
+        s += "</div>";
+        return s;
+    }
 });
 
 ui.typography.presets = [
