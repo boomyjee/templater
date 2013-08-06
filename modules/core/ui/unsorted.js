@@ -25,35 +25,46 @@ ui.table.metro = ui.panel.extendOptions({
 
 ui.buttonCombo = ui.presetSwitcherCombo.extendOptions({
     width: "100.0%", margin: 0,
-    label: "Buttons"    
+    label: "Buttons"
 });
 
-ui.buttonCombo.default = ui.panel.extendOptions({
+ui.buttonCombo.presets = [
+    {group:"Built-in",disabled:true},
+    {value:{type:'default',color:false,color_2:false,font:false,fontSize:false}},
+    {value:{type:'metro',color:false,font:false,fontSize:false}},
+    {value:{type:'apple',color:false,color_2:false,font:false,fontSize:false}}
+]
+
+ui.buttonStylePanel = ui.panel.extendOptions({
     label: "Default",
     layout: { display: "block", width: "auto", margin: "10px 10px 0" },
     items: function () { 
-        return [
+        var items = [
+            ui.label("Font:"),
+            ui.fontCombo({name:"font"}),
+            ui.lengthCombo({
+                label:'font size',options:[{label:'auto',value:false},10,12,14,16],min:8,max:20,
+                name:"fontSize"
+            }),
+            ui.label("Colors:"),
+            ui.fillCombo({name:"color"})
         ];
+        if (this.options.color_2)
+            items.push(ui.fillCombo({name:"color_2"}));
+        return items;
     }
 });
+ui.buttonStylePanel.switcherLabel = function (val) {
+    val = val || {};
+    var type = val.type || "default";
+    return $("<div style='text-align:center;overflow:hidden;'>").append(
+        teaSwitcherLabel("<button>"+type+"</button>",teacss.functions.button,val)
+    );
+}
 
-ui.buttonCombo.metro = ui.panel.extendOptions({
-    label: "Metro",
-    layout: { display: "block", width: "auto", margin: "10px 10px 0" },
-    items: function () { 
-        return [
-        ];
-    }
-});
-
-ui.buttonCombo.apple = ui.panel.extendOptions({
-    label: "Apple",
-    layout: { display: "block", width: "auto", margin: "10px 10px 0" },
-    items: function () { 
-        return [
-        ];
-    }
-});
+ui.buttonCombo.default = ui.buttonStylePanel.extendOptions({label: "Default", color_2:true});
+ui.buttonCombo.metro   = ui.buttonStylePanel.extendOptions({label: "Metro",   color_2:false});
+ui.buttonCombo.apple   = ui.buttonStylePanel.extendOptions({label: "Apple",   color_2:true});
 
 ui.tabsCombo = ui.presetSwitcherCombo.extendOptions({
     width: "100.0%", margin: 0,
@@ -178,7 +189,6 @@ ui.personCombo.apple = ui.panel.extendOptions({
     }
 });
 
-
 ui.progressCombo = ui.presetSwitcherCombo.extendOptions({
     width: "100.0%", margin: 0,
     label: "Progress bars",
@@ -262,6 +272,15 @@ ui.layoutCombo.absolute = ui.panel.extendOptions({
     }
 });
 
+ui.alignCombo = ui.select.extendOptions({
+    items: {
+        false : 'auto',
+        'left' : 'Left',
+        'center' : 'Center',
+        'right' : 'Right'
+    }
+})
+
 ui.moveHandle = ui.control.extend({
     init: function (o) {
         var me = this;
@@ -309,6 +328,22 @@ ui.moveHandle = ui.control.extend({
     }
 });
 
+var item_index = 0;
+window.teaSwitcherLabel = function(el,mixin,val) {
+    var el = $(el);
+    var id = "tea_item_"+(item_index++);
+    el.attr("id",id);
+    
+    teacss.tea.Style.start();
+    teacss.tea.Style.rule("#"+id,function(){
+        if (mixin) mixin.call(this,val||{});
+    });
+    var output = "";
+    var rules = teacss.tea.Style.rules;
+    for (var i=0;i<rules.length;i++) output += rules[i].getOutput();
+    el.append("<style>"+output+"</style>");
+    return el;
+}
 
 window.cleanTypeValues = function(type,path) {
     var app = Component.app;

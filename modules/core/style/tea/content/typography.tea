@@ -1,39 +1,61 @@
-@ global.typography = type_mixin();
-.typography.default(data) {
+@ global.typography = type_mixin("body");
+.typography.default(data,inherited) {
     @{
         data = data || {};
         
-        var textFont = data.textFont || '"Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif';
-        var headingsFont = data.headingsFont || '"Helvetica Neue", "Helvetica", Arial, Verdana, sans-serif';
+        var textFont = data.textFont;
+        var headingsFont = data.headingsFont;
         
-        var fontSize = parseFloat(data.fontSize) || 12;
-        var lineHeight = parseFloat(data.lineHeight) || 1.5;
+        var fontSize = parseFloat(data.fontSize);
+        var lineHeight = parseFloat(data.lineHeight);
         
-        var textColor = data.textColor ? color(data.textColor) : '#333';
-        var linkColor = data.linkColor ? color(data.linkColor) : '#337';
-        var linkColorHover = data.linkColorHover ? color(data.linkColorHover) : darken(linkColor,10);
+        var textColor = data.textColor ? color(data.textColor) : false;
+        var linkColor = data.linkColor ? color(data.linkColor) : false;
+        var linkColorHover = data.linkColorHover ? color(data.linkColorHover) : false;
+        
+        if (!inherited) {
+            textFont = textFont || '"Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif';
+            headingsFont = headingsFont || '"Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif';
+            
+            fontSize = fontSize || 12;
+            lineHeight = lineHeight || 1.5;
+            
+            textColor = textColor || "#333";
+            linkColor = linkColor || "#337";
+            linkColorHover = linkColorHover || darken(linkColor,10);
+        }
+        
+        if (!linkColorHover && linkColor)
+            linkColorHover = darken(linkColor,10);
     }
     
-    body {
+    @ if (textFont)
         font-family: @textFont;
-        font-size: @{fontSize}px;
-        line-height: @{lineHeight}em;
-        color: @textColor;
-    }
-
-    a {
-        color: @linkColor;
-        text-decoration: none;
         
-        &:hover {
-            color: @linkColorHover;
-            text-decoration: underline;
-        }
-    }
+    @ if (fontSize)
+        font-size: @{fontSize}px;
+        
+    @ if (textColor)
+        color: @textColor;
 
-    p {
-        margin: 0 0 @{lineHeight}em;
-    }
+    @ if (linkColor) {
+        a {
+            color: @linkColor;
+            text-decoration: none;
+            
+            &:hover {
+                color: @linkColorHover;
+                text-decoration: underline;
+            }
+        }
+    @ }
+
+    @ if (lineHeight) {
+        line-height: @{lineHeight}em;
+        p {
+            margin: 0 0 @{lineHeight}em;
+        }
+    @ }
     
     .alignleft {
         float: left;
@@ -47,31 +69,37 @@
     @ var headings = [30,24,18,14,12,11]
     @ for (var i=0;i<headings.length;i++) {
         h@{i+1} {
-            @ var h = headings[i];
-            font-size: @{h/12}em;
-            font-family: @headingsFont;
-            margin-bottom: @{12/h*lineHeight}em;
-            line-height: @{Math.ceil(h/12/lineHeight)*lineHeight*12/h}em;
+            @ if (headingsFont)
+                font-family: @headingsFont;
+                
+            @ if (lineHeight) {
+                @ var h = headings[i];
+                font-size: @{h/12}em;
+                margin-bottom: @{12/h*lineHeight}em;
+                line-height: @{Math.ceil(h/12/lineHeight)*lineHeight*12/h}em;
+            @ }
         }
     @ }
 
-    ul, ol {
-        padding: 0;
-        margin: 0 0 1em 2em;
-        
-        ul, ol { margin-bottom: 0; }
-    }
-
-    ul {
-        list-style: disc;
-    }
+    @ if (!inherited) {
+        ul, ol {
+            padding: 0;
+            margin: 0 0 1em 2em;
+            ul, ol { margin-bottom: 0; }
+        }
     
-    ol {
-        list-style: decimal;
-    }
+        ul {
+            list-style: disc;
+        }
+        
+        ol {
+            list-style: decimal;
+        }
+    @ }
 
     hr {
-        margin: @{lineHeight}em 0;
+        @ if (lineHeight)
+            margin: @{lineHeight}em 0;
         border: 0;
         border-top: 1px solid #e5e5e5;
         border-bottom: 1px solid white;
@@ -86,8 +114,10 @@
     }
 
     blockquote {
-        padding: 0 0 0 @{lineHeight}em;
-        margin: 0 0 @{lineHeight}em @{lineHeight}em;
+        @ if (lineHeight) {
+            padding: 0 0 0 @{lineHeight}em;
+            margin: 0 0 @{lineHeight}em @{lineHeight}em;
+        @ }
         border-left: 5px solid @color(1,8);
     }
     

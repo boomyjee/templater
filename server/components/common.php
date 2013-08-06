@@ -21,7 +21,7 @@ $components['html'] = array(
     'update' => function ($val) {
         $html = @$val['html'] ? : "<p>Some <b>HTML</b> text</p>";
         return array(
-            'form' => "<textarea name='html' rows='20' spellcheck='false'>".htmlspecialchars($html)."</textarea>",
+            'form' => "<textarea class='visual' name='html' rows='20' spellcheck='false'>".htmlspecialchars($html)."</textarea>",
             'value' => $val,
             'html' => '<div>'.$html."</div>"
         );

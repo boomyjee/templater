@@ -29,6 +29,13 @@ exports = function (app) {
                 ui.check({ width:'100%',name:"menu.expand", label:"Expand", margin: "10px 10px 0 10px" })
             );
         }
+        if (cmp.value.type=="form_button") {
+            cmp.controls.push(
+                ui.alignCombo({width: "100%", margin: "10px 10px 0 10px", name:"buttons."+id+".align"}),
+                ui.marginCombo({width: "100%", margin: "10px 10px 0 10px", name:"buttons."+id+".margin", label: "Margin", comboWidth: 150 }),
+                ui.buttonCombo({inline:true,name:"buttons."+id+".style",margin:"10px 10px 0 10px",width:"100%",switcherWidth:200})
+            );
+        }
         if (cmp.value.type=="container") {
             cmp.controls.push(
                 ui.backgroundCombo({ 
@@ -65,8 +72,12 @@ exports = function (app) {
             ),
             ui.fieldset("Layout").push(
                 ui.lengthCombo({
-                    width:'50%',name:"sheet.width", label:"Site width",
-                    options:[800,900,1000,1100,1200],min:800,max:1200 })
+                    width:'100.0%',name:"sheet.width", label:"Site width",
+                    options:[800,900,1000,1100,1200],min:800,max:1200 }),
+                ui.backgroundCombo({ 
+                    width:"100.0%", label:"Background", margin: "5px 0 0 0", name:"background", 
+                    types:["color","pattern","fullSize"] 
+                })
             )
         ]
     });
@@ -80,7 +91,7 @@ exports = function (app) {
                 ui.tabsCombo({name:"tabs",margin:"5px 0 0 0"}),
                 ui.alertsCombo({name:"alerts",margin:"5px 0 0 0"}),
                 ui.toggleCombo({name:"toggle",margin:"5px 0 0 0"}),
-                ui.formsCombo({name:"form", margin:"5px 0 0 0"}),
+                ui.formsCombo({name:"forms.default", margin:"5px 0 0 0"}),
                 ui.readingBoxCombo({name:"reading_box",margin:"5px 0 0 0"}),
                 ui.personCombo({name: "person", margin: "5px 0 0 0"}),
                 ui.progressCombo({name:"progress",margin:"5px 0 0 0"}),

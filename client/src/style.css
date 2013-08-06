@@ -1,6 +1,7 @@
 body {
     margin: 0;
     padding: 0;
+    overflow: hidden;
 }
 
 body.wp-admin > .teacss-ui {
@@ -418,4 +419,33 @@ body.wp-admin.folded > .teacss-ui {
 .teacss-ui .ui-preview .ui-icon-large.ui-icon-view {
     background-color: orange;
     display: block !important;
+}
+
+.teacss-ui .pagination {
+    padding: 0.2em 0;
+}
+
+.teacss-ui .pagination a {
+    display: inline-block;
+    padding: 0.2em;
+    border: 1px solid #eee;
+    font-size: 1.2em;
+    width: 2em;
+    text-align: center;
+    text-decoration: none;
+}
+
+.teacss-ui .pagination a.selected {
+    background: #eee;
+    border: 1px solid #aaa;
+}
+
+table.mceLayout tr {
+    height: 100%;
+}
+
+table.mceLayout tr.mceFirst,
+table.mceLayout tr.mceLast
+{
+    height: 0;
 }

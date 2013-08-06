@@ -1,6 +1,28 @@
-@ global.button = type_mixin("button, a.button, input[type=button], input[type=submit]");
+.buttons(data) {
+    .button(data.button);
+    .button_extra(data.button);
+    
+    @ for (var key in data.buttons) {
+        @ var sub = data.buttons[key] || {};
+        #@{key} {
+            @ if (sub.style) {
+                button {
+                    .button(sub.style);
+                }
+            @ }
+            @ if (sub.margin)
+                margin-top: @sub.margin;
+                
+            @ if (sub.align && sub.align!='auto')
+                text-align: @sub.align;
+        }
+    @ }
+}
 
-.button.base() {
+@ global.button = type_mixin("button, a.button, input[type=button], input[type=submit]");
+@ global.button_extra = type_mixin();
+
+.button.base(data) {
     display: inline-block;
     padding: 0.3em 0.7em;
     text-align: center;
@@ -12,6 +34,12 @@
     width: auto;
     height: auto;
     
+    @ data = data || {};
+    @ if (data.font)
+        font-family: @data.font;
+        
+    @ if (data.fontSize)
+        font-size: @data.fontSize;
     
     &.small {
         font-size: 0.9em;
@@ -27,6 +55,7 @@
 }
 
 .button.colors(data) {
+    @ data = data || {};
     @ var color = data.color;
     @ var color_2 = data.color_2 || color;
     @ var text = data.text;
@@ -51,27 +80,32 @@
 
 
 .button.default(data) {
-    .button.base();
+    @ data = data || {};
+    .button.base(data);
     
     border: 1px solid #ccc;
     border-bottom-color: #bbb;
     border-radius: 0.3em;
     .box_shadow('inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05)');
-    
-    .button.colors({color:'#eee', color_2:'#ddd'});
-    
+
+    @ var color_1 = color(data.color || "#eee");
+    @ var color_2 = color(data.color_2 || darken(color_1,10));
+
+    .button.colors({color:color_1, color_2:color_2});
     &:hover { 
-        .button.colors({color:darken('#fff', 10)});
+        .button.colors({color:color_1});
     }
     &.active, &:active {
-        .button.colors({color:darken('#fff', 10),text:rgba(0,0,0,0.5)});
+        .button.colors({color:color_1});
     }
     
     &.disabled, &[disabled] {
-        .button.colors({color:darken('#fff', 10),opacity:65});
+        .opacity(65);
         .box_shadow('none');        
     }
-    
+}
+
+.button_extra.default(data) {
     @{
         var extra = {
             green     :{ color: '#d1e990',             color_2:darken('#d1e990',30) },
@@ -104,16 +138,20 @@
 }
 
 .button.metro(data) {
-    .button.base();
+    @ data = data || {};
+    .button.base(data);
     
-    .button.colors({color:"#eee"});
+    @ var color_1 = color(data.color || "#eee");
+    .button.colors({color:color_1});
     &.active, &:active {
-        .button.colors({color:darken('#eee', 10),text:rgba(0,0,0,0.5)});
+        .button.colors({color:darken(color_1, 10),text:rgba(0,0,0,0.5)});
     }
     &.disabled, &[disabled] {
-        .button.colors({color:darken('#eee', 10),opacity:65});
+        .button.colors({color:darken(color_1, 10),opacity:65});
     }    
-    
+}
+
+.button_extra.metro(data) {
     @{
         var extra = {
             green:     "#00a300",
@@ -146,30 +184,37 @@
 }
 
 .button.apple(data){
-    .button.base();   
+    @ data = data || {};
+    .button.base(data);   
     border-top: 1px solid #bbb;
     border-bottom: 1px solid #bbb;
     border-radius: 2em;
     .box_shadow('inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05)');
     
-    .button.colors({color:'#eee', color_2:'#ddd'});
+    @ var color_1 = color(data.color || "#eee");
+    @ var color_2 = color(data.color_2 || darken(color_1,10));
+    
+    .button.colors({color:color_1, color_2:color_2});
     .effects.glare({margin:{left: '0.3em', right: '0.3em'}});    
+    
+    &:hover { 
+        .button.colors({color:color_1});
+    }
+    &.active, &:active {
+        .button.colors({color:color_1});
+    }
+    &.disabled, &[disabled] {
+        .button.colors({color:color_1,opacity:65});
+        .box_shadow('none');
+    }
     
     &.small {
         .effects.glare({margin:{left: '0.6em', right: '0.6em'}});    
     }
     
-    &:hover { 
-        .button.colors({color:darken('#fff', 10)});
-    }
-    &.active, &:active {
-        .button.colors({color:darken('#fff', 10),text:rgba(0,0,0,0.5)});
-    }
-    &.disabled, &[disabled] {
-        .button.colors({color:darken('#fff', 10),opacity:65});
-        .box_shadow('none');
-    }
-    
+}
+ 
+.button_extra.apple(data) {
     @{
         var extra = {
             green     :{ color: '#62c462',             color_2:'#51a351' },

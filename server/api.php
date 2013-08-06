@@ -223,6 +223,8 @@ class TemplaterApi {
                 $component_values[] = $cmp->value;
                 
                 $createComponents($cmp,$ch_data,$ch_inherit);
+                
+                Component::$api->registerComponent($cmp);
             }
         };
         $createComponents($root,$root_data,$inherit); 
@@ -233,6 +235,10 @@ class TemplaterApi {
                 <?= $root_html ?>
             </body>
         <?
+    }
+    
+    function registerComponent($cmp) {
+        // nothing to do
     }
 }
 

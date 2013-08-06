@@ -300,16 +300,18 @@ var Component = window.Component = $.Class.extend({
         var me = this;
         if (!me.dialog) {
             
-            var width = 600;
+            var width = 800;
             if (me.form && me.form.control && me.form.width)
                 width = me.form.width;
             
             me.dialog = teacss.ui.dialog({
                 modal: true,
                 resizable: false,
+                draggable: false,
                 width: width,
                 title: me.type.name,
                 dialogClass: "component-form",
+                maxHeight: '90%',
                 buttons: {
                     "Save" : function () {
                         if (me.dialog.control) {
@@ -335,6 +337,7 @@ var Component = window.Component = $.Class.extend({
                             
                             // if all is OK, recreate element and replace old DOM with a new one
                             me.afterLoad(old_element);
+                            Component.previewFrame.reloadScript = true;
                             Component.previewFrame.trigger("change");
                         });                        
                     },
@@ -343,9 +346,21 @@ var Component = window.Component = $.Class.extend({
                     }
                 }
             });
+            me.dialog.element.css({overflowY:'scroll',overflowX:'hidden'});
+            me.dialog.reposition = function(){
+                me.dialog.element.dialog("option", "position", ['center', 'center']);
+                me.dialog.element.css({maxHeight:$(window).height()*0.9});
+            };
+            
+            setInterval(me.dialog.reposition,100);
             
             if (me.form && me.form.control) {
-                me.dialog.control = eval(me.form.control)();
+                if (me.form.control.substring(0,3)=="ui.") {
+                    var cls = teacss.ui[me.form.control.substring(3)];
+                } else {
+                    var cls = eval(me.form.control);
+                }
+                me.dialog.control = cls();
                 me.dialog.push(me.dialog.control);
             }
         }
@@ -391,5 +406,6 @@ var Component = window.Component = $.Class.extend({
             });
         }
         me.dialog.open();
+        Component.currentDialog = me.dialog;
     }
 });

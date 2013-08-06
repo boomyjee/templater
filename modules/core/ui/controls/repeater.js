@@ -21,7 +21,10 @@ ui.repeaterCombo = ui.combo.extend({
         var type_options = {};
         for (var i=0;i<this.options.types.length;i++) {
             var type = this.options.types[i];
-            type_options[type] = type;
+            var cls = type;
+            if (cls && cls.extend) {
+                type_options[type] = type;
+            }
         }
         
         this.select = ui.select({

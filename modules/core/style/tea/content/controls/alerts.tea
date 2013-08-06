@@ -1,45 +1,14 @@
 @ global.alerts = type_mixin(".alert")
 
 .alerts.base(){
-    padding: 1em 2em 1em 1em;    
-    background-color: #eee;
-    font-size: 1.2em;
-
-    .close {
-        position: relative;
-        top: -7px;
-        right: -21px;
-        line-height: 18px;
-        float: right;
-        
-        font-size: 0;
-        .icon('remove');
-        &:before {
-            color: #aaa;
-            font-size: 14px;
-        }
-    }
-    
-    &.error {
-        color: #900;
-        border-color: #a99;
-        background: #faa;
-    }
-    
-    &.notice {
-        color: #770;
-        border-color: #aa9;
-        background: #ffa;
-    }
-    
-    &.success {
-        color: #070;
-        border-color: #9a9;
-        background: #afa;
+    form > & {
+        margin-bottom: 1em;
     }
 }
 
 .alerts.default() {    
+    .alerts.base();
+    
     text-shadow: 0 1px 0 rgba(255,255,255,.5);
     color: #333;
     border: 1px solid #aaa;
@@ -84,6 +53,8 @@
 }
 
 .alerts.metro() {
+    .alerts.base();
+    
     padding: 1em 2em 1em 1em;    
     background-color: #eee;
     font-size: 1.2em;
@@ -123,6 +94,8 @@
 }
 
 .alerts.apple(){    
+    .alerts.base();
+
     border-radius: 0.8em;
     position: relative;    
     border: 1px solid rgba(220,220,220,0.6);    

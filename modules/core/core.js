@@ -25,6 +25,7 @@ require("./ui/controls/imageCombo.js");
 require("./ui/controls/logoCombo.js");
 require("./ui/controls/logo.js");
 require("./ui/controls/menu.js");
+require("./ui/controls/sliderEditor.js");
 
 var old_push = ui.panel.prototype.push;
 ui.panel.prototype.push = function (what) {

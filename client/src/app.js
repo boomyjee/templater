@@ -201,7 +201,7 @@ exports = ui.Control.extend({
         var panelList = [];
         var panelHash = {};
         
-        var form = ui.form(function(){
+        var form = this.form = ui.form(function(){
             var cmps = me.previewFrame.componentsHash;
             for (var id in cmps) {
                 cmps[id].controls = [];

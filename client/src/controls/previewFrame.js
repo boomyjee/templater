@@ -65,7 +65,13 @@ ui.previewFrame = ui.panel.extend({
         teacss.files["templater_makefile.tea"] = makefile;
         teacss.process("templater_makefile.tea", function() {
             teacss.tea.Style.insert(frame[0].contentWindow.document);
+            
+            if (me.reloadScript) {
+                me.$f("head script").remove();
+            }
+            me.reloadScript = false;
             teacss.tea.Script.insert(frame[0].contentWindow.document);
+            
             
             me.updateHandles();
             

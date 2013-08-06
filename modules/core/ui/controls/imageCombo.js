@@ -21,7 +21,7 @@ ui.imageCombo = ui.presetCombo.extend({
         this._super();
         this.itemPanel.css({marginTop:30});
         
-        var uploader = $("<input type='file' multiple='true'>").hide().appendTo("body");
+        var uploader = $("<input type='file' multiple='true'>").css({position:'fixed',top:0,left:0,zIndex:10000,width:0}).hide().appendTo("body");
         uploader.change(function(){
             var data = new FormData();
             $.each(uploader[0].files, function(i, file) {
@@ -61,7 +61,9 @@ ui.imageCombo = ui.presetCombo.extend({
                 textAlign: 'center'
             }).click(function(e){
                 e.preventDefault();
+                uploader.show();
                 uploader.click();
+                uploader.hide();
             })
         );
     }

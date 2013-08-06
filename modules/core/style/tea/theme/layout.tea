@@ -55,6 +55,12 @@
         global.sheetWidth = data.sheet.width;
     }
     
+    body {
+        .background(data.background);
+        padding-top: 1px;
+        margin-top: -1px;
+    }
+    
     body > div > .container {
         @ container(sheetWidth);
         @ clearfix();    
@@ -70,13 +76,7 @@
             @ if (sub.height && sub.height!="auto")
                 height: @sub.height;
             
-            @ if (sub.background && lightness(color(sub.background.color))<50) {
-                color: #eee;
-            @ } else {
-                color: #333;
-            @ }
-            
-            
+            .typography(sub.typography,true);
             > .container {
                 position: relative;
             }
@@ -84,6 +84,7 @@
         
         body > #@{key} {
             @ if (sub.expand===false) container(sheetWidth);
+            margin-top: @sub.margin;
         }
     @ }
     

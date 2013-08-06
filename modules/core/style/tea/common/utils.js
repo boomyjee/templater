@@ -20,7 +20,7 @@ teacss.cache = function (data) {
 teacss.functions.extend = function(obj1, obj2) {
     for (var p in obj2) {
         try {
-            if ( obj2[p].constructor==Object) {
+            if ( obj2[p] && obj2[p].constructor==Object) {
                 if (obj1) obj1[p] = teacss.functions.extend(obj1[p] || {}, obj2[p]);
             } else {
                 if (obj1) obj1[p] = obj2[p];

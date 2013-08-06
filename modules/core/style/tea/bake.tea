@@ -51,7 +51,7 @@
 @ global.donut_root = tea.dir+"../";
 
 .bake(data) {
-    @ data = extend({ sheet: { width: "940px" } },data);
+    @ data = extend({ sheet: { width: "940px" },forms: {} },data);
     @ global.sheetWidth = data.sheet.width;
     
     // js
@@ -66,9 +66,9 @@
     // content
     .typography(data.typography);
     .table(data.table);
-    .form(data.form);
-    
-    .button(data.button);
+
+    .form(data.forms.default);
+    .buttons(data);
     .person(data.person);
     .progress(data.progress);
     .reading_box(data.reading_box);

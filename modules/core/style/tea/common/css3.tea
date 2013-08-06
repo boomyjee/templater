@@ -111,6 +111,12 @@
                     column-gap: @columnGap;
 }
 
+.box_sizing(sizing) {
+    box-sizing: @sizing;
+    -moz-box-sizing: @sizing;
+    -webkit-box-sizing: @sizing;
+}
+
 // Opacity
 .opacity(opacity) {
     @ opacity = opacity || 100;

@@ -1,8 +1,20 @@
+var transparent_url = "url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAAAAAA6mKC9AAAAGElEQVQYV2N4DwX/oYBhgARgDJjEAAkAAEC99wFuu0VFAAAAAElFTkSuQmCC)";
+
 ui.fillCombo = ui.Combo.extend({
     colorLabel: function (value) {
         var variate = ui.fillCombo.prototype.variate;
-        var value = variate(value);
-        return "<span style='vertical-align:middle;border:1px solid #777;display:inline-block;width:22px;height:22px;margin-right:4px;background:"+value+"'></span>";
+        var text = '';
+        if (!value) {
+            text = 'A';
+            value = 'white';
+        } 
+        else if (value=='transparent') {
+            value = transparent_url;
+        }
+        else {
+            value = variate(value);
+        }
+        return "<span style='text-align:center;font-size:18px;line-height: 22px; vertical-align:middle;border:1px solid #777;display:inline-block;width:22px;height:22px;margin-right:4px;background:"+value+"'>"+text+"</span>";
     }
 },{
     init: function (options) {
@@ -16,7 +28,11 @@ ui.fillCombo = ui.Combo.extend({
                     "<div class='combo-group'>${group}</div>",
                 "{{else}}",
                     "<div class='combo-item' style='padding:5px;display:inline-block;'>",
-                        "<div style='width:15px;height:15px;display:inline-block;background:${color};border:1px solid #aaa;'></div>",
+                        "{{if text}}",
+                            "<div title='auto' style='vertical-align:top;width:15px;height:15px;display:inline-block;border:1px solid #aaa;text-align:center'>${text}</div>",
+                        "{{else}}",
+                            "<div style='vertical-align:top;width:15px;height:15px;display:inline-block;background:${color};border:1px solid #aaa;'></div>",
+                        "{{/if}}",
                     "</div>",
                 "{{/if}}"
             ],
@@ -24,10 +40,15 @@ ui.fillCombo = ui.Combo.extend({
                 var items = [];
                 
                 items.push({group:"Extra",disabled:true});
+
+                items.push({
+                    value: false,
+                    text: "A"
+                });
                 items.push({
                     value:"transparent",
                     // checker
-                    color: "url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAAAAAA6mKC9AAAAGElEQVQYV2N4DwX/oYBhgARgDJjEAAkAAEC99wFuu0VFAAAAAElFTkSuQmCC)"
+                    color: transparent_url
                 });
                 
                 items.push({group:"Grays",disabled:true});
@@ -60,7 +81,7 @@ ui.fillCombo = ui.Combo.extend({
             })
         },options));
         
-        if (!this.value) this.value = 'transparent';
+        if (!this.value) this.value = false;
         
         this.change(function(){
             this.updatePicker();
@@ -88,10 +109,8 @@ ui.fillCombo = ui.Combo.extend({
         return teacss.functions.color(value);
     },
     multiLabel: function (parent) {
-        if (!this.variate) this.variate = ui.fillCombo.prototype.variate;
-        var value = this.variate(this.value);
         if (parent) this.multiCombo = parent;
-        return "<span style='vertical-align:middle;border:1px solid #777;display:inline-block;width:22px;height:22px;margin-right:4px;background:"+value+"'></span>";
+        return this.Class.colorLabel(this.value);
     },
     updateLabel: function () {
         this.element.button("option",{label:this.multiLabel()+this.options.label});
@@ -101,6 +120,7 @@ ui.fillCombo = ui.Combo.extend({
         this.picker.setValue(value);
     },
     setValue: function (value) {
+        if (!value) value = false;
         if (typeof value=="string" && value.indexOf(",")!=-1) {
             var parts = value.split(",");
             if (parts.length==2) value = [parseInt(parts[0]),parseInt(parts[1])];

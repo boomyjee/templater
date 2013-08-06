@@ -18,16 +18,24 @@ ui.presetCombo = ui.combo.extend({
     initPresets: function () {
         var me = this;
         
-        if (this.form && this.options.name) {
+        var form = this.form;
+        var name = this.options.name ? "presets."+this.options.name : false;
+        
+        if (this.options.presetName) {
+            name = this.options.presetName;
+            form = Component.app.form;
+        }
+        
+        if (form && name) {
             this.presets = ui.Control({
-                name:"presets."+this.options.name,
+                name: name,
                 change: function () {
                     me.items = me.getItems();
                     me.refresh();
                     me.setSelected();
                 }
             });
-            this.form.registerItem(this.presets);
+            form.registerItem(this.presets);
         }
     },
     refresh: function () {
@@ -93,20 +101,22 @@ ui.presetSwitcherCombo = ui.presetCombo.extend({
     init: function (o) {
         var me = this;
         if (o && o.inline && o.height) o.comboHeight = o.height;
+        
+        var itemTpl = function (item,common) {
+            if (item.group) return $("<div class='combo-group'>").html(item.group);
+            if (!item.value || !item.value.type) return;
+            var type = item.value.type;
+            var labelF = this.options.repository[type].switcherLabel;
+            return $("<div class='combo-item'>").append(
+                labelF ? labelF.call(this.options.repository[type],item.value,this) : type
+            );
+        }
+        
         this._super($.extend({
             types: false,
             repository: false,
             switcherWidth: 250,
-            itemTpl: function (item,common) {
-                if (item.group) return $("<div class='combo-group'>").html(item.group);
-                if (!item.value || !item.value.type) return;
-                var type = item.value.type;
-                var labelF = this.options.repository[type].switcherLabel;
-                return $("<div class='combo-item'>").append(
-                    type,
-                    labelF ? ":&nbsp;"+labelF.call(this.options.repository[type],item.value,this) : ""
-                );
-            },
+            itemTpl: itemTpl,
             items: function () {
                 var me = this;
                 var switcher = this.switcher = ui.switcher({
@@ -132,7 +142,10 @@ ui.presetSwitcherCombo = ui.presetCombo.extend({
                     .css({position:'absolute',left:0,top:0})
                     .appendTo(panel);
                 
-                this.itemPanel.css({marginLeft:me.options.switcherWidth});
+                this.itemPanel.css({
+                    marginLeft:me.options.switcherWidth,
+                    width: 'auto'
+                });
                 
                 var savePresetButton = ui.button({label:"Create Preset",margin:0,click:function(){me.savePreset()}});
                 savePresetButton.element
@@ -156,7 +169,7 @@ ui.presetSwitcherCombo = ui.presetCombo.extend({
             if (item) {
                 if (item==me.selected_on_open) {
                     teacss.jQuery(this).addClass("selected");
-                } else if (item.value && me.selected_on_open.value){
+                } else if (item.value && me.selected_on_open && me.selected_on_open.value){
                     for (var key in item.value) {
                         if (!value_equals(item.value[key],me.selected_on_open.value[key])) return;
                     }

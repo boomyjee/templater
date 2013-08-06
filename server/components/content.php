@@ -148,27 +148,29 @@ $components['slider'] = array(
     'category' => 'Content',
     'static' => true,    
     'update' => function ($val,$dataSource,$api) {
-        $source = @$val['source'];
-        if (!$source) $source = "post.images";
         
-        $template = '
-            <div class="flexslider">
-                {% assign slides = post.slider.slides %}
-                {% if slides.size == 0 %}
-                    
-                {% else %}
-                    {% for one in slides %}
+        $slides = $val['slides'];
+        
+        ob_start();
+        ?>
+            <div class="slider">
+                <? foreach ($slides as $one): ?>
+                    <? $slide = $one['slide'] ?>
                     <div>
-                        {{ one.content }}
+                        <? if ($slide['type']=='html'): ?>
+                            <?= $slide['html'] ?>
+                        <? elseif ($slide['type']=='image'): ?>
+                            <img src="<?= $slide['image'] ?>">
+                        <? endif ?>
                     </div>
-                    {% endfor %}
-                {% endif %}
+                <? endforeach ?>
             </div>
-        ';
+        <?
+        $html = ob_get_clean();
         
         return array(
-            'html' => '<div>'.$api->liquid($template,$dataSource)."</div>",
-            'form' => '<label>Source</label><input name="source">',
+            'html' => $html,
+            'form' => array('control'=>'ui.sliderEditor'),
             'value' => $val
         );
     }
