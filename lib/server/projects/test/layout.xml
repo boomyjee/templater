@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template id="id1380546190190">
+  <component id="id1380546190195" type="container">
+    <component id="id1380546190199" type="logo"/>
+  </component>
+  <component id="id1380546190196" type="menu"/>
+  <component id="id1380546190204" type="container">
+    <component id="id1380546190205" type="html"/>
+  </component>
+  <component id="id1380546190197" type="container">
+    <component id="id1380546190200" type="html"/>
+    <component id="id1380546190201" type="html"/>
+    <component id="id1380546190202" type="html"/>
+  </component>
+  <component id="id1380546190198" type="container">
+    <component id="id1380546190203" type="html">
+      <value>
+        <html><![CDATA[(c) Bla-bla, 2013]]></html>
+      </value>
+    </component>
+  </component>
+</template>

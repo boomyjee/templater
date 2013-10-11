@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template id="id1372953305671">
+  <component id="id1372953305672" type="container">
+    <component id="id1372953305673" type="logo"/>
+    <component id="id1375568711765" type="slider">
+      <value>
+        <title>test</title>
+        <slides>
+          <slide>
+            <type>html</type>
+            <image>/~boomyjee/templater/lib/server/upload/slides/524a817692453.jpg</image>
+            <html>&lt;p style="text-align: center;"&gt;&lt;img src="/~boomyjee/_other/lpcandy/upload/LPCandy/files/1/.thumbs/files/5129775_xlarge.jpg" height="64" width="100" /&gt;&lt;/p&gt;
+&lt;p style="text-align: center;"&gt;Some Slide Text&lt;/p&gt;</html>
+          </slide>
+        </slides>
+        <slides>
+          <slide>
+            <type>html</type>
+            <image>/~boomyjee/templater/server/upload/slides/51fdaaf64a256.jpg</image>
+            <html>&lt;p&gt;&lt;img style="display: block; margin-left: auto; margin-right: auto;" src="/~boomyjee/_other/lpcandy/upload/LPCandy/files/1/.thumbs/files/5129714_large.jpg" height="71" width="100" /&gt;&lt;/p&gt;</html>
+          </slide>
+        </slides>
+        <slides>
+          <slide>
+            <type>html</type>
+            <html>&lt;h1 style="text-align: center;"&gt;Just text slide&lt;/h1&gt;</html>
+          </slide>
+        </slides>
+        <slides>
+          <slide>
+            <type>html</type>
+            <html>&lt;p style="text-align: center;"&gt;123&lt;/p&gt;</html>
+          </slide>
+        </slides>
+      </value>
+    </component>
+    <component id="id1374615375247" type="html">
+      <value>
+        <html><![CDATA[<h1>Нужно сложное веб- или мобильное приложение?</h1>]]></html>
+      </value>
+    </component>
+    <component id="id1381412235547" type="liquid">
+      <value>
+        <template>{{ description }}</template>
+      </value>
+    </component>
+    <component id="id1374247591651" type="form">
+      <value>
+        <success>Спасибо за запрос!</success>
+      </value>
+      <component id="id1374247591652" type="form_text">
+        <value>
+          <label>Ваше имя</label>
+          <name>name</name>
+        </value>
+      </component>
+      <component id="id1374247667768" type="form_text">
+        <value>
+          <label>Телефон, скайп или почта</label>
+          <name>contact</name>
+        </value>
+      </component>
+      <component id="id1374269616989" type="form_text">
+        <value>
+          <label>Ссылка на ваш проект (если есть)</label>
+          <name>link</name>
+        </value>
+      </component>
+      <component id="id1374247667769" type="form_button">
+        <value>
+          <label>Хочу с вами работать!</label>
+        </value>
+      </component>
+    </component>
+    <component id="id1372959623731" type="html">
+      <value>
+        <html><![CDATA[<h3 style='color:#0a0'>АКЦИЯ – бесплатный прототип!
+Для одного проекта в месяц мы доводим проект до стадии прототипа бесплатно!</h3>
+]]></html>
+      </value>
+    </component>
+    <component id="id1372956874472" type="container">
+      <component id="id1372956874473" type="html">
+        <value>
+          <html><![CDATA[<h2>В чем отличия нашей компании:</h2>]]></html>
+        </value>
+      </component>
+      <component id="id1372959623730" type="html">
+        <value>
+          <html><![CDATA[<p><b>Опыт именно сложной разработки.</b></p>
+<p>Мы уже давно находимся на рынке и всегда стремились брать качеством, а не количеством - больше 50 проектов написанных с нуля сложность более человеко-года.</p>]]></html>
+        </value>
+      </component>
+      <component id="id1372959623727" type="html">
+        <value>
+          <html><![CDATA[<p><b>Работа с клиентами.</b></p> 
+<p>Мы общаемся со своими заказчиками на понятном языке, вы можете свободно обсуждать с нами проект на уровне бизнес-процессов без технических терминов.</p>]]></html>
+        </value>
+      </component>
+      <component id="id1372959623728" type="html">
+        <value>
+          <html><![CDATA[<p><b>Поддержка и документирование.</b></p>
+<p>Мы будем с вами и после окончания разработки. Поддержка и продвижение для нас - не пустой звук. В интересные проекты мы инвестируем сами и делимся связями и знакомствами, которые наработали за годы.</p>]]></html>
+        </value>
+      </component>
+      <component id="id1372959623729" type="html">
+        <value>
+          <html><![CDATA[<p><b>Создание прототипа.</b></p> 
+<p>Наши проекты начинают работать с первых дней разработки – мы создаем прототип, который меняется прямо на ваших глазах, а не заставляем ждать месяцами первых результатов.</p>]]></html>
+        </value>
+      </component>
+    </component>
+    <component id="id1374245710030" type="container">
+      <component id="id1374245710031" type="testimonial">
+        <value>
+          <name>Сергей Гимгин</name>
+          <link>http://metalrus.ru</link>
+          <pic></pic>
+          <text>&lt;p&gt;С учетом всех пожеланий сайт был сделан за меньшие сроки, чем рассчитывал. Получил удовольствие от работы, на всех этапах работы ощущался профессионализм. Убедился в том, что лучше один раз хорошо заплатить профессионалу, чем получить некачественный результат по работе с дилетантами. В будущем планирую обращаться в бюро Алексея не только по своему проекту, но и с абсолютной уверенностью советовать своим друзьям.&lt;/p&gt;</text>
+        </value>
+      </component>
+      <component id="id1374245847531" type="testimonial">
+        <value>
+          <name>Максим Крылов</name>
+          <link></link>
+          <pic></pic>
+          <text>&lt;p&gt;Помимо высоких профессиональных знаний и умений очень понравилось как ребята вникают в суть задачи и находят оптимальные решения. Поразила и разносторонность знаний, особенно когда была задача с генетикой и чудесным образом оказалось что в ней тоже разбираются. Также хочу отметить скорость и энергию, с которой решаются задачи.&lt;/p&gt;</text>
+        </value>
+      </component>
+    </component>
+  </component>
+</template>

@@ -1,0 +1,25 @@
+@ global.slider = type_mixin(".slider");
+
+.slider.flexslider(data) {
+
+    height: 100px;
+    visibility: hidden;
+
+    @ var sel = this.selector;
+    @ data = data || {};
+    
+    @ var current = teacss.tea.Style.current; teacss.tea.Style.current = false;
+    @import "flexslider/flexslider.tea";
+    @ teacss.tea.Style.current = current;
+    
+    Script {
+        @append donut_root + "js/jquery.js";
+        @append donut_root + "js/flexslider.js";
+        @append {
+            $(function(){
+                $("@sel").find("> *").wrapAll("<ul class='slides'>").wrap("<li>");
+                $("@sel").addClass("flexslider").flexslider(@{JSON.stringify(data)});
+            });
+        }
+    }
+}

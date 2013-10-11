@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template id="id1380546190206" parentTemplate="layout">
+  <component id="id1380546190204" type="container">
+    <component id="id1380550909579" type="html"/>
+    <component id="id1380550909580" type="html"/>
+    <component id="id1380550909581" type="html"/>
+  </component>
+</template>

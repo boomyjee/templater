@@ -1,0 +1,266 @@
+/* body 100% height */
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+body.edit-layout {
+    min-height: 100%;
+    position: relative;
+}
+
+/* empty containers */
+.empty-info {
+    display: none;
+}
+
+body.edit-layout .empty-info {
+    height: 100px;
+    line-height: 100px;
+    overflow: hidden;
+    background-color: rgba(200,200,200,0.5);
+    text-align: center;
+    white-space: nowrap;
+    font-size: 14px !important;
+    color: rgba(0,0,0,0.5) !important;
+    display: block;
+}
+
+body.edit-layout .container:empty {
+    height: 100px;
+    line-height: 100px;
+    overflow: hidden;
+    background-color: rgba(200,200,200,0.5);
+    text-align: center;
+    white-space: nowrap;
+}
+
+body.edit-layout .container:empty:before {
+    content: "Place elements inside container";
+    font-size: 14px !important;
+    color: rgba(0,0,0,0.5) !important;
+    display: inline !important;
+}
+
+/* handle container */
+.handle-container {
+    position: absolute;
+    left: 0; right: 0;
+    top: 1px; bottom: 0;
+    display: none;
+    overflow: hidden;
+    min-height: 100px;
+}
+
+body.edit-layout .handle-container {
+    display: block;
+}
+
+/* compnent handle */
+.component-handle {
+    position: absolute;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    min-height: 20px;
+    min-width: 20px;
+    /*opacity: 0;*/
+}
+
+.component-handle > * {
+    visibility: hidden;
+}
+
+.component-handle:hover {
+    box-shadow: 0px 0px 5px #ff8800 inset;
+    -moz-box-shadow: 0px 0px 5px #ff8800 inset;
+    -webkit-box-shadow: 0px 0px 5px #ff8800 inset;
+    transition: 0.2s ease-in-out;
+    -moz-transition: 0.2s ease-in-out;
+    -webkit-transition: 0.2s ease-in-out;    
+    opacity: 1;
+}
+
+.component-handle.selected {
+    border: 2px solid #ff8800;
+    box-shadow: 0px 0px 5px #ff8800 inset;
+    -moz-box-shadow: 0px 0px 5px #ff8800 inset;
+    -webkit-box-shadow: 0px 0px 5px #ff8800 inset;
+    transition: none;    
+    -moz-transition: none;
+    -webkit-transition: none;
+    opacity: 1;
+}
+
+/* compnent heading */
+.component-handle .component-heading {
+    background: none repeat scroll 0 0 rgba(255, 200, 0, 0.8);
+    height: 24px;
+    left: 0;
+    line-height: 24px;
+    position: absolute;
+    padding: 0 5px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+}
+
+.component-handle .component-heading.draggable {
+    cursor: move;
+}
+
+body.edit-layout .component-handle:hover > .component-heading {
+    display: block;
+    visibility: visible;
+    transition: 0.2s ease-in-out;
+    -moz-transition: 0.2s ease-in-out;
+    -webkit-transition: 0.2s ease-in-out;    
+    opacity: 1;    
+}
+
+body.edit-layout .component-handle.selected > .component-heading {
+    display: block;
+    visibility: visible;
+    transition: none;    
+    -moz-transition: none;
+    -webkit-transition: none;
+    opacity: 1;
+}
+
+/* sort and area handles */
+.sort-handle.visible, 
+.drop-handle.visible,
+.area-handle.visible
+{
+    display: block;
+    visibility: visible;
+}
+
+.area-handle {
+    position: absolute;
+    display: none;
+    min-height: 40px;
+}
+
+.drop-handle {
+    position: absolute;
+    left: 2px; top: 2px; right: 2px; bottom: 2px; z-index: 3;
+    border: 2px solid rgba(255,0,0,0.3);
+    color: red;
+}
+
+.sort-handle {
+    position: absolute;
+    left: 0; top: 0; right: 0; bottom: 0; z-index: 2;
+    border: 2px solid rgba(0,0,255,0.3);
+    color: blue;
+    display: none;
+}
+
+/* drop marker */
+.drop-marker {
+    border: 2px dashed black;
+    position: absolute;
+    z-index:1000;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+/* controls handle */
+.controls-handle {
+    position: absolute;
+    top: 0px; left: 0px; right: 0px; bottom: 0;
+    overflow: hidden;
+    font: 14px Arial;
+    color: black;
+    display: none;
+}
+
+.controls-handle.selected {
+    display: block;
+    min-height: 26px;
+}
+
+.controls-handle.hidden {
+    display: none;
+}
+
+.controls-handle .controls-center {
+    height: 0px;
+    left: 0;
+    margin-top: -24px;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 50%;
+    z-index: 1000;
+}
+
+.controls-handle .controls-top {
+    margin-top: -24px;
+    height: 0px;
+    left: 0;
+    position: absolute;
+    right: 30px;
+    text-align: center;
+    top: 0;
+    z-index: 1000;
+}
+
+.controls-handle .controls-bottom {
+    margin-bottom: 24px;
+    height: 0px;
+    left: 30px;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    bottom: 0;
+    z-index: 1000;
+}
+
+.controls-handle > .controls-top > span {
+    font-size: 30px;
+    line-height: 30px;
+    height: 28px;
+    padding-top: 20px;
+}
+
+.controls-handle > .controls-bottom > span {
+    font-size: 30px;
+    line-height: 30px;
+    height: 28px;
+    padding-bottom: 20px;
+}
+
+.controls-handle > div > span {
+    display: none;
+    background-color: #f7f7f7;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#f7f7f7), to(#e7e7e7));
+    background-image: -webkit-linear-gradient(top, #f7f7f7, #e7e7e7); 
+    background-image: -moz-linear-gradient(top, #f7f7f7, #e7e7e7); 
+    background-image: -ms-linear-gradient(top, #f7f7f7, #e7e7e7); 
+    background-image: -o-linear-gradient(top, #f7f7f7, #e7e7e7); 
+    color: #a7a7a7;
+    width: 48px;
+    height: 48px;
+    text-align: center;
+    line-height: 52px;
+    font-size: 48px;
+    font-weight: bold;
+    border-radius: 50%;
+    box-shadow: 0px 3px 8px #aaa, inset 0px 2px 3px #fff;    
+    cursor: pointer;
+}
+
+.controls-handle > div > span.visible {
+    display: inline-block;
+}
+
+.controls-handle > div > span:hover {
+    text-decoration: none;
+    color: #555;
+    background: #f5f5f5;
+}
