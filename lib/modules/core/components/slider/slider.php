@@ -20,7 +20,7 @@ TemplaterApi::addAction('getComponents',function($api,&$components) {
                                 <? if ($slide['type']=='html'): ?>
                                     <?= $slide['html'] ?>
                                 <? elseif ($slide['type']=='image'): ?>
-                                    <img src="<?= $slide['image'] ?>">
+                                    <img src="<?=$api->uploadUrl.'/'.$slide['image']?>">
                                 <? endif ?>
                             </div>
                         <? endforeach ?>

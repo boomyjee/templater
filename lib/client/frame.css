@@ -18,7 +18,7 @@ body.edit-layout {
     display: none;
 }
 
-body.edit-layout .empty-info {
+body .empty-info {
     height: 100px;
     line-height: 100px;
     overflow: hidden;
@@ -30,17 +30,22 @@ body.edit-layout .empty-info {
     display: block;
 }
 
-body.edit-layout .container:empty {
+body.edit-layout .container:empty,
+body.edit-layout form:empty
+{
     height: 100px;
     line-height: 100px;
     overflow: hidden;
     background-color: rgba(200,200,200,0.5);
     text-align: center;
     white-space: nowrap;
+    margin-bottom: 0 !important;
 }
 
-body.edit-layout .container:empty:before {
-    content: "Place elements inside container";
+body.edit-layout .container:empty:before,
+body.edit-layout form:empty:before
+{
+    content: "Place elements inside";
     font-size: 14px !important;
     color: rgba(0,0,0,0.5) !important;
     display: inline !important;
@@ -50,7 +55,7 @@ body.edit-layout .container:empty:before {
 .handle-container {
     position: absolute;
     left: 0; right: 0;
-    top: 1px; bottom: 0;
+    top: 0px; bottom: 0;
     display: none;
     overflow: hidden;
     min-height: 100px;
@@ -58,6 +63,11 @@ body.edit-layout .container:empty:before {
 
 body.edit-layout .handle-container {
     display: block;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;    
 }
 
 /* compnent handle */
@@ -84,7 +94,9 @@ body.edit-layout .handle-container {
     opacity: 1;
 }
 
-.component-handle.selected {
+.component-handle.selected,
+body.view3d .component-handle
+{
     border: 2px solid #ff8800;
     box-shadow: 0px 0px 5px #ff8800 inset;
     -moz-box-shadow: 0px 0px 5px #ff8800 inset;
@@ -92,10 +104,19 @@ body.edit-layout .handle-container {
     transition: none;    
     -moz-transition: none;
     -webkit-transition: none;
+    opacity: 0.3;
+}
+
+body.view3d .component-handle {
+    box-shadow: -5px -5px 5px rgba(0,0,0,0.5);
+    opacity: 0.6;
+}
+
+body:hover .component-handle.selected {
     opacity: 1;
 }
 
-/* compnent heading */
+/* component heading */
 .component-handle .component-heading {
     background: none repeat scroll 0 0 rgba(255, 200, 0, 0.8);
     height: 24px;
@@ -121,7 +142,9 @@ body.edit-layout .component-handle:hover > .component-heading {
     opacity: 1;    
 }
 
-body.edit-layout .component-handle.selected > .component-heading {
+body.edit-layout:hover .component-handle.selected > .component-heading,
+body.edit-layout.view3d .component-handle > .component-heading
+{
     display: block;
     visibility: visible;
     transition: none;    
@@ -179,7 +202,11 @@ body.edit-layout .component-handle.selected > .component-heading {
     display: none;
 }
 
-.controls-handle.selected {
+body.view3d:hover .controls-handle.selected {
+    display: none;
+}
+
+body:hover .controls-handle.selected {
     display: block;
     min-height: 26px;
 }

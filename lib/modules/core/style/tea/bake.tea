@@ -1,3 +1,4 @@
+@import "common/color-variate.js";
 @import "common/utils.js";
 @import "common/reset";
 @import "common/base";
@@ -9,96 +10,80 @@
 @import "common/icons";
 
 @import "content/typography";
-@import "content/columns";
-@import "content/table";
 @import "content/button";
-@import "content/person";
-@import "content/progress";
 @import "content/form";
-@import "content/content_box";
-@import "content/reading_box";
-@import "content/pricing_table";
-@import "content/icons";
-
-
-@import "content/controls/tabs";
-@import "content/controls/alerts";
-@import "content/controls/toggle";
-@import "content/controls/slider";
+@import "content/form_layout";
+@import "content/testimonial";
+@import "content/table";
+@import "content/alerts";
 
 @import "theme/layout";
 @import "theme/logo";
-@import "theme/header";
+@import "theme/list";
 @import "theme/top_menu";
-@import "theme/vmenu";
-@import "theme/sheet";
-@import "theme/footer";
-@import "theme/testimonials";
-
-@import "theme/widgets/common";
-@import "theme/widgets/flickr";
-@import "theme/widgets/twitter";
-@import "theme/widgets/tagcloud";
-@import "theme/widgets/categories";
-@import "theme/widgets/recent_posts";
-@import "theme/widgets/pages";
-
-@import "theme/pages/home";
-@import "theme/pages/blog";
-@import "theme/pages/portfolio";
-
 
 @ global.donut_root = tea.dir+"../";
 
+.align<align>(x) {
+    @ if (x && x!='auto' && x!='fill')
+        text-align: @x;
+    @ if (x=='fill')
+        > * {
+            display: block !important;
+            width: 100% !important;
+            .box_sizing('border-box');
+        }
+}
+
 .bake(data) {
-    @ global.sheetWidth = data.sheet.width;
-    
-    // js
-    @append donut_root+"js/jquery.js";
-    @append donut_root+"js/controls.js";
-    @ for (var i=1;i<=9;i++) global['color'+i] = data['color'+i];    
 
-    // reset
+    @ color1 = data.color1;
+    @ color2 = data.color2;
+    @ color3 = data.color3;
+
     .reset();
-    .columns();
-    
-    // content
-    .typography(data.typography);
-    .table(data.table);
-
-    .form(data.forms.default);
-    .buttons(data);
-    .person(data.person);
-    .progress(data.progress);
-    .reading_box(data.reading_box);
-    .content_box();
-    .pricing_table(data.pricing_table);
-    
-    // controls
-    .tabs(data.tabs);
-    .alerts(data.alerts);
-    .toggle(data.toggle);
-    
-    // theme
     .layout(data);
-    .logo(data.logo);
-    .header(data.header);
-    .top_menus(data.menu);
-    .vmenu(data.vmenu);
-    .sheet();
-    .footer();
-    .testimonials();
- 
-    // widgets    
-    .widgets.flickr();
-    .widgets.twitter();
-    .widgets.tagcloud();
-    .widgets.categories();
-    .widgets.recentPosts();
-    .widgets.pages();
+    .typography(data.typography);
+    .alerts(data.alerts);
     
-    // page specific
-    .pages.home();
-    .pages.blog();
-    .pages.portfolio();
+    @ eachComponent("logo",function(cmp,id){
+        #@{id} {
+            .logo(data.logo ? data.logo[id] : false);
+        }
+    @ })
+    
+    @ eachComponent("list",function(cmp,id){
+        #@{id} {
+            .list(data.list ? data.list[id] : false);
+        }
+    @ })
+    
+    @ eachComponent("form",function(cmp,id){
+        #@{id} form {
+            @ var sub = data.forms ? (data.forms[id] || {}) : {};
+            .form(sub.style);
+            .form_layout(sub.layout,sub.style);
+        }
+    @ })    
+    
+    @ eachComponent("testimonial",function(cmp,id){
+        #@{id} {
+            .testimonial(data.testimonial ? data.testimonial[id] : false);
+        }
+    @ })    
+    
+    @ eachComponent("form_button",function(cmp,id){
+        #@{id} {
+            @ var sub = data.buttons ? (data.buttons[id] || {}) : {};
+            @ if (sub.style) {
+                button {
+                    .button(sub.style);
+                }
+            @ }
+            @ if (sub.margin)
+                margin-top: @sub.margin;
+                
+            .align(sub.align);    
+        }
+    @ })
 }

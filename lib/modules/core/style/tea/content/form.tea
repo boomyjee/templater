@@ -1,8 +1,12 @@
 @ global.form = type_mixin("form");
 
-.form.default(data) {    
+.form.default(data) {   
+
+    @ data = data || {};
+    @ var padding = data.controlPadding || '0.3em';
+    @ var height = 2 * parseFloat(padding) + 1.5 + "em";
+    
     margin: 0 0 1.5em;
-    padding-right: 0.8em;
     
     label {
         display: block;
@@ -12,12 +16,13 @@
     input, textarea, select {
         display: inline-block;
         width: 100%;
-        height: 2.1em;
-        padding: 0.3em;
+        height: @height;
+        padding: @padding;
         margin-bottom: 0.8em;
         color: #333;
         border: 1px solid #ccc;
         border-radius: 0.3em;
+        font-size: 100%;
         .box_sizing('border-box');
     }  
     
@@ -90,18 +95,6 @@
             top: -0.6em;
         }
     }    
-    
-    &.vertical {
-        > label {
-            float: left;
-            width: 200px;
-            text-align: right;
-            margin-top: 0.6em;
-        }
-        > input, > textarea, > select, > .control-group {
-            margin-left: 210px;
-        }
-    }
     
     input + fieldset {
         margin-top: 1em;

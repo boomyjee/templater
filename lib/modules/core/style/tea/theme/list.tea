@@ -1,0 +1,89 @@
+@ global.bullet = type_mixin();
+.bullet.default(data) {
+    @ data = data || {};
+    @ var h = data.size || 18;
+    @ var w = h;
+    @ var indent = data.indent || 0.2;
+    @ var padding = w * (1 + indent);
+    
+    list-style: none;
+    margin-left: 0;
+    padding-left: @{padding}px;
+    
+    @ fontAwesome();
+    
+    li {
+        position: relative;
+        > *:first-child:before {
+            font-family: FontAwesome;
+            font-weight: normal;
+            font-style: normal;
+            font-size: @{h}px;
+            content: "@{fontAwesome.map[data.symbol]}";
+            color: @color(data.color);
+        
+            position: relative;
+            display: inline-block;
+            vertical-align: middle;
+
+            width: @{w}px;
+            height: 0;
+            
+            left: @{-padding}px;
+            top: @{-h/2}px;
+            
+            line-height: @{h}px;
+            margin-right: @{-w}px;
+        }
+    }
+}
+
+.bullet.image(data) {
+    @ data = data || {};
+    @ var img = image(data.image);
+    @ var h = img.height;
+    @ var w = img.width / (img.height || 1) * h;
+    @ var indent = data.indent || 0.2;
+    @ var padding = w * (1 + indent);
+    
+    list-style: none;        
+    margin: 0;
+    padding-left: @{padding}px;
+    
+    li {
+        position: relative;
+        > *:first-child:before {
+            position: relative;
+            content: "";
+            display: inline-block;
+            vertical-align: middle;
+            width: @{w}px;
+            height: @{h}px;
+            
+            left: @{-padding}px;
+            top: @{-h/2}px;
+            
+            margin-right: @{-w}px;
+            margin-bottom: @{-h}px;
+            
+            background: url(@img.src) no-repeat 0 0;
+            background-size: contain;
+        }
+    }
+}
+
+
+@ global.list = type_mixin("ul");
+.list.default(data) {
+    @{
+        data = data || {};
+        var itemMargin = data.itemMargin || "1em";
+    }
+
+    ul {
+        .bullet(data.bullet);
+        li {
+            margin-bottom: @itemMargin;
+        }
+    }
+}

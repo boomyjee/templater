@@ -1,0 +1,65 @@
+@ global.form_layout = type_mixin("form");
+
+.form_layout.default() {
+}
+
+.form_layout.horizontal(data) {
+
+    @ data = data || {};
+    @ labelWidth = data.labelWidth ? parseFloat(data.labelWidth) : 200;
+
+    > div {
+        > label {
+            float: left;
+            width: @{labelWidth}px;
+            text-align: right;
+            margin-top: 0.6em;
+        }
+        
+        > span {
+            display: block;
+            margin-left: @{labelWidth+10}px;
+        }
+    }
+}
+
+.form_layout.compact(data,style) {
+
+    @ style = style || {};
+    @ var padding = style.controlPadding || '0.3em';
+    @ var sel = this.selector;
+
+    Script {
+        @append donut_root + "js/jquery.js";
+        @append {
+            $(function(){
+                $("@sel").find("> div > label").click(function(){
+                    $(this).next().find("input").focus();
+                })
+                $("@sel").find("> div > span > input").bind("focus blur",function(e){
+                    var val = $(this).val();
+                    var label = $(this).parent().prev();
+                    label.toggle(val || $(this).is(":focus") || e.type=="focus" ? false:true);
+                })
+            });
+        }
+    }    
+
+    > div {
+        position: relative;
+        
+        > label {
+            position: absolute;
+            font-weight: bold;
+            color: #ccc;
+            left: @padding;
+            top: @padding;
+            cursor: text;
+            padding-left: 0.1em;
+            padding-top: 0.1em;
+        }
+    }
+}
+
+
+

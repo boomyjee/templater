@@ -26,10 +26,17 @@ class TemplaterApi {
             die();
         }
         
+        $base_url = explode("?",$_SERVER['REQUEST_URI'],2);
+        $base_url = $base_url[0];
+        $base_url = dirname($base_url);
+        
         $this->modules = $_REQUEST['_modules'] ? : array();
         
         $this->uploadDir = __DIR__."/upload";
+        $this->uploadUrl = $base_url."/upload";
+        
         $this->settingsPath = __DIR__."/settings.json";
+        $this->templatePath = false;
         
         $this->base_url = dirname(dirname($_SERVER['SCRIPT_URL']));
         $this->base_dir = dirname(__DIR__);
@@ -45,16 +52,7 @@ class TemplaterApi {
     }
     
     function compress($out) {
-        if (ini_get('zlib.output_compression') && 'ob_gzhandler' != ini_get('output_handler') && isset($_SERVER['HTTP_ACCEPT_ENCODING'])) {
-            header('Vary: Accept-Encoding');
-            if ( false !== stripos($_SERVER['HTTP_ACCEPT_ENCODING'], 'deflate') && function_exists('gzdeflate')) {
-                header('Content-Encoding: deflate');
-                $out = gzdeflate( $out, 3 );
-            } elseif ( false !== stripos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') && function_exists('gzencode') ) {
-                header('Content-Encoding: gzip');
-                $out = gzencode( $out, 3 );
-            }
-        }
+        ob_start('ob_gzhandler');
         echo $out;
         exit;
     }
@@ -84,6 +82,7 @@ class TemplaterApi {
     
     function component($values = false,$ret = false) {
         if (!$values) $values = $_REQUEST['values'];
+        
         $components = $this->getComponents();
         $res = array();
         foreach ($values as $val) {
@@ -111,6 +110,62 @@ class TemplaterApi {
         return $tpl->render($data);        
     }    
     
+    function browse() {
+        $api_url = explode("?",$_SERVER['REQUEST_URI'],2);
+        $api_url = $api_url[0];
+        
+        define('KC_ROOT',$api_url);
+        
+        $url = @$_REQUEST['url'];
+        
+        if ($url) {
+            $path = __DIR__."/lib/kcFinder".$url;
+            if (is_file($path)) {
+                $ext = pathinfo($path,PATHINFO_EXTENSION);
+                if ($ext=='php') {
+                    chdir(dirname($path));
+                    include $path;
+                    die();
+                }
+                if ($ext=='css') header('Content-type: text/css');
+                if ($ext=='js') header('Content-type: application/javascript');
+                readfile($path);
+                die();
+            }
+            die();
+        }
+        
+        global $_CONFIG;
+        $config = array();
+        $_CONFIG = array();
+        $_CONFIG['disabled'] = false;
+        $_CONFIG['uploadURL'] = "http://upload.url/dir";
+        $_CONFIG['uploadDir'] = $this->uploadDir;
+        if (isset($_REQUEST['theme'])) $_CONFIG['theme'] = $_REQUEST['theme'];
+        
+        $_CONFIG = array_merge($_CONFIG,$config);
+        require __DIR__.'/lib/kcFinder/browse.php';        
+    }
+    
+    function upload_delete() {
+        $dir = @$_REQUEST['dir'];
+        $name = @$_REQUEST['file'];
+        
+        $path = $this->uploadDir."/".$dir."/".$name;
+        
+        $ext = pathinfo($name, PATHINFO_EXTENSION);
+        $thumb = basename($name,".".$ext).".png";
+        $thumbPath = $this->uploadDir."/".$dir."/thumbs/".$thumb;
+        
+        if (file_exists($path)) {
+            unlink($path);
+        }
+        if (file_exists($thumbPath)) {
+            unlink($thumbPath);
+        }
+        echo "ok";
+    }
+    
     function upload() {
         $name = @$_REQUEST['name'];
         $iconWidth = @$_REQUEST['iconWidth'];
@@ -130,7 +185,7 @@ class TemplaterApi {
                     $name = $val['name'];
                     $tmp_name = $val['tmp_name'];
                     $ext = pathinfo($name, PATHINFO_EXTENSION);
-                    $dest = uniqid() . ($ext ? ".".$ext : "");
+                    $dest = time()."_".uniqid() . ($ext ? ".".$ext : "");
                     move_uploaded_file($tmp_name, $dir. "/" .$dest);
                     
                     require_once __DIR__."/lib/PhpThumb/Factory.php";
@@ -143,7 +198,7 @@ class TemplaterApi {
                     $url = str_replace($this->base_dir,$this->base_url,$dir."/".$dest);
                     $turl = str_replace($this->base_dir,$this->base_url,$tdir."/".$thumb);
                     
-                    $res[] = array('url'=>$url,'icon'=>$turl);
+                    $res[] = array('name'=>$dest,'url'=>$url,'icon'=>$turl);
                 }
             }
             echo json_encode($res);
@@ -165,55 +220,8 @@ class TemplaterApi {
         return $this->$key;
     }
     
-    function getTemplates2() {
-        $templates = array();
-        include_once __DIR__."/lib/XML2Array.php";
-        
-        $restoreCmp = function (&$cmp) use (&$restoreCmp) {
-            if (isset($cmp['@attributes'])) {
-                foreach ($cmp['@attributes'] as $key=>$val) {
-                    $cmp['value'][$key] = $val;
-                }
-                unset($cmp['@attributes']);
-            }
-            
-            if (isset($cmp['@value'])) unset($cmp['@value']);
-            if (isset($cmp['component'])) {
-                $list = isset($cmp['component'][0]) ? $cmp['component'] : array($cmp['component']);
-                foreach ($list as $one) {
-                    $restoreCmp($one);
-                    $cmp['children'][] = $one;
-                }
-                unset($cmp['component']);
-            }
-            
-            if (isset($cmp['value']['html'])) {
-                $cmp['value']['html'] = $cmp['value']['html']['@cdata'];
-            }
-        };           
-        
-        
-        $project_dir = str_replace(".json","",$this->settingsPath);
-        if (file_exists($project_dir)) {
-            $iterator = new \DirectoryIterator($project_dir);
-            foreach ($iterator as $sub) {
-                if (!$sub->isDot() && !$sub->isDir()) {
-                    $name = $sub->getBasename('.xml');
-                    if ($name == $sub->getBasename()) continue;
-                    
-                    $data = XML2Array::createArray(file_get_contents($sub->getPathname()));
-                    $data = $data['template'];
-                    $restoreCmp($data);                           
-                    $templates[$name] = $data;
-                }
-            }
-        }
-        if (empty($templates)) $templates = false;        
-        return json_encode($templates);
-    }
-    
-    function getTemplates() {
-        $templates = array();
+    function getTemplates($json=false) {
+        $templates = (object)array();
         
         $restoreCmp = function ($cmp,$key=false) use (&$restoreCmp) {
             $out = array('value'=>array());
@@ -238,7 +246,7 @@ class TemplaterApi {
             return $out;
         };   
 
-        $project_dir = str_replace(".json","",$this->settingsPath);
+        $project_dir = $this->templatePath ? : str_replace(".json","",$this->settingsPath);
         if (file_exists($project_dir)) {
             $iterator = new \DirectoryIterator($project_dir);
             foreach ($iterator as $sub) {
@@ -249,22 +257,24 @@ class TemplaterApi {
                     $data = yaml_parse(file_get_contents($sub->getPathname()));
                     $data = $restoreCmp($data);                           
                     
-                    $templates[$name] = $data;
+                    $templates->$name = $data;
                 }
             }
         }
-        if (empty($templates)) $templates = false;        
+        if (!$json) return $templates;
         return json_encode($templates);
     }    
     
-    function getTheme() {
-        return @file_get_contents($this->settingsPath);
+    function getTheme($json=false) {
+        $data = @file_get_contents($this->settingsPath);
+        if ($json) return $data;
+        return json_decode($data);
     }
     
     function load() {
         $res = array();
-        $res['theme'] = $this->getTheme();
-        $res['templates'] = $this->getTemplates();
+        $res['theme'] = $this->getTheme(true);
+        $res['templates'] = $this->getTemplates(true);
         
         $components = $this->getComponents();
         $res['components'] = array();
@@ -275,6 +285,18 @@ class TemplaterApi {
             
             $comps = $this->component(array(array('type'=>$key)),true);
             $res['components'][$key]['new'] = $comps[0];
+        }
+        
+        $upload = new DirectoryIterator($this->uploadDir);
+        foreach ($upload as $dir) {
+            if ($dir->isDir() && !$dir->isDot()) {
+                $files = new DirectoryIterator($dir->getPathname());
+                foreach ($files as $file) {
+                    if ($file->isFile()) {
+                        $res['upload'][$dir->__toString()][] = $file->__toString();
+                    }
+                }
+            }
         }
         
         $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(realpath(__DIR__."/../modules"),
@@ -298,32 +320,6 @@ class TemplaterApi {
     }
     
     function saveTemplates($templates) {
-        $fixCmp = function (&$cmp) use (&$fixCmp) {
-            $val = &$cmp['value'];
-            $atts = array('id','type','parentTemplate');
-            
-            foreach ($atts as $key) {
-                if (isset($val[$key])) {
-                    $cmp['@attributes'][$key] = $val[$key];
-                    unset($val[$key]);
-                }
-            }
-            if (empty($val)) unset($cmp['value']);
-            
-            if (isset($cmp['children'])) {
-                $children = array();
-                foreach ($cmp['children'] as &$child) {
-                    $fixCmp($child);
-                }
-                $cmp['component'] = $cmp['children'];
-                unset($cmp['children']);
-            }
-            
-            if (isset($cmp['value']['html'])) {
-                $cmp['value']['html'] = array('@cdata'=>$cmp['value']['html']);
-            }
-        };   
-        
         $fixYaml = function ($cmp) use (&$fixYaml) {
             $type = $cmp['value']['type'];
             $key = $type."#".$cmp['value']['id'];
@@ -349,10 +345,9 @@ class TemplaterApi {
         };
         
         // save templates
-        include_once __DIR__."/lib/Array2XML.php";
         $templates = json_decode($templates,true);
         
-        $project_dir = str_replace(".json","",$this->settingsPath);
+        $project_dir = $this->templatePath ? : str_replace(".json","",$this->settingsPath);
         
         if (!file_exists($project_dir)) mkdir($project_dir);
         
@@ -362,17 +357,11 @@ class TemplaterApi {
         }        
         
         ini_set('yaml.output_indent',4);
-        
         foreach ($templates as $name=>$one) {
             $yaml_path = $project_dir."/".$name.".yaml";
             $data = $fixYaml($one);
             $data = reset($data);
             file_put_contents($yaml_path,yaml_emit($data,YAML_UTF8_ENCODING));
-            
-            $tpl_path = $project_dir."/".$name.".xml";
-            $fixCmp($one);
-            $xml = Array2XML::createXML('template', $one);
-            file_put_contents($tpl_path,$xml->saveXML());
         }
     }
     
@@ -386,7 +375,7 @@ class TemplaterApi {
     }
     
     function view($name,$dataSource) {
-        $templates = $this->getTemplates();
+        $templates = $this->getTemplates(true);
         $templates = json_decode($templates);
         
         $tpl = $templates->$name;

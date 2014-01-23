@@ -1,0 +1,247 @@
+.buttons(data) {
+    .button(data.button);
+    .button_extra(data.button);
+    
+    @ for (var key in data.buttons) {
+        @ var sub = data.buttons[key] || {};
+        #@{key} {
+            @ if (sub.style) {
+                button {
+                    .button(sub.style);
+                }
+            @ }
+            @ if (sub.margin)
+                margin-top: @sub.margin;
+                
+            @ if (sub.align && sub.align!='auto')
+                text-align: @sub.align;
+        }
+    @ }
+}
+
+@ global.button = type_mixin("button, a.button, input[type=button], input[type=submit]");
+@ global.button_extra = type_mixin();
+
+.button.base(data) {
+    display: inline-block;
+    padding: 0.3em 0.7em;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    outline: none;
+    white-space:nowrap;
+    margin: 2px;
+    width: auto;
+    height: auto;
+    
+    @ data = data || {};
+    @ if (data.font)
+        font-family: @data.font;
+        
+    @ if (data.fontSize)
+        font-size: @data.fontSize;
+    
+    &.small {
+        font-size: 0.9em;
+    }
+    
+    &.large {        
+        padding: 0.7em 1.5em;
+    }    
+    
+    &.disabled, &[disabled] {
+        cursor: default;
+    }
+}
+
+.button.colors(data) {
+    @ data = data || {};
+    @ var color = data.color;
+    @ var color_2 = data.color_2 || color;
+    @ var text = data.text;
+    @ if (!text) text = ((lightness(color) + lightness(color_2)) / 2 > 74) ? "#333" : "#fff";    
+    
+    color: @text;
+    @ if ((lightness(text)) < 74) {
+        text-shadow: 0 1px 1px rgba(255,255,255,.75);
+    @ } else {
+        text-shadow: 0 -1px 0 rgba(0,0,0,.25);
+    @ }
+    
+    @ if (color==color_2) 
+        background: @color;
+    @ else {
+        .gradient.bar(color,color_2);
+        .reset_filter();    
+    @ }
+    
+    @ if (data.opacity) opacity(data.opacity);
+}
+
+
+.button.default(data) {
+    @ data = data || {};
+    .button.base(data);
+    
+    border: 1px solid #ccc;
+    border-bottom-color: #bbb;
+    border-radius: 0.3em;
+    .box_shadow('inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05)');
+
+    @ var color_1 = color(data.color || "#eee");
+    @ var color_2 = color(data.color_2 || darken(color_1,10));
+
+    .button.colors({color:color_1, color_2:color_2});
+    &:hover { 
+        .button.colors({color:color_1});
+    }
+    &.active, &:active {
+        .button.colors({color:color_1});
+    }
+    
+    &.disabled, &[disabled] {
+        .opacity(65);
+        .box_shadow('none');        
+    }
+}
+
+.button_extra.default(data) {
+    @{
+        var extra = {
+            green     :{ color: '#d1e990',             color_2:darken('#d1e990',30) },
+            darkgreen :{ color: darken('#62c462',20),  color_2:darken('#51a351',10) },
+            orange    :{ color: lighten('orange', 15), color_2:'orange' },
+            blue      :{ color: '#5bc0de',             color_2:'#2f96b4' },
+            red       :{ color: '#ee5f5b',             color_2:'#bd362f' },
+            pink      :{ color: lighten('pink', 15),   color_2:'pink' },
+            darkgray  :{ color: "#999",                color_2:"#777" },
+            lightgray :{ color: "#eee",                color_2:"#ccc" }        
+        }
+        for (key in extra) {
+            var sel = "."+key;
+            if (data && data.preset) {
+                if (data.preset==key) sel = ""; else continue;
+            }
+            @{
+                &@sel {
+                    .button.colors(extra[key]);
+                    &:hover:not(.disabled) {
+                        .button.colors({ color:extra[key].color_2 });
+                    }
+                    &.active:not(.disabled), &:active:not(.disabled) {
+                        .button.colors({ color:lighten(extra[key].color_2,10) });
+                    }
+                }
+            }
+        }
+    }
+}
+
+.button.metro(data) {
+    @ data = data || {};
+    .button.base(data);
+    
+    @ var color_1 = color(data.color || "#eee");
+    .button.colors({color:color_1});
+    &.active, &:active {
+        .button.colors({color:darken(color_1, 10),text:rgba(0,0,0,0.5)});
+    }
+    &.disabled, &[disabled] {
+        .button.colors({color:darken(color_1, 10),opacity:65});
+    }    
+}
+
+.button_extra.metro(data) {
+    @{
+        var extra = {
+            green:     "#00a300",
+            darkgreen: darken('#62c462',20),
+            orange:    lighten('orange', 15),
+            blue:      '#3A5498',
+            red:       lighten('#BA141A', 20),
+            pink:      'pink',
+            darkgray:  "#999",
+            lightgray: darken("#eee", 10)
+        }
+        for (key in extra) {
+            var sel = "."+key;
+            if (data && data.preset) {
+                if (data.preset==key) sel = ""; else continue;
+            }
+            @{
+                &@sel {
+                    .button.colors({color:extra[key]});
+                    &:hover {
+                        .button.colors({ color:darken(extra[key],20) });
+                    }
+                    &.active, &:active {
+                        .button.colors({ color:lighten(extra[key],10) });
+                    }
+                }
+            }
+        }        
+    }
+}
+
+.button.apple(data){
+    @ data = data || {};
+    .button.base(data);   
+    border-top: 1px solid #bbb;
+    border-bottom: 1px solid #bbb;
+    border-radius: 2em;
+    .box_shadow('inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05)');
+    
+    @ var color_1 = color(data.color || "#eee");
+    @ var color_2 = color(data.color_2 || darken(color_1,10));
+    
+    .button.colors({color:color_1, color_2:color_2});
+    .effects.glare({margin:{left: '0.3em', right: '0.3em'}});    
+    
+    &:hover { 
+        .button.colors({color:color_1});
+    }
+    &.active, &:active {
+        .button.colors({color:color_1});
+    }
+    &.disabled, &[disabled] {
+        .button.colors({color:color_1,opacity:65});
+        .box_shadow('none');
+    }
+    
+    &.small {
+        .effects.glare({margin:{left: '0.6em', right: '0.6em'}});    
+    }
+    
+}
+ 
+.button_extra.apple(data) {
+    @{
+        var extra = {
+            green     :{ color: '#62c462',             color_2:'#51a351' },
+            darkgreen :{ color: darken('#62c462',20),  color_2:darken('#51a351',20) },
+            orange    :{ color: lighten('orange', 15), color_2:'orange' },
+            blue      :{ color: '#5bc0de',             color_2:'#2f96b4' },
+            red       :{ color: '#ee5f5b',             color_2:'#bd362f' },
+            pink      :{ color: lighten('pink', 15),   color_2:'pink' },
+            darkgray  :{ color: "#999",                color_2:"#777" },
+            lightgray :{ color: "#eee",                color_2:"#ccc" }        
+        }
+        for (key in extra) {
+            var sel = "."+key;
+            if (data && data.preset) {
+                if (data.preset==key) sel = ""; else continue;
+            }
+            @{
+                &@sel {
+                    .button.colors(extra[key]);
+                    &:hover {
+                        .button.colors({ color:extra[key].color_2 });
+                    }
+                    &.active, &:active {
+                        .button.colors({ color:lighten(extra[key].color_2,10) });
+                    }
+                }
+            }
+        }
+    }
+}

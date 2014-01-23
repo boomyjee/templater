@@ -30,7 +30,6 @@
     cursor: pointer;
     outline: none;
     white-space:nowrap;
-    margin: 2px;
     width: auto;
     height: auto;
     
@@ -141,6 +140,7 @@
     @ data = data || {};
     .button.base(data);
     
+    border: none;
     @ var color_1 = color(data.color || "#eee");
     .button.colors({color:color_1});
     &.active, &:active {

@@ -1,0 +1,69 @@
+@{
+    grid = function(columns,columnWidth,gutterWidth) {
+        grid.columnCount = columns;
+        grid.columnWidth = columnWidth;
+        grid.gutterWidth = gutterWidth;
+    }
+    grid.columnCount = 16
+    grid.columnWidth = 40
+    grid.gutterWidth = 20
+}
+
+.grid_property<grid>(what) {
+    @{
+        if (what=='container') return grid.container();
+        return grid.columns(parseInt(what));
+    }
+}
+
+.container(width,sel) {
+    @ if (sel) return tea.rule(sel,function(){container(width)});
+    @ width = width || '900px';
+    width: @width;
+    margin: 0 auto;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.sheetContainer(expand) {
+    > .container {
+        @ container(sheetWidth);
+        @ clearfix();
+    }
+    @ if (!expand) container(sheetWidth);
+}
+
+.grid.container() {
+    @ siteWidth = (grid.columnCount * grid.columnWidth) + (grid.gutterWidth * (grid.columnCount-1))
+    .container(siteWidth+'px');
+    .clearfix();
+}
+
+.grid.columns(columnSpan) {
+    display: inline;
+    float: left;
+    width: @{(grid.columnWidth * columnSpan) + (grid.gutterWidth * (columnSpan - 1))}px;
+    margin-left: @{grid.gutterWidth}px;
+
+    &:first-child {
+        margin-left: 0;
+    }
+}
+
+.grid.prepend(columnOffset) {
+    margin-left:  @{(grid.columnWidth * columnOffset) + (grid.gutterWidth * (columnOffset - 1))}px !important;
+}
+
+.grid.append(columnOffset) {
+    margin-right: @{(grid.columnWidth * columnOffset) + (grid.gutterWidth * (columnOffset - 1))}px !important;
+}
+
+.grid.common() {
+    float:left;margin:0 2% 2% 0;width:48%;
+}
+.grid.ot() {
+    .grid.common(); width: 31.33%;
+}
+.grid.tt() {
+    .grid.common(); width: 64.66%;
+}

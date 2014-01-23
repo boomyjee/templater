@@ -1,0 +1,2 @@
+RewriteEngine on
+RewriteRule ^browse.php(.*) demo.php?_type=browse&url=$1 [L,QSA]

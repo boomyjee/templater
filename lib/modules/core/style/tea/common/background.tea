@@ -27,7 +27,7 @@
         test.color_3 = teacss.functions.color_3;
         
         if (teacss.cache(test) && !teacss.building) return;
-        if (!bg.pattern) return background.color(bg);
+        if (!bg.pattern) return 'transparent';
         
         var canvas = new Canvas(bg.pattern);
         var gl = canvas.gl;
@@ -43,10 +43,15 @@
             '}'        
         ].join('\n'));
         
-        var col = teacss.Color.parse(color(bg.color));
+        var col = teacss.Color.parse(color(bg.pattern_color));
         col = [col.rgb[0]/255,col.rgb[1]/255,col.rgb[2]/255,col.alpha];
+        
+        var color_2 = bg.pattern_color_2;
+        if (!color_2) {
+            color_2 = 'white';
+        }
 
-        var col2 = teacss.Color.parse(color(bg.color_2));
+        var col2 = teacss.Color.parse(color(color_2));
         col2 = [col2.rgb[0]/255,col2.rgb[1]/255,col2.rgb[2]/255,col2.alpha];
         
         var transparency = bg.transparency ? Number(bg.transparency)/100.0 : 0; 

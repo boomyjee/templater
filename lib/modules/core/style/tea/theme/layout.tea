@@ -1,126 +1,82 @@
-.sidebar(width,position,sidebar_sel,main_sel) {
-    @ sidebar_sel = sidebar_sel || "#sidebar";
-    @ main_sel = main_sel || "#main";
-    @ position = position || 'right';
-
-    !@{sidebar_sel} {
-        width: @width;
-        float: @position;
-    }
-    
-    !@{main_sel} {
-        margin-@{position}: @{parseFloat(width)+20}px;
-    }
-}
-
-@ global.sublayout = type_mixin();
-.sublayout.default(data) {
-    @ if (data.part=="of")
-        width: 23%;
-    @ else if (data.part=="ot")
-        width: 31.33%;
-    @ else if (data.part=="oh")
-        width: 48%;
-    @ else if (data.part=="tt")
-        width: 64.66%;
-    @ else if (data.part=="tf")
-        width: 73%;
-    @ else 
-        @ return;
-        
-    display: inline-block; margin:0 2% 2% 0; vertical-align: top;
-}
-.sublayout.absolute(data) {
-    position: absolute !important;
-    @ if (data.position) {
-        left: @{data.position.x};
-        top: @{data.position.y};
-    @ }
-}
-
 @ global.layout = type_mixin();
-.layout.default(data) {
-    @{
-        data = extend({
-            header: {expand:true},
-            menu: {},
-            sheet: { width: "940px" },
-            column: {
-                width: "200px",
-                float: "right",
-                margin: 0
-            },
-            footer: {}
-        },data);
-        global.sheetWidth = data.sheet.width;
+@ global.layout.item = type_mixin();
+@ global.layout.container = type_mixin();
+
+.layout.container.default(data) {
+
+    @ data = data || {};
+    @ if (data.height && data.height!="auto")
+        height: @data.height;
+        
+    @ if (data.padding)
+        padding: @data.padding;
+        
+    .box_sizing('border-box');
+    
+    .background(data.background);
+    .typography(data.typography,true);
+    .clearfix();
+    
+    > .container {
+        margin-bottom: -10px;
+        > * {
+            margin-bottom: 10px;
+        }
     }
+}
+
+.layout.default(data) {
     
     body {
         .background(data.background);
-        padding-top: 1px;
-        margin-top: -1px;
     }
     
-    body > div > .container {
-        @ container(sheetWidth);
-        @ clearfix();    
-    }
-    
-    @ for (var key in data.container) {
-        @ var sub = data.container[key];
-        #@{key} {
-            margin-top: @sub.margin;
-            padding: @sub.padding;
-            .background(sub.background);
+    @ eachComponent(function(cmp,id,parent){ if (cmp.value && (cmp.value.type=="container" || cmp.value.type=="form")) {
+        #@{id} {
+            .layout.container(data.container ? data.container[id] : false);
+            @ if (!parent) {
+                > .container {
+                    width: @data.sheet.width;
+                    margin: 0 auto;
+                }
+            @ }
+        }
+        
+        @ var w = 0;
+        @ var pg = 2;
+
+        @ if (cmp.children) $.each(cmp.children, function(){
+            @{ 
+                var sid = this.value.id;
+                var sub = (data.layout ? data.layout[sid] : false) || {};
+                var dw = 100;
             
-            @ if (sub.height && sub.height!="auto")
-                height: @sub.height;
-            
-            .typography(sub.typography,true);
-            > .container {
-                position: relative;
+                if (sub.part=="of") dw = (100 - pg*3)/4;
+                else if (sub.part=="ot") dw = (100 - pg*2)/3;
+                else if (sub.part=="oh") dw = (100 - pg*1)/2;
+                else if (sub.part=="tt") dw = (100 - pg*2)/3*2 + pg;
+                else if (sub.part=="tf") dw = (100 - pg*3)/4*3 + pg*2;
+                
+                if (w + dw > 100) w = 0;
+                var margin = w==0 ? 0 : pg;
+                w += dw;
             }
-        }
-        
-        body > #@{key} {
-            @ if (sub.expand===false) container(sheetWidth);
-            margin-top: @sub.margin;
-        }
-    @ }
-    
-    @ for (var key in data.layout) {
-        @ var sub = data.layout[key];
-        #@{key} {
-            .global.sublayout(sub);
-        }
-    @ }
-    
-    .header {
-        @ sheetContainer(data.header.expand);
-        margin-top: @data.header.margin;
-        
-        #top_menu {
-            margin: 0 0 @data.menu.margin;
-        }
-    }
-    
-    .top_menu {
-        @ sheetContainer(data.menu.expand);
-        margin-top: @data.menu.margin;
-    }
-    
-    .sheet {
-        @ sheetContainer(true);
-        margin-top: @data.sheet.margin;
-        
-        .container { 
-            padding: 20px 0; 
-        }
-        .sidebar(data.column.width,data.column.float);
-    }
-    
-    .footer {
-        @ sheetContainer(data.footer.expand);
-        margin-top: @data.footer.margin;
-    }
+            
+            #@sid {
+                display: @{ dw==100 ? 'block':'inline-block' };
+                vertical-align: top;
+                margin-left: @{margin}%;
+                width: @{dw}%;
+                
+                @ if (sub.margin)
+                    margin-top: @sub.margin;
+            }
+            
+            @ if (sub.overflow) {
+                #@{id} #@{sid} {
+                    margin-bottom: -@sub.overflow;
+                }
+            @ }
+        @ })
+    @ } })
 }
