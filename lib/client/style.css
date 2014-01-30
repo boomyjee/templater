@@ -139,6 +139,18 @@ body.view-layout #teacss-layer > .editor-panel > .frame-panel {
     text-decoration: underline;
 }
 
+.teacss-ui .ui-button-tabs-content .context-menu .combo-group .close-link,
+.teacss-ui .ui-button-tabs-content .context-menu .combo-group .edit-link {
+    display: block;
+    border: 1px solid #aaa;
+    font-size: 0.8em;
+    padding: 0.1em 0.4em;
+    background: #333;
+    color: white;
+    float: right;
+    margin-left: 5px;
+}
+
 .teacss-ui {
     font-size: 12px !important;
     font-family: Georgia;
@@ -182,7 +194,8 @@ body.view-layout #teacss-layer > .editor-panel > .frame-panel {
     color: #555;
 }
 
-.combo-item .ui-icon {
+.combo-item .ui-icon
+{
     float: right;
 }
 

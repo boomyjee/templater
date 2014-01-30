@@ -6,7 +6,7 @@
     <script src="lib/templater.js"></script>
     <script>
         templater({
-            project: "demo",
+            project: "table_layout",
             template: "test"
         })
     </script>

@@ -226,6 +226,24 @@ body:hover .controls-handle.selected {
     z-index: 1000;
 }
 
+.controls-handle .controls-left {
+    top: 0; bottom: 0;
+    width: 5px;
+    left: 0;
+    position: absolute;
+    z-index: 1000;
+    background: red;
+}
+
+.controls-handle .controls-right {
+    top: 0; bottom: 0;
+    width: 5px;
+    right: 0;
+    position: absolute;
+    z-index: 1000;
+    background: red;
+}
+
 .controls-handle .controls-top {
     margin-top: -24px;
     height: 0px;

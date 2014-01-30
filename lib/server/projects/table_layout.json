@@ -1,0 +1,18 @@
+{
+  "color1": "blue",
+  "color2": "green",
+  "color3": "yellow",
+  "sheet": {
+    "width": "940px"
+  },
+  "background": {
+    "type": "color",
+    "color": false,
+    "pattern": "http://uxcandy.com/~boomyjee/templater/lib/modules/core/ui/controls/../../assets/patterns/new-retro-09b.jpg",
+    "pattern_color": "transparent",
+    "pattern_color_2": [
+      2,
+      7
+    ]
+  }
+}

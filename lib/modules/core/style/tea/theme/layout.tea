@@ -1,6 +1,23 @@
 @ global.layout = type_mixin();
 @ global.layout.item = type_mixin();
 @ global.layout.container = type_mixin();
+@ global.layout.border = type_mixin();
+
+.layout.border.default(border) {
+    @{
+        if (!border) return;
+        var width = border.width || 0;
+        var cl = color(border.color);
+        
+        $.each(["left","right","top","bottom"],function(i,where){
+            if (border[where]) {
+                @{
+                    border-@where: @width solid @cl;
+                }
+            }
+        });
+    }
+}
 
 .layout.container.default(data) {
 
@@ -10,6 +27,9 @@
         
     @ if (data.padding)
         padding: @data.padding;
+        
+    @ if (data.border)
+        .layout.border(data.border);
         
     .box_sizing('border-box');
     
@@ -62,7 +82,7 @@
                 w += dw;
             }
             
-            #@sid {
+            body #@sid {
                 display: @{ dw==100 ? 'block':'inline-block' };
                 vertical-align: top;
                 margin-left: @{margin}%;
