@@ -14,5 +14,15 @@
       2,
       7
     ]
+  },
+  "layout": {
+    "id1391102247307": {
+      "type": "column",
+      "column": 6
+    },
+    "id1391166237492": {
+      "type": "column",
+      "column": 6
+    }
   }
 }

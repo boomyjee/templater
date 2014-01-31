@@ -46,7 +46,6 @@
 }
 
 .layout.default(data) {
-    
     body {
         .background(data.background);
     }
@@ -64,18 +63,25 @@
         
         @ var w = 0;
         @ var pg = 2;
+        @ var col_num = 12;
+        @ var col_w = (100 - pg * (col_num-1)) / col_num;
 
         @ if (cmp.children) $.each(cmp.children, function(){
             @{ 
                 var sid = this.value.id;
                 var sub = (data.layout ? data.layout[sid] : false) || {};
                 var dw = 100;
-            
-                if (sub.part=="of") dw = (100 - pg*3)/4;
-                else if (sub.part=="ot") dw = (100 - pg*2)/3;
-                else if (sub.part=="oh") dw = (100 - pg*1)/2;
-                else if (sub.part=="tt") dw = (100 - pg*2)/3*2 + pg;
-                else if (sub.part=="tf") dw = (100 - pg*3)/4*3 + pg*2;
+                
+                if (sub.type=='column') {
+                    var count = sub.column || col_num;
+                    dw = count * col_w + pg * (count - 1);
+                } else {
+                    if (sub.part=="of") dw = (100 - pg*3)/4;
+                    else if (sub.part=="ot") dw = (100 - pg*2)/3;
+                    else if (sub.part=="oh") dw = (100 - pg*1)/2;
+                    else if (sub.part=="tt") dw = (100 - pg*2)/3*2 + pg;
+                    else if (sub.part=="tf") dw = (100 - pg*3)/4*3 + pg*2;
+                }
                 
                 if (w + dw > 100) w = 0;
                 var margin = w==0 ? 0 : pg;
