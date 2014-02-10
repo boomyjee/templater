@@ -32,13 +32,13 @@
       "type": "column",
       "column": 6
     },
-    "id1392004739155": {
-      "type": "column",
-      "column": 12
-    },
     "id1392000899213": {
       "type": "column",
       "column": 12
+    },
+    "col_6": {
+      "type": "column",
+      "column": 6
     }
   }
 }

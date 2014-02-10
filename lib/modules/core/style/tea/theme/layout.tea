@@ -45,64 +45,81 @@
     }
 }
 
+@ var componentWidth = {};
+
 .layout.default(data) {
     body {
         .background(data.background);
     }
     
-    @ eachComponent(function(cmp,id,parent){ if (cmp.value && (cmp.value.type=="container" || cmp.value.type=="form")) {
-        #@{id} {
-            .layout.container(data.container ? data.container[id] : false);
-            @ if (!parent) {
-                > .container {
-                    width: @data.sheet.width;
-                    margin: 0 auto;
-                }
-            @ }
-        }
-        
-        @ var w = 0;
-        @ var pg = 2;
-        @ var col_num = 12;
-        @ var col_w = (100 - pg * (col_num-1)) / col_num;
-
+    @ eachComponent(function(cmp,id,parent){ 
+    
         @ if (cmp.children) $.each(cmp.children, function(){
-            @{ 
-                var sid = this.value.id;
-                var sub = (data.layout ? data.layout[sid] : false) || {};
-                var dw = 100;
-                
-                if (sub.type=='column') {
-                    var count = sub.column || col_num;
-                    dw = count * col_w + pg * (count - 1);
-                } else {
-                    if (sub.part=="of") dw = (100 - pg*3)/4;
-                    else if (sub.part=="ot") dw = (100 - pg*2)/3;
-                    else if (sub.part=="oh") dw = (100 - pg*1)/2;
-                    else if (sub.part=="tt") dw = (100 - pg*2)/3*2 + pg;
-                    else if (sub.part=="tf") dw = (100 - pg*3)/4*3 + pg*2;
-                }
-                
-                if (w + dw > 100) w = 0;
-                var margin = w==0 ? 0 : pg;
-                w += dw;
+            componentWidth[this.value.id] = componentWidth[id] || 100;
+        @ });
+    
+        @ if (cmp.value && (cmp.value.type=="container" || cmp.value.type=="form")) {
+            #@{id} {
+                .layout.container(data.container ? data.container[id] : false);
+                @ if (!parent) {
+                    > .container {
+                        width: @data.sheet.width;
+                        margin: 0 auto;
+                    }
+                @ }
             }
-            
-            body #@sid {
-                display: @{ dw==100 ? 'block':'inline-block' };
-                vertical-align: top;
-                margin-left: @{margin}%;
-                width: @{dw}%;
-                
-                @ if (sub.margin)
-                    margin-top: @sub.margin;
+
+            @{
+                var w = 0;
+                var pg = 2;
+                var col_num = 12;
+                var col_w = (100 - pg * (col_num-1)) / col_num;
+
+                var total = componentWidth[id] || 100;
             }
-            
-            @ if (sub.overflow) {
-                #@{id} #@{sid} {
-                    margin-bottom: -@sub.overflow;
+
+            @ if (cmp.children) $.each(cmp.children, function(){
+                @{ 
+                    var sid = this.value.id;
+                    var sub = (data.layout ? data.layout[sid] : false) || {};
+                    var dw = 100;
+
+                    if (sub.type=='column') {
+                        var count = sub.column || col_num;
+                        dw = count * col_w + pg * (count - 1);
+                    } else {
+                        if (sub.part=="of") dw = (total - pg*3)/4;
+                        else if (sub.part=="ot") dw = (total - pg*2)/3;
+                        else if (sub.part=="oh") dw = (total - pg*1)/2;
+                        else if (sub.part=="tt") dw = (total - pg*2)/3*2 + pg;
+                        else if (sub.part=="tf") dw = (total - pg*3)/4*3 + pg*2;
+                    }
+
+                    if (w + dw > total) w = 0;
+                    var margin = w==0 ? 0 : pg;
+                    w += dw;
+
+                    componentWidth[sid] = dw;
+                    var relativeWidth = dw / total * 100;
+                    var relativeMargin = margin / total * 100;
                 }
-            @ }
-        @ })
-    @ } })
+
+                body #@sid {
+                    display: @{ dw==100 ? 'block':'inline-block' };
+                    vertical-align: top;
+                    margin-left: @{relativeMargin}%;
+                    width: @{relativeWidth}%;
+
+                    @ if (sub.margin)
+                        margin-top: @sub.margin;
+                }
+
+                @ if (sub.overflow) {
+                    #@{id} #@{sid} {
+                        margin-bottom: -@sub.overflow;
+                    }
+                @ }
+            @ })
+        @ }
+    @ })
 }
