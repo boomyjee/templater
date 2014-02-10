@@ -101,7 +101,7 @@ body.view-layout #teacss-layer > .editor-panel > .frame-panel {
     outline: none;
 }
 
-.teacss-ui .preview-toolbar .ui-button-text-only .ui-button-text {
+.teacss-ui .preview-toolbar .ui-button-text {
     padding: 0.15em 0.3em;
     line-height: 1.4;
 }
@@ -172,12 +172,12 @@ body.view-layout #teacss-layer > .editor-panel > .frame-panel {
     color: #777 !important;
 }
 
-.teacss-ui .ui-button-text
+.ui-button-text
 {
     padding: 0.1em 0.1em 0.1em 1em;
 }
         
-.teacss-ui .ui-button-text-only .ui-button-text {
+.ui-button-text-only .ui-button-text {
     padding: 0.1em 0.1em;
     line-height: 1.8;
 }     

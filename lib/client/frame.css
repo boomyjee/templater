@@ -6,6 +6,7 @@ html {
 body {
     margin: 0;
     padding: 0;
+    overflow-y: scroll;
 }
 
 body.edit-layout {
@@ -108,6 +109,14 @@ body.view3d .component-handle
     opacity: 0.3;
 }
 
+body.edit-layout:hover .component-handle.selected-parent {
+    border: 2px solid #00ff00;
+    transition: none;    
+    -moz-transition: none;
+    -webkit-transition: none;
+    opacity: 0.3;    
+}
+
 body.view3d .component-handle {
     box-shadow: -5px -5px 5px rgba(0,0,0,0.5);
     opacity: 0.6;
@@ -152,6 +161,37 @@ body.edit-layout.view3d .component-handle > .component-heading
     -moz-transition: none;
     -webkit-transition: none;
     opacity: 1;
+}
+
+body.edit-layout:hover .component-handle.selected-parent > .component-heading {
+    display: block;
+    visibility: visible;
+    transition: none;    
+    -moz-transition: none;
+    -webkit-transition: none;
+    opacity: 1;
+    background: none repeat scroll 0 0 rgba(100, 255, 100, 0.8);
+}
+
+
+/* parent select title */
+.parent-component-handle {
+    display: none;
+    position: absolute;
+    line-height: 24px;
+    height: 24px;
+    background: none repeat scroll 0 0 rgba(100, 255, 100, 0.8);
+    cursor: pointer;
+    padding: 0 5px;
+    z-index: 1000;
+}
+
+.parent-component-handle:hover {
+    background: none repeat scroll 0 0 rgba(100, 255, 100, 1.0);
+}
+
+body.edit-layout:hover .parent-component-handle.selected-parent {
+    display: block;
 }
 
 /* sort and area handles */
@@ -293,6 +333,11 @@ body:hover .controls-handle.selected {
 .controls-handle .controls-right .right-resizer {
     right: 0;
     cursor: w-resize;
+}
+
+.component-resizer-helper {
+    width: 5px;
+    background: #f70;
 }
 
 .controls-handle .controls-top {
