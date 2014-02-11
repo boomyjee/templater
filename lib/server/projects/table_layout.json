@@ -34,7 +34,7 @@
     },
     "id1392000899213": {
       "type": "column",
-      "column": false
+      "column": 12
     },
     "col_6": {
       "type": "absolute",
@@ -43,8 +43,8 @@
       "columns": 6,
       "width": "283.5px",
       "position": {
-        "x": "98px",
-        "y": "36px"
+        "x": "53px",
+        "y": "34px"
       }
     },
     "id1392034806737": {
@@ -54,8 +54,122 @@
   },
   "container": {
     "id1392000899213": {
-      "border": "300px",
-      "height": "200px"
+      "height": "200px",
+      "border": {
+        "width": "10px",
+        "color": [
+          1,
+          5
+        ],
+        "right": false,
+        "left": false,
+        "top": false,
+        "bottom": false
+      }
+    },
+    "id1391102156271": {
+      "background": {
+        "type": "color",
+        "color": [
+          3,
+          14
+        ],
+        "pattern": false,
+        "pattern_color": [
+          1,
+          13
+        ],
+        "pattern_color_2": "white",
+        "transparency": 0,
+        "_id": 1392129450914
+      }
     }
+  },
+  "typography": {
+    "type": "default",
+    "headingsFont": "Palatino Linotype",
+    "textFont": "Verdana",
+    "_id": 1392123846677
+  },
+  "presets": {
+    "typographyFonts": [
+      {
+        "group": "My Fonts",
+        "presets": true,
+        "disabled": true,
+        "preset": true
+      },
+      {
+        "value": {
+          "type": "default",
+          "headingsFont": "Palatino Linotype",
+          "textFont": "Verdana",
+          "_id": 1392123846677
+        },
+        "preset": true
+      }
+    ],
+    "backgrounds": [
+      {
+        "group": "My Bg",
+        "presets": true,
+        "disabled": true,
+        "preset": true
+      },
+      {
+        "value": {
+          "type": "color",
+          "color": [
+            3,
+            14
+          ],
+          "pattern": false,
+          "pattern_color": [
+            1,
+            13
+          ],
+          "pattern_color_2": "white",
+          "transparency": 0,
+          "_id": 1392129450914
+        },
+        "preset": true
+      },
+      {
+        "value": {
+          "type": "color",
+          "color": [
+            2,
+            12
+          ],
+          "pattern": false,
+          "pattern_color": [
+            1,
+            13
+          ],
+          "pattern_color_2": "white",
+          "transparency": 0,
+          "_id": 1392129450916
+        },
+        "preset": true
+      },
+      {
+        "value": {
+          "type": "color",
+          "color": [
+            1,
+            9
+          ],
+          "pattern": false,
+          "pattern_color": [
+            1,
+            13
+          ],
+          "pattern_color_2": "white",
+          "transparency": 0,
+          "_id": 1392129450915
+        },
+        "preset": true
+      }
+    ]
   }
 }

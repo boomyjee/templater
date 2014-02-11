@@ -109,7 +109,7 @@ body.hide-handles .component-handle {
 body.hide-handles .component-handle.selected,
 body.hide-handles .component-handle.selected-parent {
     display: block !important;
-    opacity: 0.2 !important;
+    opacity: 0.3 !important;
 }
 
 .component-handle.selected,
