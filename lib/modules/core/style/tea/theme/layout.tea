@@ -28,6 +28,11 @@
     @ if (data.padding)
         padding: @data.padding;
         
+    min-height: 30px;
+    
+    @ if (data.height)
+        height: @data.height;
+        
     @ if (data.border)
         .layout.border(data.border);
         
@@ -38,6 +43,7 @@
     .clearfix();
     
     > .container {
+        position: relative;
         margin-bottom: -10px;
         > * {
             margin-bottom: 10px;
@@ -53,10 +59,11 @@
     }
     
     @ eachComponent(function(cmp,id,parent){ 
-    
-        @ if (cmp.children) $.each(cmp.children, function(){
-            componentWidth[this.value.id] = componentWidth[id] || 100;
-        @ });
+        @{ 
+            if (cmp.children) $.each(cmp.children, function(){
+                componentWidth[this.value.id] = componentWidth[id] || 100;
+            }); 
+        }
     
         @ if (cmp.value && (cmp.value.type=="container" || cmp.value.type=="form")) {
             #@{id} {
@@ -82,17 +89,21 @@
                 @{ 
                     var sid = this.value.id;
                     var sub = (data.layout ? data.layout[sid] : false) || {};
-                    var dw = 100;
+                    var dw = total;
+                    var position = false;
 
-                    if (sub.type=='column') {
-                        var count = sub.column || col_num;
-                        dw = count * col_w + pg * (count - 1);
-                    } else {
+                    if (sub.type=="part") {
                         if (sub.part=="of") dw = (total - pg*3)/4;
                         else if (sub.part=="ot") dw = (total - pg*2)/3;
                         else if (sub.part=="oh") dw = (total - pg*1)/2;
                         else if (sub.part=="tt") dw = (total - pg*2)/3*2 + pg;
                         else if (sub.part=="tf") dw = (total - pg*3)/4*3 + pg*2;
+                    } 
+                    else if (sub.type!='absolute') {
+                        if (sub.column) {
+                            var count = sub.column || col_num;
+                            dw = count * col_w + pg * (count - 1);
+                        }
                     }
 
                     if (w + dw > total) w = 0;
@@ -102,14 +113,32 @@
                     componentWidth[sid] = dw;
                     var relativeWidth = dw / total * 100;
                     var relativeMargin = margin / total * 100;
+                    
+                    var pos = sub.position || {};
                 }
 
                 body #@sid {
-                    display: @{ dw==100 ? 'block':'inline-block' };
-                    vertical-align: top;
-                    margin-left: @{relativeMargin}%;
-                    width: @{relativeWidth}%;
+                    @ if (sub.type=='absolute') {
+                        display: block;
+                        position: absolute;
+                        
+                        @ if (sub.width)
+                            width: @sub.width;
+                            
+                        left: @{pos.x || 0};
+                        top: @{pos.y || 0};
+                    
+                    @ } else {
+                
+                        display: @{ dw==total ? 'block':'inline-block' };
+                        margin-left: @{relativeMargin}%;
 
+                        @ if (relativeWidth!=100)
+                            width: @{relativeWidth}%;
+                        
+                    @ }
+
+                    vertical-align: top;
                     @ if (sub.margin)
                         margin-top: @sub.margin;
                 }

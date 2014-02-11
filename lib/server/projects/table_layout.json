@@ -3,7 +3,7 @@
   "color2": "green",
   "color3": "yellow",
   "sheet": {
-    "width": "940px"
+    "width": "800px"
   },
   "background": {
     "type": "color",
@@ -17,28 +17,45 @@
   },
   "layout": {
     "id1391102247307": {
-      "type": "column",
+      "type": "part",
       "column": 6
     },
     "id1391166237492": {
-      "type": "column",
+      "type": "part",
       "column": 6
     },
     "id1392000899214": {
-      "type": "column",
+      "type": "part",
       "column": 6
     },
     "id1392001635709": {
       "type": "column",
-      "column": 6
+      "column": 12
     },
     "id1392000899213": {
       "type": "column",
-      "column": 12
+      "column": false
     },
     "col_6": {
-      "type": "column",
-      "column": 6
+      "type": "absolute",
+      "column": 5,
+      "part": "oh",
+      "columns": 6,
+      "width": "283.5px",
+      "position": {
+        "x": "98px",
+        "y": "36px"
+      }
+    },
+    "id1392034806737": {
+      "type": "part",
+      "part": "oh"
+    }
+  },
+  "container": {
+    "id1392000899213": {
+      "border": "300px",
+      "height": "200px"
     }
   }
 }

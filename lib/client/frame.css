@@ -77,7 +77,7 @@ body.edit-layout .handle-container {
     position: absolute;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
-    min-height: 20px;
+    min-height: 25px;
     min-width: 20px;
     /*opacity: 0;*/
 }
@@ -94,6 +94,22 @@ body.edit-layout .handle-container {
     -moz-transition: 0.2s ease-in-out;
     -webkit-transition: 0.2s ease-in-out;    
     opacity: 1;
+}
+
+body.hide-handles .component-heading,
+body.hide-handles .controls-left,
+body.hide-handles .controls-right,
+body.hide-handles .controls-top,
+body.hide-handles .controls-bottom,
+body.hide-handles .highlight-handle,
+body.hide-handles .component-handle {
+    display: none !important;
+}
+
+body.hide-handles .component-handle.selected,
+body.hide-handles .component-handle.selected-parent {
+    display: block !important;
+    opacity: 0.2 !important;
 }
 
 .component-handle.selected,
@@ -137,6 +153,7 @@ body:hover .component-handle.selected {
     right: 0;
     top: 0;
     opacity: 0;
+    color: #000;
 }
 
 .component-handle .component-heading.draggable {
@@ -184,6 +201,7 @@ body.edit-layout:hover .component-handle.selected-parent > .component-heading {
     cursor: pointer;
     padding: 0 5px;
     z-index: 1000;
+    color: #000;
 }
 
 .parent-component-handle:hover {
@@ -286,8 +304,18 @@ body:hover .controls-handle.selected {
     width: 260px;
 }
 
+.highlight-handle:hover {
+    background: rgba(255,119,0,0.1);
+}
+
 .controls-handle.hidden {
     display: none;
+}
+
+.controls-handle .controls-back {
+    left: 0; right: 0;
+    top: 24px; bottom: 0;
+    position: absolute;
 }
 
 .controls-handle .controls-center {
@@ -315,24 +343,6 @@ body:hover .controls-handle.selected {
 
 .controls-handle .controls-right {
     right: 0;
-}
-
-.controls-handle .controls-left .left-resizer,
-.controls-handle .controls-right .right-resizer {
-    width: 5px; background: transparent;
-    position: absolute;
-    z-index: 1001;
-    top: 0; bottom: 0;
-}
-
-.controls-handle .controls-left .left-resizer {
-    left: 0;
-    cursor: e-resize;
-}
-
-.controls-handle .controls-right .right-resizer {
-    right: 0;
-    cursor: w-resize;
 }
 
 .component-resizer-helper {
