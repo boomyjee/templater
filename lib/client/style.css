@@ -27,7 +27,6 @@ body.view-layout #teacss-layer > .editor-panel > .frame-panel {
     top: 0 !important;
     bottom: 0 !important;
 }
-
 .teacss-ui .button-label {
     background: none repeat scroll 0 0 #FFFFFF;
     display: inline-block;
@@ -51,6 +50,24 @@ body.view-layout #teacss-layer > .editor-panel > .frame-panel {
     vertical-align:middle;
 }
 
+.teacss-ui .color-label {
+    text-align: center;
+    font-size: 12px;
+    line-height: 20px;
+    vertical-align: middle;
+    border: 1px solid #777;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAAAAAA6mKC9AAAAGElEQVQYV2N4DwX/oYBhgARgDJjEAAkAAEC99wFuu0VFAAAAAElFTkSuQmCC);
+}
+
+.teacss-ui .color-label span {
+    display: block;
+    width: 100%;
+    height: 100%;  
+}
 
 .teacss-ui .ui-tabs .ui-tabs-nav {
     border-bottom: medium none;
@@ -172,8 +189,13 @@ body.view-layout #teacss-layer > .editor-panel > .frame-panel {
     color: #777 !important;
 }
 
-.ui-button-text
-{
+.ui-button {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.ui-button-text {
     padding: 0.1em 0.1em 0.1em 1em;
 }
         

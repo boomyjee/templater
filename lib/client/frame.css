@@ -33,15 +33,9 @@ body .empty-info {
 body.edit-layout .container:empty,
 body.edit-layout form:empty
 {
+    min-height: 100%;
     height: 100px;
-    line-height: 100px;
     overflow: hidden;
-    background-color: rgba(200,200,200,0.5);
-    text-align: center;
-    white-space: nowrap;
-    margin-bottom: 0 !important;
-    border: 2px solid #ccc !important;
-    box-shadow: inset 0 0 20px rgba(0,0,0,0.2) !important;
 }
 
 body.edit-layout .container:empty:before,
@@ -49,8 +43,14 @@ body.edit-layout form:empty:before
 {
     content: "Place elements inside";
     font-size: 16px !important;
+    height: 16px;
+    line-height: 16px;
     color: #777 !important;
-    display: inline !important;
+    display: block !important;
+    white-space: nowrap;
+    position: absolute;
+    text-align: center;
+    left: 0; right: 0; top: 50%; margin-top: -8px;
 }
 
 /* handle container */
@@ -101,6 +101,7 @@ body.hide-handles .controls-left,
 body.hide-handles .controls-right,
 body.hide-handles .controls-top,
 body.hide-handles .controls-bottom,
+body.hide-handles .controls-center,
 body.hide-handles .highlight-handle,
 body.hide-handles .component-handle {
     display: none !important;
@@ -122,7 +123,7 @@ body.view3d .component-handle
     transition: none;    
     -moz-transition: none;
     -webkit-transition: none;
-    opacity: 0.3;
+    opacity: 0.0;
 }
 
 body.edit-layout:hover .component-handle.selected-parent {
@@ -259,6 +260,7 @@ body.edit-layout:hover .parent-component-handle.selected-parent {
     font: 14px Arial;
     color: black;
     display: none;
+    min-width: 20px;
 }
 
 body.view3d:hover .controls-handle.selected {

@@ -1,0 +1,639 @@
+{
+  "color1": "#81cf3c",
+  "color2": "#f5b60a",
+  "color3": "yellow",
+  "sheet": {
+    "width": "940px"
+  },
+  "cmp": {
+    "id1392132170500": {
+      "background": {
+        "type": "color",
+        "color": "#ffffff",
+        "pattern": false,
+        "pattern_color": [
+          1,
+          13
+        ],
+        "pattern_color_2": "white",
+        "transparency": 0,
+        "_id": 1392234610864
+      },
+      "layout": {
+        "height": false
+      },
+      "border": {
+        "width": false,
+        "color": [
+          1,
+          7
+        ]
+      }
+    },
+    "id1392132704070": {
+      "background": {
+        "type": "pattern",
+        "pattern": "http://uxcandy.com/~boomyjee/templater/lib/modules/core/ui/controls/../../assets/patterns/new-retro-07b.jpg",
+        "pattern_color": [
+          1,
+          10
+        ],
+        "pattern_color_2": [
+          1,
+          12
+        ],
+        "transparency": 30,
+        "color": false,
+        "_id": 1392236897285
+      }
+    },
+    "id1392132170503": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "-14px",
+          "y": "38px"
+        }
+      }
+    },
+    "id1392146568866": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "448px",
+          "y": "14px"
+        },
+        "width": "474px",
+        "height": "163px"
+      }
+    },
+    "id1392132170502": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "24px",
+          "y": "-21px"
+        }
+      }
+    },
+    "id1392132704069": {
+      "layout": {
+        "height": "433px",
+        "overflow": "0px"
+      }
+    },
+    "id1392166668979": {
+      "layout": {
+        "column": 6,
+        "height": "450px"
+      },
+      "background": {
+        "type": "color",
+        "color": "#ffffff",
+        "pattern": false,
+        "pattern_color": [
+          1,
+          13
+        ],
+        "pattern_color_2": "white",
+        "transparency": 0,
+        "_id": 1392234610864
+      },
+      "border": {
+        "width": "3px",
+        "color": [
+          1,
+          8
+        ]
+      },
+      "borderRadius": "20px 20px 20px 20px",
+      "padding": "20px 20px 20px 20px",
+      "typography": {
+        "type": "default",
+        "fontSize": 20,
+        "textColor": [
+          1,
+          6
+        ]
+      }
+    },
+    "id1392166668980": {
+      "layout": {
+        "column": 6,
+        "height": "450px"
+      },
+      "form": {
+        "layout": {
+          "type": "default"
+        },
+        "style": {
+          "type": "default",
+          "controlPadding": "1em"
+        }
+      },
+      "padding": "20px 20px 20px 20px",
+      "background": {
+        "type": "color",
+        "color": [
+          1,
+          13
+        ],
+        "pattern": false,
+        "pattern_color": [
+          1,
+          13
+        ],
+        "pattern_color_2": "white",
+        "transparency": 0,
+        "_id": 1392237183182
+      },
+      "border": {
+        "width": "3px",
+        "color": [
+          1,
+          8
+        ]
+      },
+      "typography": {
+        "type": "default",
+        "textColor": [
+          1,
+          3
+        ]
+      },
+      "borderRadius": "20px 20px 20px 20px"
+    },
+    "id1392165795364": {
+      "padding": "20px 0px 20px 0px",
+      "background": {
+        "type": "pattern",
+        "pattern": "http://uxcandy.com/~boomyjee/templater/lib/modules/core/ui/controls/../../assets/patterns/new-retro-07b.jpg",
+        "pattern_color": [
+          1,
+          10
+        ],
+        "pattern_color_2": [
+          1,
+          12
+        ],
+        "transparency": 30,
+        "color": false,
+        "_id": 1392236897285
+      }
+    },
+    "id1392166668984": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "333px",
+          "y": "-53px"
+        }
+      }
+    },
+    "id1392166668982": {
+      "layout": {
+        "column": 3
+      }
+    },
+    "id1392166668983": {
+      "layout": {
+        "column": 3
+      }
+    },
+    "id1392167764997": {
+      "layout": {
+        "column": 3
+      }
+    },
+    "id1392167764998": {
+      "layout": {
+        "column": 3
+      }
+    },
+    "id1392166668981": {
+      "button": {
+        "style": {
+          "type": "apple",
+          "fontSize": "48px",
+          "color": [
+            2,
+            9
+          ]
+        },
+        "align": "fill",
+        "margin": "20px"
+      }
+    },
+    "id1392168200133": {
+      "background": {
+        "type": "color",
+        "color": "#f2f2f2",
+        "pattern": false,
+        "pattern_color": [
+          1,
+          13
+        ],
+        "pattern_color_2": "white",
+        "transparency": 0,
+        "_id": 1392168200660
+      },
+      "layout": {
+        "column": 4,
+        "height": "300px"
+      }
+    },
+    "id1392168200134": {
+      "background": {
+        "type": "color",
+        "color": "#f2f2f2",
+        "pattern": false,
+        "pattern_color": [
+          1,
+          13
+        ],
+        "pattern_color_2": "white",
+        "transparency": 0,
+        "_id": 1392168200660
+      },
+      "layout": {
+        "column": 4,
+        "height": "300px"
+      }
+    },
+    "id1392168200135": {
+      "background": {
+        "type": "color",
+        "color": "#f2f2f2",
+        "pattern": false,
+        "pattern_color": [
+          1,
+          13
+        ],
+        "pattern_color_2": "white",
+        "transparency": 0,
+        "_id": 1392168200660
+      },
+      "layout": {
+        "column": 4,
+        "height": "300px"
+      }
+    },
+    "id1392168200131": {
+      "padding": "20px 20px 20px 20px"
+    },
+    "id1392329972521": {
+      "logo": {
+        "type": "default",
+        "bullet": {
+          "type": "default",
+          "symbol": "ok"
+        }
+      }
+    },
+    "id1392620152526": {
+      "layout": {
+        "type": "column",
+        "width": "376px",
+        "position": {
+          "x": "36px",
+          "y": "48px"
+        }
+      },
+      "logo": {
+        "type": "default",
+        "bullet": {
+          "type": "default",
+          "symbol": "leaf",
+          "color": [
+            2,
+            8
+          ]
+        }
+      },
+      "list": {
+        "type": "default",
+        "bullet": {
+          "type": "default",
+          "symbol": "leaf",
+          "size": 36,
+          "indent": 0.4,
+          "color": [
+            2,
+            7
+          ]
+        },
+        "itemMargin": "1.1em"
+      }
+    },
+    "id1392623452680": {
+      "layout": {
+        "type": "column",
+        "column": 12
+      }
+    },
+    "id1392623452681": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "520px",
+          "y": "196px"
+        },
+        "width": "402px",
+        "height": "203px"
+      },
+      "typography": {
+        "type": "default",
+        "fontSize": 24,
+        "textColor": [
+          2,
+          5
+        ]
+      }
+    },
+    "id1392623652115": {
+      "list": {
+        "type": "default",
+        "bullet": {
+          "type": "image",
+          "symbol": "glass",
+          "image": "lib/server/upload/bullets/1392624362_5301c2ea8464c.png",
+          "indent": false
+        }
+      }
+    },
+    "id1392625556695": {
+      "layout": {
+        "height": "300px"
+      }
+    },
+    "id1392629276010": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "-20px",
+          "y": "38px"
+        }
+      }
+    },
+    "id1392629276011": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "7px",
+          "y": "-39px"
+        }
+      }
+    },
+    "id1392630852081": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "439px",
+          "y": "24px"
+        },
+        "width": false,
+        "height": false
+      },
+      "canvas": {
+        "text": "ПОХУДЕЙ НА 100%\nна 1000 кг за 5 часов",
+        "styles": {
+          "1": {
+            "3": {
+              "fontFamily": "Comic Sans MS",
+              "fillValue": [
+                2,
+                7
+              ],
+              "fontSize": 64
+            },
+            "4": {
+              "fontFamily": "Comic Sans MS",
+              "fillValue": [
+                2,
+                7
+              ],
+              "fontSize": 64
+            },
+            "5": {
+              "fontFamily": "Comic Sans MS",
+              "fillValue": [
+                2,
+                7
+              ],
+              "fontSize": 64
+            },
+            "6": {
+              "fontFamily": "Comic Sans MS",
+              "fillValue": [
+                2,
+                7
+              ],
+              "fontSize": 64
+            },
+            "7": {
+              "fontSize": 64
+            }
+          }
+        },
+        "fontFamily": "Impact",
+        "width": 481,
+        "height": 148,
+        "fillValue": [
+          1,
+          6
+        ],
+        "fontSize": 48,
+        "strokeWidth": 2,
+        "strokeValue": "#ffffff",
+        "shadowColorValue": "rgba(0, 0, 0, 0.16)",
+        "lineHeight": 1.3
+      }
+    },
+    "id1392800686317": {
+      "canvas": {
+        "styles": {},
+        "width": 216,
+        "height": 104,
+        "text": "< enter text >\n555"
+      },
+      "layout": {
+        "type": "column",
+        "column": 12
+      }
+    },
+    "id1392802773565": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "448px",
+          "y": "13px"
+        }
+      },
+      "smart_text": {
+        "styles": {
+          "0": {
+            "11": {
+              "fontSize": 80,
+              "fillValue": [
+                2,
+                8
+              ]
+            },
+            "12": {
+              "fontSize": 80,
+              "fillValue": [
+                2,
+                8
+              ]
+            },
+            "13": {
+              "fontSize": 80,
+              "fillValue": [
+                2,
+                8
+              ]
+            },
+            "14": {
+              "fontSize": 80,
+              "fillValue": [
+                2,
+                8
+              ]
+            }
+          },
+          "1": {
+            "3": {
+              "fillValue": [
+                2,
+                8
+              ],
+              "fontSize": 80
+            },
+            "4": {
+              "fillValue": [
+                2,
+                8
+              ],
+              "fontSize": 80
+            },
+            "5": {
+              "fillValue": [
+                2,
+                8
+              ],
+              "fontSize": 80
+            },
+            "6": {
+              "fillValue": [
+                2,
+                8
+              ],
+              "fontSize": 80
+            },
+            "7": {
+              "fillValue": [
+                2,
+                8
+              ],
+              "fontSize": 80
+            }
+          }
+        },
+        "width": 470,
+        "height": 162,
+        "text": "ПОХУДЕЙ НА 100%\nдо -8 кг в неделю",
+        "fontFamily": "Impact",
+        "fontSize": 56,
+        "fillValue": [
+          1,
+          6
+        ],
+        "strokeValue": "#ffffff",
+        "strokeWidth": 2,
+        "shadowColorValue": "rgba(0, 0, 0, 0.21)",
+        "lineHeight": 1
+      }
+    }
+  },
+  "presets": {
+    "backgrounds": [
+      {
+        "group": "My Bgs",
+        "presets": true,
+        "disabled": true,
+        "preset": true
+      },
+      {
+        "value": {
+          "type": "pattern",
+          "pattern": "http://uxcandy.com/~boomyjee/templater/lib/modules/core/ui/controls/../../assets/patterns/new-retro-07b.jpg",
+          "pattern_color": [
+            1,
+            10
+          ],
+          "pattern_color_2": [
+            1,
+            12
+          ],
+          "transparency": 30,
+          "color": false,
+          "_id": 1392236897285
+        },
+        "preset": true
+      },
+      {
+        "value": {
+          "type": "color",
+          "color": [
+            1,
+            13
+          ],
+          "pattern": false,
+          "pattern_color": [
+            1,
+            13
+          ],
+          "pattern_color_2": "white",
+          "transparency": 0,
+          "_id": 1392237183182
+        },
+        "preset": true
+      },
+      {
+        "value": {
+          "type": "color",
+          "color": "#ffffff",
+          "pattern": false,
+          "pattern_color": [
+            1,
+            13
+          ],
+          "pattern_color_2": "white",
+          "transparency": 0,
+          "_id": 1392234610864
+        },
+        "preset": true
+      },
+      {
+        "value": {
+          "type": "color",
+          "color": "#f2f2f2",
+          "pattern": false,
+          "pattern_color": [
+            1,
+            13
+          ],
+          "pattern_color_2": "white",
+          "transparency": 0,
+          "_id": 1392168200660
+        },
+        "preset": true
+      }
+    ]
+  },
+  "typography": {
+    "type": "default",
+    "textFont": "Georgia",
+    "headingsFont": "Century Gothic"
+  }
+}

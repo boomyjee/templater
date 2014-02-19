@@ -21,6 +21,7 @@
 @import "theme/logo";
 @import "theme/list";
 @import "theme/top_menu";
+@import "theme/smart_heading";
 
 @ global.donut_root = tea.dir+"../";
 
@@ -46,44 +47,52 @@
     .typography(data.typography);
     .alerts(data.alerts);
     
-    @ eachComponent("logo",function(cmp,id){
+    @ eachComponent(function(cmp,id,parent,type){
         #@{id} {
-            .logo(data.logo ? data.logo[id] : false);
-        }
-    @ })
-    
-    @ eachComponent("list",function(cmp,id){
-        #@{id} {
-            .list(data.list ? data.list[id] : false);
-        }
-    @ })
-    
-    @ eachComponent("form",function(cmp,id){
-        #@{id} form {
-            @ var sub = data.forms ? (data.forms[id] || {}) : {};
-            .form(sub.style);
-            .form_layout(sub.layout,sub.style);
-        }
-    @ })    
-    
-    @ eachComponent("testimonial",function(cmp,id){
-        #@{id} {
-            .testimonial(data.testimonial ? data.testimonial[id] : false);
-        }
-    @ })    
-    
-    @ eachComponent("form_button",function(cmp,id){
-        #@{id} {
-            @ var sub = data.buttons ? (data.buttons[id] || {}) : {};
-            @ if (sub.style) {
-                button {
-                    .button(sub.style);
-                }
-            @ }
-            @ if (sub.margin)
-                margin-top: @sub.margin;
+            @ var sub = data.cmp ? (data.cmp[id] || {}) : {};
+            
+            @ if (type=="logo")
+                .logo(sub.logo);
                 
-            .align(sub.align);    
+            @ if (type=="list")
+                .list(sub.list);
+                
+            @ if (type=="form") {
+                @ var val = sub.form || {};
+                .form(val.style);
+                .form_layout(val.layout,val.style);
+            @ }
+            
+            @ if (type=="testimonial") 
+                .testimonial(sub.testimonial);
+                    
+            @ if (type=="form_button") {
+                @ var val = sub.button || {};
+                
+                
+                @ if (val.style) {
+                    button {
+                        .button(val.style);
+                    }
+                @ }
+                @ if (val.margin)
+                    margin-top: @val.margin;
+                .align(val.align);    
+            @ }
+            
+            @ if (type=="smart_text") {
+                min-width: 100px;
+                min-height: 100px;
+                
+                @ if (sub.smart_text) {
+                    width: @{sub.smart_text.width}px;
+                    height: @{sub.smart_text.height}px;
+                @ }
+                .background.smart_text(sub.smart_text);
+                
+                @ if (sub.layout && sub.layout.height)
+                    height: @sub.layout.height;
+            @ }
         }
-    @ })
+    @ });
 }

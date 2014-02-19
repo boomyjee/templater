@@ -19,4 +19,11 @@ TemplaterApi::addAction('getComponents',function($api,&$components) {
     // include "components/website.php";
     include "components/landing.php";
     // include "components/content.php";
+    
+    $components['smart_text'] = array(
+        'name' => 'Smart text',
+        'description' => 'Canvas based text',
+        'category' => 'Design',
+        'html' => "<div></div>"
+    );    
 });

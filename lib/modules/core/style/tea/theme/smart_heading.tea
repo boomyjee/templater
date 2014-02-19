@@ -1,0 +1,17 @@
+.headingStyle(data) {
+    @ data = data || {};
+    
+    font-weight: normal;
+    b {
+        font-weight: normal;
+    }
+    
+    @ if (data.font)
+        font-family: @data.font;
+        
+    @ if (data.fontSize)
+        font-size: @data.fontSize;
+        
+    @ if (data.color)
+        color: @color(data.color);
+}

@@ -6,14 +6,13 @@
     "width": "800px"
   },
   "background": {
-    "type": "color",
-    "color": false,
-    "pattern": "http://uxcandy.com/~boomyjee/templater/lib/modules/core/ui/controls/../../assets/patterns/new-retro-09b.jpg",
-    "pattern_color": "transparent",
-    "pattern_color_2": [
-      2,
-      7
-    ]
+    "type": "pattern",
+    "color": "#ebebeb",
+    "pattern": "http://uxcandy.com/~boomyjee/templater/lib/modules/core/ui/controls/../../assets/patterns/new-retro-07b.jpg",
+    "pattern_color": "#ffffff",
+    "pattern_color_2": "#ebebeb",
+    "transparency": 28,
+    "_id": 1392129450914
   },
   "layout": {
     "id1391102247307": {
@@ -44,7 +43,7 @@
       "width": "283.5px",
       "position": {
         "x": "53px",
-        "y": "34px"
+        "y": "29px"
       }
     },
     "id1392034806737": {
@@ -70,26 +69,20 @@
     "id1391102156271": {
       "background": {
         "type": "color",
-        "color": [
-          3,
-          14
-        ],
-        "pattern": false,
-        "pattern_color": [
-          1,
-          13
-        ],
+        "color": false,
+        "pattern": "http://uxcandy.com/~boomyjee/templater/lib/modules/core/ui/controls/../../assets/patterns/new-retro-16b.jpg",
+        "pattern_color": "#ebebeb",
         "pattern_color_2": "white",
-        "transparency": 0,
-        "_id": 1392129450914
+        "transparency": 0
       }
     }
   },
   "typography": {
     "type": "default",
-    "headingsFont": "Palatino Linotype",
-    "textFont": "Verdana",
-    "_id": 1392123846677
+    "headingsFont": "Georgia",
+    "textFont": "Lucida Grande",
+    "_id": 1392123846677,
+    "headingFont": "Comic Sans MS"
   },
   "presets": {
     "typographyFonts": [
@@ -118,18 +111,12 @@
       },
       {
         "value": {
-          "type": "color",
-          "color": [
-            3,
-            14
-          ],
-          "pattern": false,
-          "pattern_color": [
-            1,
-            13
-          ],
-          "pattern_color_2": "white",
-          "transparency": 0,
+          "type": "pattern",
+          "color": "#ebebeb",
+          "pattern": "http://uxcandy.com/~boomyjee/templater/lib/modules/core/ui/controls/../../assets/patterns/new-retro-07b.jpg",
+          "pattern_color": "#ffffff",
+          "pattern_color_2": "#ebebeb",
+          "transparency": 28,
           "_id": 1392129450914
         },
         "preset": true
@@ -138,8 +125,8 @@
         "value": {
           "type": "color",
           "color": [
-            2,
-            12
+            1,
+            14
           ],
           "pattern": false,
           "pattern_color": [

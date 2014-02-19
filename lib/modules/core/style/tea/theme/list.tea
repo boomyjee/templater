@@ -19,7 +19,7 @@
             font-weight: normal;
             font-style: normal;
             font-size: @{h}px;
-            content: "@{fontAwesome.map[data.symbol]}";
+            content: "@{fontAwesome.map[data.symbol || "play-sign"]}";
             color: @color(data.color);
         
             position: relative;
@@ -66,7 +66,8 @@
             margin-right: @{-w}px;
             margin-bottom: @{-h}px;
             
-            background: url(@img.src) no-repeat 0 0;
+            @ if (img.src)
+                background: url(@img.src) no-repeat 0 0;
             background-size: contain;
         }
     }

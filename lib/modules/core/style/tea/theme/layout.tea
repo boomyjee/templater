@@ -7,10 +7,10 @@
     @{
         if (!border) return;
         var width = border.width || 0;
-        var cl = color(border.color);
+        var cl = border.color!==undefined ? color(border.color) : 'black';
         
         $.each(["left","right","top","bottom"],function(i,where){
-            if (border[where]) {
+            if (border[where]!==false) {
                 @{
                     border-@where: @width solid @cl;
                 }
@@ -30,11 +30,14 @@
         
     min-height: 30px;
     
-    @ if (data.height)
-        height: @data.height;
+    @ if (data.layout && data.layout.height)
+        height: @data.layout.height;
         
     @ if (data.border)
         .layout.border(data.border);
+        
+    @ if (data.borderRadius)
+        border-radius: @data.borderRadius;
         
     .box_sizing('border-box');
     
@@ -58,16 +61,16 @@
         .background(data.background);
     }
     
-    @ eachComponent(function(cmp,id,parent){ 
+    @ eachComponent(function(cmp,id,parent,type){ 
         @{ 
             if (cmp.children) $.each(cmp.children, function(){
                 componentWidth[this.value.id] = componentWidth[id] || 100;
             }); 
         }
     
-        @ if (cmp.value && (cmp.value.type=="container" || cmp.value.type=="form")) {
+        @ if (type=="container" || type=="form") {
             #@{id} {
-                .layout.container(data.container ? data.container[id] : false);
+                .layout.container(data.cmp[id]);
                 @ if (!parent) {
                     > .container {
                         width: @data.sheet.width;
@@ -88,7 +91,7 @@
             @ if (cmp.children) $.each(cmp.children, function(){
                 @{ 
                     var sid = this.value.id;
-                    var sub = (data.layout ? data.layout[sid] : false) || {};
+                    var sub = data.cmp[sid] ? (data.cmp[sid].layout || {}) : {};
                     var dw = total;
                     var position = false;
 

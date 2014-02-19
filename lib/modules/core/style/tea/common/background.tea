@@ -65,3 +65,24 @@
         canvas.background(path);
     }
 }
+
+.background.smart_text(bg,path) {
+    background-repeat: no-repeat;    
+    @{
+        bg = bg || {};
+        
+        var test = {};
+        for (var key in bg) test[key] = bg[key];
+        test.color_1 = teacss.functions.color_1;
+        test.color_2 = teacss.functions.color_2;
+        test.color_3 = teacss.functions.color_3;
+        
+        if (teacss.cache(test) && !teacss.building) return;
+        
+        var canvas = new Canvas(bg.width||500,bg.height||100);
+        var fabricCanvas = new fabric.TextCanvas(canvas.getCanvas2d());
+        fabricCanvas.setValue(bg);
+        canvas.setState('canvas');
+        canvas.background(path);
+    }
+}
