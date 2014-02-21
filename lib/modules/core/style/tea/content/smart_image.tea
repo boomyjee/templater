@@ -1,0 +1,55 @@
+@ global.smart_image = type_mixin("form");
+
+.smart_image.horizontal(data) {
+    
+    @ data = data || {};
+
+    position: relative;
+    height: @{data.height}px;
+    
+    @{
+        //var h = hue(color(data.color1_value||data.color1));
+        var h = hue(color(2,5));
+        var delta = (h-hue(data.color1||"") % 360) / 360.0;
+        var canvas = new teacss.Canvas(data.image);
+        canvas.hueSaturation(delta,0);
+        
+        var w = data.right-data.left, h = data.height;
+        var center = new teacss.Canvas(w,h);
+        center.draw2D(function(ctx){
+            if (canvas.width==data.width) {
+                ctx.drawImage(canvas.getCanvas2d(),data.left,0,w,h,0,0,w,h);
+            }
+        });
+    }
+    
+    &:before, &:after {
+        @ canvas.background();
+    }
+    
+    .in {
+        left: @{data.left}px;
+        right: @{data.width-data.right}px;
+        @ center.background();
+    }
+    
+    &:before, &:after, .in {
+        position: absolute;
+        top: 0; bottom: 0;
+        display: "block";
+        content: "";
+    }
+    
+    &:before {
+        left: 0;
+        width: @{data.left}px;
+        background-position: top left;
+    }
+    
+    &:after {
+        right: 0;
+        width: @{data.width-data.right}px;
+        background-position: top right;
+    }
+    
+}

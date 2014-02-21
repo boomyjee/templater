@@ -1,35 +1,11 @@
 {
-  "color1": "#81cf3c",
+  "color1": "#8dcf3c",
   "color2": "#f5b60a",
-  "color3": "yellow",
+  "color3": "#00aaff",
   "sheet": {
     "width": "940px"
   },
   "cmp": {
-    "id1392132170500": {
-      "background": {
-        "type": "color",
-        "color": "#ffffff",
-        "pattern": false,
-        "pattern_color": [
-          1,
-          13
-        ],
-        "pattern_color_2": "white",
-        "transparency": 0,
-        "_id": 1392234610864
-      },
-      "layout": {
-        "height": false
-      },
-      "border": {
-        "width": false,
-        "color": [
-          1,
-          7
-        ]
-      }
-    },
     "id1392132704070": {
       "background": {
         "type": "pattern",
@@ -85,7 +61,7 @@
     "id1392166668979": {
       "layout": {
         "column": 6,
-        "height": "450px"
+        "height": "480px"
       },
       "background": {
         "type": "color",
@@ -120,7 +96,7 @@
     "id1392166668980": {
       "layout": {
         "column": 6,
-        "height": "450px"
+        "height": "480px"
       },
       "form": {
         "layout": {
@@ -214,14 +190,14 @@
       "button": {
         "style": {
           "type": "apple",
-          "fontSize": "48px",
+          "fontSize": "36px",
           "color": [
             2,
             9
           ]
         },
         "align": "fill",
-        "margin": "20px"
+        "margin": "32px"
       }
     },
     "id1392168200133": {
@@ -290,41 +266,6 @@
         }
       }
     },
-    "id1392620152526": {
-      "layout": {
-        "type": "column",
-        "width": "376px",
-        "position": {
-          "x": "36px",
-          "y": "48px"
-        }
-      },
-      "logo": {
-        "type": "default",
-        "bullet": {
-          "type": "default",
-          "symbol": "leaf",
-          "color": [
-            2,
-            8
-          ]
-        }
-      },
-      "list": {
-        "type": "default",
-        "bullet": {
-          "type": "default",
-          "symbol": "leaf",
-          "size": 36,
-          "indent": 0.4,
-          "color": [
-            2,
-            7
-          ]
-        },
-        "itemMargin": "1.1em"
-      }
-    },
     "id1392623452680": {
       "layout": {
         "type": "column",
@@ -335,8 +276,8 @@
       "layout": {
         "type": "absolute",
         "position": {
-          "x": "520px",
-          "y": "196px"
+          "x": "511px",
+          "y": "197px"
         },
         "width": "402px",
         "height": "203px"
@@ -364,24 +305,6 @@
     "id1392625556695": {
       "layout": {
         "height": "300px"
-      }
-    },
-    "id1392629276010": {
-      "layout": {
-        "type": "absolute",
-        "position": {
-          "x": "-20px",
-          "y": "38px"
-        }
-      }
-    },
-    "id1392629276011": {
-      "layout": {
-        "type": "absolute",
-        "position": {
-          "x": "7px",
-          "y": "-39px"
-        }
       }
     },
     "id1392630852081": {
@@ -461,12 +384,129 @@
         "column": 12
       }
     },
-    "id1392802773565": {
+    "id1392804270129": {
+      "layout": {
+        "type": "absolute",
+        "height": "188px",
+        "width": "506px",
+        "position": {
+          "x": "-31px",
+          "y": "224px",
+          "z": 1
+        }
+      },
+      "smart_image": {
+        "type": "horizontal",
+        "left": 9,
+        "right": 50,
+        "width": 115,
+        "height": 97,
+        "image": "http://uxcandy.com/~boomyjee/templater/lib/modules/core/ui/controls/../../assets/smart/arrow1.png",
+        "color1": "#fcd05f"
+      }
+    },
+    "id1392817132596": {
       "layout": {
         "type": "absolute",
         "position": {
-          "x": "448px",
-          "y": "13px"
+          "x": "50px",
+          "y": "247px",
+          "z": 2
+        },
+        "height": "53px"
+      },
+      "smart_text": {
+        "styles": {},
+        "width": 315,
+        "height": 42,
+        "text": "ХУДЕЙ С FITLINE БЫСТРО",
+        "fontSize": 32,
+        "fontFamily": "Impact",
+        "fillValue": "#ffffff",
+        "strokeValue": "#626262"
+      }
+    },
+    "id1392817549829": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "-6px",
+          "y": "30px"
+        }
+      }
+    },
+    "id1392817549830": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "89px",
+          "y": "40px"
+        },
+        "width": "320px"
+      }
+    },
+    "id1392817549831": {
+      "layout": {
+        "type": "column",
+        "margin": "100px",
+        "height": "132px",
+        "column": false
+      },
+      "typography": {
+        "type": "default",
+        "textColor": "#fc0000",
+        "fontSize": 18,
+        "lineHeight": 1.2
+      }
+    },
+    "header": {
+      "background": {
+        "type": "color",
+        "color": "#ffffff",
+        "pattern": false,
+        "pattern_color": [
+          1,
+          13
+        ],
+        "pattern_color_2": "white",
+        "transparency": 0,
+        "_id": 1392234610864
+      },
+      "layout": {
+        "height": "433px"
+      },
+      "border": {
+        "width": false,
+        "color": [
+          1,
+          7
+        ]
+      }
+    },
+    "logo": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "7px",
+          "y": "-39px"
+        }
+      }
+    },
+    "header_girl": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "-20px",
+          "y": "38px"
+        }
+      }
+    },
+    "header_slogan": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "452px",
+          "y": "18px"
         }
       },
       "smart_text": {
@@ -553,6 +593,84 @@
         "shadowColorValue": "rgba(0, 0, 0, 0.21)",
         "lineHeight": 1
       }
+    },
+    "header_benefits": {
+      "layout": {
+        "type": "column",
+        "width": "376px",
+        "position": {
+          "x": "36px",
+          "y": "48px"
+        },
+        "column": false
+      },
+      "logo": {
+        "type": "default",
+        "bullet": {
+          "type": "default",
+          "symbol": "leaf",
+          "color": [
+            2,
+            8
+          ]
+        }
+      },
+      "list": {
+        "type": "default",
+        "bullet": {
+          "type": "default",
+          "symbol": "leaf",
+          "size": 36,
+          "indent": 0.4,
+          "color": [
+            2,
+            7
+          ]
+        },
+        "itemMargin": "1.1em"
+      }
+    },
+    "id1392909848923": {
+      "smart_text": {
+        "styles": {},
+        "width": 289,
+        "height": 39,
+        "text": "ДО ЗАВЕРШЕНИЯ АКЦИИ",
+        "fontSize": 30,
+        "strokeWidth": 1,
+        "strokeValue": "#3a3a3a",
+        "fillValue": "#ffffff",
+        "shadowColorValue": false,
+        "shadowY": 0,
+        "shadowX": 0,
+        "shadowBlur": 1,
+        "fontFamily": "Impact"
+      },
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "85px",
+          "y": "338px"
+        }
+      }
+    },
+    "counter_top": {
+      "layout": {
+        "type": "column",
+        "height": "69px",
+        "margin": "60px",
+        "column": false
+      },
+      "countdown": {
+        "type": "default",
+        "color1": [
+          1,
+          2
+        ],
+        "color2": false,
+        "animation": "scroll",
+        "_id": 1392992853363
+      }
     }
   },
   "presets": {
@@ -629,7 +747,64 @@
         },
         "preset": true
       }
-    ]
+    ],
+    "colorThemes": [
+      {
+        "group": "My Themes",
+        "presets": true,
+        "disabled": true,
+        "preset": true
+      },
+      {
+        "value": {
+          "color1": "#8dcf3c",
+          "color2": "#f5b60a",
+          "color3": "#00aaff",
+          "themeColors": [],
+          "_id": 1392953011117
+        },
+        "label": "Custom",
+        "preset": true
+      }
+    ],
+    "cmp": {
+      "counter_top": {
+        "countdown": [
+          {
+            "group": "My Counters",
+            "presets": true,
+            "disabled": true,
+            "preset": true
+          },
+          {
+            "value": {
+              "type": "default",
+              "color1": [
+                1,
+                14
+              ],
+              "color2": false,
+              "animation": "false",
+              "_id": 1392993784539
+            },
+            "preset": true
+          },
+          {
+            "value": {
+              "type": "default",
+              "color1": [
+                1,
+                2
+              ],
+              "color2": false,
+              "animation": "scroll",
+              "_id": 1392992853363
+            },
+            "preset": true
+          }
+        ]
+      }
+    }
   },
   "typography": {
     "type": "default",

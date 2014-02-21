@@ -301,6 +301,15 @@ body.view-layout #teacss-layer > .editor-panel > .frame-panel {
     content: "\f0eb";
 }
 
+.change-type-dialog .combo-item {
+    display: inline-block;
+    width: 130px;
+    height: 40px;
+    border: 1px solid #eee;
+    margin: 2px;
+    vertical-align: middle;
+}
+
 .change-type-dialog .combo-item small {
     display: block;
     font-size: 0.8em;

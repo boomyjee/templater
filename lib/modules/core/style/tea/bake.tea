@@ -16,6 +16,8 @@
 @import "content/testimonial";
 @import "content/table";
 @import "content/alerts";
+@import "content/smart_image";
+@import "content/countdown";
 
 @import "theme/layout";
 @import "theme/logo";
@@ -82,7 +84,7 @@
             
             @ if (type=="smart_text") {
                 min-width: 100px;
-                min-height: 100px;
+                min-height: 60px;
                 
                 @ if (sub.smart_text) {
                     width: @{sub.smart_text.width}px;
@@ -93,6 +95,14 @@
                 @ if (sub.layout && sub.layout.height)
                     height: @sub.layout.height;
             @ }
+            
+            @ if (type=="smart_image") {
+                .smart_image(sub.smart_image);
+            @ }
+            
+            @ if (type=="countdown") {
+                .countdown(sub.countdown);
+            @ }            
         }
     @ });
 }

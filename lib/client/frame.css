@@ -79,7 +79,9 @@ body.edit-layout .handle-container {
     -webkit-box-sizing: border-box;
     min-height: 25px;
     min-width: 20px;
-    /*opacity: 0;*/
+
+    font: 12px Arial;
+    color: black;
 }
 
 .component-handle > * {
@@ -113,6 +115,10 @@ body.hide-handles .component-handle.selected-parent {
     opacity: 0.3 !important;
 }
 
+.component-handle.selected {
+    z-index: 1000 !important;
+}
+
 .component-handle.selected,
 body.view3d .component-handle
 {
@@ -123,7 +129,7 @@ body.view3d .component-handle
     transition: none;    
     -moz-transition: none;
     -webkit-transition: none;
-    opacity: 0.0;
+    opacity: 0.1;
 }
 
 body.edit-layout:hover .component-handle.selected-parent {
@@ -151,14 +157,14 @@ body:hover .component-handle.selected {
     line-height: 24px;
     position: absolute;
     padding: 0 5px;
-    right: 0;
     top: 0;
     opacity: 0;
     color: #000;
+    z-index: 5;
 }
 
 .component-handle .component-heading.draggable {
-    cursor: move;
+    cursor: n-resize;
 }
 
 body.edit-layout .component-handle:hover > .component-heading {
@@ -191,6 +197,156 @@ body.edit-layout:hover .component-handle.selected-parent > .component-heading {
     background: none repeat scroll 0 0 rgba(100, 255, 100, 0.8);
 }
 
+/* controls */
+.controls-root {
+    font: 14px Arial;
+    display: block;
+    padding-bottom: 104px;
+}
+
+.controls-root .add-section {
+    height: 100px;
+    background-color: white;
+    text-align: center;
+    border: 2px solid #ccc;
+    
+    position: absolute;
+    left: 0; right: 0;
+    bottom: 0;
+}
+
+.controls-root .add-section span {
+    cursor: pointer;
+    background: none repeat scroll 0 0 #DD5500;
+    border-radius: 8px;
+    box-shadow: 0 9px 0 #DB1F05, 0 9px 10px rgba(0, 0, 0, 0.7);
+    color: #FFFFFF;
+    display: block;
+    font-size: 1.5em;
+    font-weight: 700;
+    margin: 10px auto 0;
+    padding: 10px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.1s ease 0s;
+    width: 260px;
+    line-height: 52px;
+}
+
+body.edit-layout:hover .component-handle.selected div[class*=controls-] {
+    visibility: visible;
+}
+
+.highlight-handle:hover {
+    background: rgba(255,119,0,0.1);
+}
+
+.component-handle .controls-back {
+    left: 0; right: 0;
+    top: 0px; bottom: 0;
+    position: absolute;
+    z-index: 0;
+}
+
+.component-handle .controls-center {
+    height: 0px;
+    left: 0;
+    margin-top: -24px;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 50%;
+    z-index: 10;
+}
+
+.component-handle .controls-left,
+.component-handle .controls-right {
+    top: 0; bottom: 0;
+    width: 0;
+    position: absolute;
+    z-index: 10;
+}
+
+.component-handle .controls-left {
+    left: 0;
+}
+
+.component-handle .controls-right {
+    right: 0;
+}
+
+.component-resizer-helper {
+    width: 5px;
+    background: #f70;
+}
+
+.component-handle .controls-top {
+    margin-top: -15px;
+    height: 0px;
+    left: 0;
+    position: absolute;
+    right: 30px;
+    text-align: center;
+    top: 0;
+    z-index: 10;
+}
+
+.component-handle .controls-bottom {
+    margin-bottom: 15px;
+    height: 0px;
+    left: 30px;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    bottom: 0;
+    z-index: 10;
+}
+
+.component-handle > .controls-top > span {
+    font-size: 30px;
+    line-height: 30px;
+    height: 28px;
+    width: 28px;
+}
+
+.component-handle > .controls-bottom > span {
+    font-size: 30px;
+    line-height: 30px;
+    height: 28px;
+    width: 28px;
+}
+
+.component-handle > div > span {
+    display: none;
+    background-color: #f7f7f7;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#f7f7f7), to(#e7e7e7));
+    background-image: -webkit-linear-gradient(top, #f7f7f7, #e7e7e7); 
+    background-image: -moz-linear-gradient(top, #f7f7f7, #e7e7e7); 
+    background-image: -ms-linear-gradient(top, #f7f7f7, #e7e7e7); 
+    background-image: -o-linear-gradient(top, #f7f7f7, #e7e7e7); 
+    color: #a7a7a7;
+    width: 48px;
+    height: 48px;
+    text-align: center;
+    line-height: 52px;
+    font-size: 48px;
+    font-weight: bold;
+    border-radius: 50%;
+    box-shadow: 0px 3px 8px #aaa, inset 0px 2px 3px #fff;    
+    cursor: pointer;
+}
+
+.component-handle > div > span.visible {
+    display: inline-block;
+}
+
+.component-handle > div > span:hover {
+    text-decoration: none;
+    color: #555;
+    background: #f5f5f5;
+}
+
 
 /* parent select title */
 .parent-component-handle {
@@ -213,36 +369,6 @@ body.edit-layout:hover .parent-component-handle.selected-parent {
     display: block;
 }
 
-/* sort and area handles */
-.sort-handle.visible, 
-.drop-handle.visible,
-.area-handle.visible
-{
-    display: block;
-    visibility: visible;
-}
-
-.area-handle {
-    position: absolute;
-    display: none;
-    min-height: 40px;
-}
-
-.drop-handle {
-    position: absolute;
-    left: 2px; top: 2px; right: 2px; bottom: 2px; z-index: 3;
-    border: 2px solid rgba(255,0,0,0.3);
-    color: red;
-}
-
-.sort-handle {
-    position: absolute;
-    left: 0; top: 0; right: 0; bottom: 0; z-index: 2;
-    border: 2px solid rgba(0,0,255,0.3);
-    color: blue;
-    display: none;
-}
-
 /* drop marker */
 .drop-marker {
     border: 2px dashed black;
@@ -250,170 +376,4 @@ body.edit-layout:hover .parent-component-handle.selected-parent {
     z-index:1000;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
-}
-
-/* controls handle */
-.controls-handle {
-    position: absolute;
-    top: 0px; left: 0px; right: 0px; bottom: 0;
-    overflow: hidden;
-    font: 14px Arial;
-    color: black;
-    display: none;
-    min-width: 20px;
-}
-
-body.view3d:hover .controls-handle.selected {
-    display: none;
-}
-
-body:hover .controls-handle.selected {
-    display: block;
-    min-height: 26px;
-}
-
-.controls-handle.controls-root {
-    display: block;
-    padding-bottom: 104px;
-}
-
-.controls-handle.controls-root .add-section {
-    height: 100px;
-    background-color: white;
-    text-align: center;
-    border: 2px solid #ccc;
-    
-    position: absolute;
-    left: 0; right: 0;
-    bottom: 0;
-}
-
-.controls-handle.controls-root .add-section span {
-    cursor: pointer;
-    background: none repeat scroll 0 0 #DD5500;
-    border-radius: 8px;
-    box-shadow: 0 9px 0 #DB1F05, 0 9px 10px rgba(0, 0, 0, 0.7);
-    color: #FFFFFF;
-    display: block;
-    font-size: 1.5em;
-    font-weight: 700;
-    margin: 10px auto;
-    padding: 10px;
-    position: relative;
-    text-align: center;
-    text-decoration: none;
-    transition: all 0.1s ease 0s;
-    width: 260px;
-}
-
-.highlight-handle:hover {
-    background: rgba(255,119,0,0.1);
-}
-
-.controls-handle.hidden {
-    display: none;
-}
-
-.controls-handle .controls-back {
-    left: 0; right: 0;
-    top: 24px; bottom: 0;
-    position: absolute;
-}
-
-.controls-handle .controls-center {
-    height: 0px;
-    left: 0;
-    margin-top: -24px;
-    position: absolute;
-    right: 0;
-    text-align: center;
-    top: 50%;
-    z-index: 1000;
-}
-
-.controls-handle .controls-left,
-.controls-handle .controls-right {
-    top: 0; bottom: 0;
-    width: 0;
-    position: absolute;
-    z-index: 1000;
-}
-
-.controls-handle .controls-left {
-    left: 0;
-}
-
-.controls-handle .controls-right {
-    right: 0;
-}
-
-.component-resizer-helper {
-    width: 5px;
-    background: #f70;
-}
-
-.controls-handle .controls-top {
-    margin-top: -24px;
-    height: 0px;
-    left: 0;
-    position: absolute;
-    right: 30px;
-    text-align: center;
-    top: 0;
-    z-index: 1000;
-}
-
-.controls-handle .controls-bottom {
-    margin-bottom: 24px;
-    height: 0px;
-    left: 30px;
-    position: absolute;
-    right: 0;
-    text-align: center;
-    bottom: 0;
-    z-index: 1000;
-}
-
-.controls-handle > .controls-top > span {
-    font-size: 30px;
-    line-height: 30px;
-    height: 28px;
-    padding-top: 20px;
-}
-
-.controls-handle > .controls-bottom > span {
-    font-size: 30px;
-    line-height: 30px;
-    height: 28px;
-    padding-bottom: 20px;
-}
-
-.controls-handle > div > span {
-    display: none;
-    background-color: #f7f7f7;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#f7f7f7), to(#e7e7e7));
-    background-image: -webkit-linear-gradient(top, #f7f7f7, #e7e7e7); 
-    background-image: -moz-linear-gradient(top, #f7f7f7, #e7e7e7); 
-    background-image: -ms-linear-gradient(top, #f7f7f7, #e7e7e7); 
-    background-image: -o-linear-gradient(top, #f7f7f7, #e7e7e7); 
-    color: #a7a7a7;
-    width: 48px;
-    height: 48px;
-    text-align: center;
-    line-height: 52px;
-    font-size: 48px;
-    font-weight: bold;
-    border-radius: 50%;
-    box-shadow: 0px 3px 8px #aaa, inset 0px 2px 3px #fff;    
-    cursor: pointer;
-}
-
-.controls-handle > div > span.visible {
-    display: inline-block;
-}
-
-.controls-handle > div > span:hover {
-    text-decoration: none;
-    color: #555;
-    background: #f5f5f5;
 }

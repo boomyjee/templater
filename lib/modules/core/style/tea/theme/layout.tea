@@ -128,6 +128,9 @@
                         @ if (sub.width)
                             width: @sub.width;
                             
+                        @ if (pos.z)
+                            z-index: @pos.z;
+                            
                         left: @{pos.x || 0};
                         top: @{pos.y || 0};
                     

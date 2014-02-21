@@ -15,15 +15,13 @@ include "components/list/list.php";
 include "components/form/form.php";
 include "components/testimonial/testimonial.php";
 
+include "components/smart_image/smart_image.php";
+include "components/smart_text/smart_text.php";
+
+include "components/countdown/countdown.php";
+
 TemplaterApi::addAction('getComponents',function($api,&$components) {
     // include "components/website.php";
     include "components/landing.php";
     // include "components/content.php";
-    
-    $components['smart_text'] = array(
-        'name' => 'Smart text',
-        'description' => 'Canvas based text',
-        'category' => 'Design',
-        'html' => "<div></div>"
-    );    
 });

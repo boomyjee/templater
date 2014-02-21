@@ -1,0 +1,66 @@
+@ global.countdown = type_mixin(".countdown");
+@ var dir = tea.dir;
+
+.countdown.default(data) {
+    @ data = data || {};
+    @ var sel = this.selector;
+    
+    @ if (!data.noscript) {
+        Script {
+            @append donut_root + "lib/jquery.js";
+            @append donut_root + "lib/countdown/county.js";
+            @append {
+                $(function(){
+                    $(document).ready(function(){
+                        $("@sel").empty().county({
+                            endDateTime: new Date('2015/12/27 10:00:00'), 
+                            animation: "@{data.animation}", 
+                            days: false
+                        });
+                    });                
+                })
+            }
+            @ reloadScript(sel,{animation:data.animation||false});
+        }
+    @ }
+    
+    @ var color1 = color(data.color1) || "#eee";
+    @ var color2 = color(data.color2) || lighten(color1,20);
+    @ var border = darken(color1,5);
+    @ var text = lightness(color1) < 50 ? '#fff' : '#333';
+    @ var size = data.fontSize || 60;
+    
+    margin-top: 1em;
+    text-align: center;
+    
+    > span {
+        color: @text;
+        .gradient.vertical(color1,color2);
+        
+        border-top: 1px solid @border;
+        border-bottom: 1px solid @border;
+        margin: 0 2px;
+        
+        display: inline-block;
+        height: 1.2em;
+        line-height: 1.2em;
+
+        font-family: Arial;
+        font-weight: bold;
+        font-size: @{size}px;
+        width: 1.6em;
+
+        overflow: hidden;
+        position: relative;        
+        
+        &.separator-left {
+            border-left: solid 1px @border;
+        } 
+        
+        > span {
+            position: relative;
+            left: 0; top: 0;
+            padding: 0 0.25em;
+        }           
+    }
+}
