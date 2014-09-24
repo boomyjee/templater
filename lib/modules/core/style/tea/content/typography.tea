@@ -9,9 +9,10 @@
         var fontSize = parseFloat(data.fontSize);
         var lineHeight = parseFloat(data.lineHeight);
         
-        var textColor = data.textColor ? color(data.textColor) : false;
-        var linkColor = data.linkColor ? color(data.linkColor) : false;
-        var linkColorHover = data.linkColorHover ? color(data.linkColorHover) : false;
+        var textColor = color(data.textColor);
+        var headingsColor = color(data.headingsColor);
+        var linkColor = color(data.linkColor);
+        var linkColorHover = color(data.linkColorHover);
         
         if (!inherited) {
             textFont = textFont || '"Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif';
@@ -74,6 +75,9 @@
         h@{i+1} {
             @ if (headingsFont)
                 font-family: @headingsFont;
+                
+            @ if (headingsColor)
+                color: @headingsColor;
                 
             @ if (lineHeight) {
                 @ var h = headings[i];

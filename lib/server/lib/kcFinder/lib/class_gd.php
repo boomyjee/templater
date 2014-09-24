@@ -55,6 +55,8 @@ class gd {
             list($key, $width) = each($image);
             list($key, $height) = each($image);
             $image = imagecreatetruecolor($width, $height);
+            imagealphablending($image, false);
+            imagesavealpha($image, true);
 
         } elseif (false !== (list($width, $height, $type) = @getimagesize($image))) {
             $image =

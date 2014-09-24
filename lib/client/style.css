@@ -221,10 +221,11 @@ body.view-layout #teacss-layer > .editor-panel > .frame-panel {
     float: right;
 }
 
-.combo-item.no-preset {
+.teacss-ui .combo-item.no-preset {
     text-align: center;
     font-style: italic;
     font-size: 1.2em;
+    display: block;
 }
 
 .teacss-ui .combo-group .ui-icon {

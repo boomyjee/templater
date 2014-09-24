@@ -6,6 +6,7 @@
 @import "common/css3";
 @import "common/grid";
 @import "common/background";
+@import "common/background_mask";
 @import "common/effects";
 @import "common/icons";
 
@@ -18,6 +19,8 @@
 @import "content/alerts";
 @import "content/smart_image";
 @import "content/countdown";
+@import "content/menu";
+@import "content/validation";
 
 @import "theme/layout";
 @import "theme/logo";
@@ -46,12 +49,28 @@
 
     .reset();
     .layout(data);
+    
     .typography(data.typography);
     .alerts(data.alerts);
     
     @ eachComponent(function(cmp,id,parent,type){
         #@{id} {
             @ var sub = data.cmp ? (data.cmp[id] || {}) : {};
+            
+            @ if (sub.typography)
+                .typography(sub.typography,true);
+                
+            @ if (sub.shadow) {
+                @ var sh = sub.shadow;
+                .box_shadow(sh.x+"px "+sh.y+"px "+sh.blur+"px "+color(sh.color));
+            @ }
+            
+            @ if (sub.validation) {
+                .validation(sub.validation);
+            @ } 
+
+            @ if (type=="menu")
+                .menu(sub.menu || {});
             
             @ if (type=="logo")
                 .logo(sub.logo);
@@ -70,10 +89,8 @@
                     
             @ if (type=="form_button") {
                 @ var val = sub.button || {};
-                
-                
                 @ if (val.style) {
-                    button {
+                    button, a.button {
                         .button(val.style);
                     }
                 @ }

@@ -1,12 +1,18 @@
 @ global.background = type_mixin();
 
-.background.default(bg) {
-    background: @color(bg ? bg.color : 'transparent');
+.background.default(bg,data) {
+    @ var col = (bg ? color(bg.color) : false) || 'transparent';
+    background: @col;
+    .background_mask(data.mask,data,col);
 }
 @ background.color = background.default;
 
-.background.gradient(bg) {
-    .gradient.vertical(color(bg.color),color(bg.color_2));
+.background.gradient(bg,data) {
+    @ var col = color(bg.color);
+    @ var col_2 = color(bg.color_2);
+
+    .gradient.vertical(col,col_2);
+    .background_mask(data.mask,data,{top:col,bottom:col_2});
 }
 
 .background.gradientTop(bg) {
@@ -18,20 +24,10 @@
     background: url(@bg.texture) 50% 0%;
 }
 
-.background.pattern(bg,path) {
-    @{
-        var test = {};
-        for (var key in bg) test[key] = bg[key];
-        test.color_1 = teacss.functions.color_1;
-        test.color_2 = teacss.functions.color_2;
-        test.color_3 = teacss.functions.color_3;
-        
-        if (teacss.cache(test) && !teacss.building) return;
-        if (!bg.pattern) return 'transparent';
-        
-        var canvas = new Canvas(bg.pattern);
-        var gl = canvas.gl;
-        gl["patternShader"] = gl["patternShader"] || new Shader(gl,null,[
+@{
+    Canvas.effects.pattern = Canvas.effects.pattern || function (bg) {
+        var gl = this.gl;
+        gl.patternShader = gl.patternShader || new Shader(gl,null,[
             'uniform sampler2D tex0;',
             'uniform vec4 c1,c2;',
             'uniform float transparency;',
@@ -42,10 +38,10 @@
                 'gl_FragColor = c3;',
             '}'        
         ].join('\n'));
-        
+
         var col = teacss.Color.parse(color(bg.pattern_color));
         col = [col.rgb[0]/255,col.rgb[1]/255,col.rgb[2]/255,col.alpha];
-        
+
         var color_2 = bg.pattern_color_2;
         if (!color_2) {
             color_2 = 'white';
@@ -53,36 +49,44 @@
 
         var col2 = teacss.Color.parse(color(color_2));
         col2 = [col2.rgb[0]/255,col2.rgb[1]/255,col2.rgb[2]/255,col2.alpha];
-        
+
         var transparency = bg.transparency ? Number(bg.transparency)/100.0 : 0; 
-        
-        canvas.draw3D(gl["patternShader"],{tex0:canvas.getTexture()},{
+
+        this.draw3D(gl["patternShader"],{tex0:this.getTexture()},{
             c1: col,
             c2: col2,
             transparency:  transparency
         });
-        canvas.setState('texture');
-        canvas.background(path);
+        this.setState('texture');
+        return this;
     }
 }
 
-.background.smart_text(bg,path) {
+
+.background.pattern(bg,data) {
+    @{
+        if (!bg.pattern) return 'transparent';
+        var canvas = teacss.cache(bg,true,function(){
+            var canvas = new Canvas(bg.pattern);
+            canvas.pattern(bg);
+            return canvas.preview();
+        });
+        canvas.background();
+        background_mask(data.mask,data,canvas);
+    }
+}
+
+.background.smart_text(bg,data) {
     background-repeat: no-repeat;    
     @{
         bg = bg || {};
-        
-        var test = {};
-        for (var key in bg) test[key] = bg[key];
-        test.color_1 = teacss.functions.color_1;
-        test.color_2 = teacss.functions.color_2;
-        test.color_3 = teacss.functions.color_3;
-        
-        if (teacss.cache(test) && !teacss.building) return;
-        
-        var canvas = new Canvas(bg.width||500,bg.height||100);
-        var fabricCanvas = new fabric.TextCanvas(canvas.getCanvas2d());
-        fabricCanvas.setValue(bg);
-        canvas.setState('canvas');
-        canvas.background(path);
+        var canvas = teacss.cache(bg,true,function(){
+            var canvas = new Canvas(bg.width||500,bg.height||100);
+            var fabricCanvas = new fabric.TextCanvas(canvas.getCanvas2d());
+            fabricCanvas.setValue(bg);
+            canvas.setState('canvas');
+            return canvas.preview();
+        });
+        canvas.background();
     }
 }

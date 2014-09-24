@@ -1,5 +1,45 @@
 @ global.smart_image = type_mixin("form");
 
+@{
+    global.smartCanvas = global.smartCanvas || function(data) {
+        return teacss.cache(data,true,function(){
+            var canvas = new teacss.Canvas(data.image)
+            var params = {};
+            for (var i=1;i<=3;i++) {
+                var src = (data["src_"+i] || "").toHSV();
+                var dst_val = data["dst_"+i];
+                var dst = (color(dst_val) || "").toHSV();
+
+                params["replace"+i] = [
+                    src.h / 360,
+                    dst.h / 360,
+                    dst_val ? data["delta_"+i] / 360 : 0,
+                    (dst.s - src.s) / 100
+                ];
+            }
+            canvas.smartReplace(params);
+            return canvas.preview();
+        });
+    }
+}
+
+
+.smart_image.default(data) {
+    @ data = data || {};
+    
+    min-width: 50px;
+    min-height: 50px;
+    
+    @{
+        var canvas = smartCanvas(data);
+        canvas.background();
+    }
+    
+    background-repeat: no-repeat;
+    width: @{canvas.width}px;
+    height: @{canvas.height}px;
+}
+
 .smart_image.horizontal(data) {
     
     @ data = data || {};
@@ -8,19 +48,20 @@
     height: @{data.height}px;
     
     @{
-        //var h = hue(color(data.color1_value||data.color1));
-        var h = hue(color(2,5));
-        var delta = (h-hue(data.color1||"") % 360) / 360.0;
-        var canvas = new teacss.Canvas(data.image);
-        canvas.hueSaturation(delta,0);
-        
-        var w = data.right-data.left, h = data.height;
-        var center = new teacss.Canvas(w,h);
-        center.draw2D(function(ctx){
-            if (canvas.width==data.width) {
-                ctx.drawImage(canvas.getCanvas2d(),data.left,0,w,h,0,0,w,h);
-            }
-        });
+        if (!data.image) return;
+
+        var canvas = smartCanvas(data);
+        if (!canvas.center) {
+            var w = data.right-data.left, h = data.height;
+            canvas.center = new teacss.Canvas(w,h);
+            canvas.center.draw2D(function(ctx){
+                if (canvas.width==data.width) {
+                    ctx.drawImage(canvas.getCanvas2d(),data.left,0,w,h,0,0,w,h);
+                }
+            });
+            canvas.center.preview();
+        }
+        var center = canvas.center;
     }
     
     &:before, &:after {

@@ -1,34 +1,5 @@
 @import "style/font-awesome.css";
 
-.teacss-ui .ui-dialog.canvas-editor-dialog .ui-dialog-titlebar {
-    display: none;
-}
-
-.teacss-ui .ui-dialog.canvas-editor-toolbar .ui-dialog-titlebar .ui-button 
-{
-    /* display: none; */
-}
-
-.teacss-ui .ui-dialog.canvas-editor-dialog,
-.teacss-ui .ui-dialog.canvas-editor-toolbar
-{
-    padding: 0;
-    border-width: 1px;
-}
-
-.teacss-ui .ui-dialog.canvas-editor-dialog .ui-dialog-content,
-.teacss-ui .ui-dialog.canvas-editor-toolbar .ui-dialog-content 
-{
-    padding: 0;
-    overflow: hidden;
-}
-
-.teacss-ui .ui-dialog.canvas-editor-toolbar .ui-button {
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-}
-
 .teacss-ui .ui-icon[class*=" fa-"] {
     background: none repeat scroll 0 0 transparent;
     margin-top: -0.5em;

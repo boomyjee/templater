@@ -30,8 +30,6 @@ class TemplaterApi {
         $base_url = $base_url[0];
         $base_url = dirname($base_url);
         
-        $this->modules = $_REQUEST['_modules'] ? : array();
-        
         $this->uploadDir = __DIR__."/upload";
         $this->uploadUrl = $base_url."/upload";
         
@@ -41,13 +39,17 @@ class TemplaterApi {
         $this->base_url = dirname(dirname($_SERVER['SCRIPT_URL']));
         $this->base_dir = dirname(__DIR__);
         
-        $this->includeModules($this->modules);
+        $this->modules = array("core");
     }    
     
     function includeModules($modules) {
         foreach ($modules as $module) {
-            if ($module[0]!="/")
+            if ($module[0]!="/") {
                 include __DIR__."/../modules/$module/$module.php";
+            } else {
+                $name = basename($module);
+                include "$module/$name.php";
+            }
         }
     }
     
@@ -62,6 +64,7 @@ class TemplaterApi {
         $res = self::runAction('run',array($this,$action));
         if ($res!==false) {
             if (method_exists($this,$action)) {
+                $this->includeModules($this->modules);
                 $this->$action();
             } else {
                 echo 'No handler for this method';
@@ -82,9 +85,9 @@ class TemplaterApi {
     
     function component($values = false,$ret = false) {
         if (!$values) $values = $_REQUEST['values'];
-        
         $components = $this->getComponents();
         $res = array();
+        
         foreach ($values as $val) {
             $upd = array('html'=>'');
             $type = $val['type'];
@@ -220,44 +223,52 @@ class TemplaterApi {
         return $this->$key;
     }
     
+    public $templates = false;
     function getTemplates($json=false) {
-        $templates = (object)array();
-        
-        $restoreCmp = function ($cmp,$key=false) use (&$restoreCmp) {
-            $out = array('value'=>array());
-            
-            if ($key) {
-                $parts = explode('#',$key,2);
-                $out['value']['id'] = $parts[1];
-                $out['value']['type'] = $parts[0];
-            }
-            
-            if (!is_array($cmp)) {
-                $cmp = array($out['value']['type'] => $cmp);
-            }
-            
-            foreach ($cmp as $k=>$v) {
-                if (strpos($k,"#")!==false) {
-                    $out['children'][] = $restoreCmp($v,$k);
-                } else {
-                    $out['value'][$k] = $v;
-                }
-            }
-            return $out;
-        };   
+        $templates = $this->templates;
+        if (!$templates) {
+            $this->templates = $templates = (object)array();
+            $restoreCmp = function ($cmp,$key=false) use (&$restoreCmp) {
+                $out = array('value'=>array());
 
-        $project_dir = $this->templatePath ? : str_replace(".json","",$this->settingsPath);
-        if (file_exists($project_dir)) {
-            $iterator = new \DirectoryIterator($project_dir);
-            foreach ($iterator as $sub) {
-                if (!$sub->isDot() && !$sub->isDir()) {
-                    $name = $sub->getBasename('.yaml');
-                    if ($name == $sub->getBasename()) continue;
-                    
-                    $data = yaml_parse(file_get_contents($sub->getPathname()));
-                    $data = $restoreCmp($data);                           
-                    
-                    $templates->$name = $data;
+                if ($key) {
+                    $parts = explode('#',$key,2);
+                    $out['value']['id'] = $parts[1];
+                    $out['value']['type'] = $parts[0];
+                }
+
+                if (!is_array($cmp)) {
+                    $cmp = array($out['value']['type'] => $cmp);
+                }
+
+                foreach ($cmp as $k=>$v) {
+                    if (strpos($k,"#")!==false) {
+                        $out['children'][] = $restoreCmp($v,$k);
+                    } else {
+                        $out['value'][$k] = $v;
+                    }
+                }
+                return $out;
+            };   
+
+            $project_dir = $this->templatePath ? : str_replace(".json","",$this->settingsPath);
+            if (file_exists($project_dir)) {
+                $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($project_dir,
+                    RecursiveDirectoryIterator::SKIP_DOTS));
+
+                foreach ($iterator as $sub) {
+                    if (!$sub->isDir()) {
+                        $path = $sub->getPathname();
+                        $rel = str_replace($project_dir."/","",$path);
+                        $name = str_replace(".yaml","",$rel);
+
+                        if ($name==$rel) continue;
+
+                        $data = yaml_parse(file_get_contents($path));
+                        $data = $restoreCmp($data);                           
+
+                        $templates->$name = $data;
+                    }
                 }
             }
         }
@@ -346,7 +357,6 @@ class TemplaterApi {
         
         // save templates
         $templates = json_decode($templates,true);
-        
         $project_dir = $this->templatePath ? : str_replace(".json","",$this->settingsPath);
         
         if (!file_exists($project_dir)) mkdir($project_dir);
@@ -359,6 +369,10 @@ class TemplaterApi {
         ini_set('yaml.output_indent',4);
         foreach ($templates as $name=>$one) {
             $yaml_path = $project_dir."/".$name.".yaml";
+            $dir = dirname($yaml_path);
+            if (!file_exists($dir))
+                mkdir($dir,0777,true);
+            
             $data = $fixYaml($one);
             $data = reset($data);
             file_put_contents($yaml_path,yaml_emit($data,YAML_UTF8_ENCODING));
@@ -371,10 +385,25 @@ class TemplaterApi {
     }    
     
     function publish() {
-        // nothing to do
+        $project = @$_REQUEST['_project'];
+        if (!$project) return;
+        
+        $files = $_REQUEST['files'];
+        $base = __DIR__."/projects/$project/publish/";
+        
+        if (!file_exists($base)) mkdir($base,0777,true);
+        foreach ($files as $path=>$text) {
+            $path = $base.$path;
+
+            $mark = "data:image/png;base64,";
+            if (strpos($text,$mark)===0)
+                $text = base64_decode(substr($text,strlen($mark)));
+            
+            $res = file_put_contents($path,$text);
+        }        
     }
     
-    function view($name,$dataSource) {
+    function view($name,$dataSource,$ret) {
         $templates = $this->getTemplates(true);
         $templates = json_decode($templates);
         
@@ -382,8 +411,7 @@ class TemplaterApi {
         
         Component::$api = $this;
         Component::$dataSource = $dataSource;
-        Component::$settings &= $settings;
-
+        
         $root_data = $tpl;
         $root = new Component($root_data);
         
@@ -394,9 +422,9 @@ class TemplaterApi {
         
         // if template has a parent then load parent template and create substitution has from current one
         if (@$root_data->value->parentTemplate) {
-            $findRoot = function ($data,$inherit) use (&$settings,&$findRoot,&$hash,&$root_data) {
+            $findRoot = function ($data,$inherit) use (&$templates,&$findRoot,&$hash,&$root_data) {
                 if (@$data->value->parentTemplate) {
-                    $findRoot($settings->templates->{$data->value->parentTemplate} ? : (object)array(),true);
+                    $findRoot($templates->{$data->value->parentTemplate} ? : (object)array(),true);
                     if ($data->children) foreach ($data->children as $child) {
                         if (@$child->value->id) $hash[$child->value->id] = array('data'=>$child,'inherit'=>$inherit);
                     }
@@ -413,7 +441,7 @@ class TemplaterApi {
         $components = array();
         $component_values = array();
         
-        $createComponents = function($parent,$data,$inherit) use (&$settings,&$components,&$component_values,&$hash,&$createComponents) {
+        $createComponents = function($parent,$data,$inherit) use (&$templates,&$components,&$component_values,&$hash,&$createComponents) {
             if ($data->children) foreach ($data->children as $child) {
                 $ch_data = $child;
                 $ch_inherit = $inherit;
@@ -435,13 +463,10 @@ class TemplaterApi {
             }
         };
         $createComponents($root,$root_data,$inherit); 
-        $root_html = $root->render();
+        $root_html = "<body>".$root->render()."</body>";
         
-        ?>
-            <body>
-                <?= $root_html ?>
-            </body>
-        <?
+        if ($ret) return $root_html;
+        echo $root_html;
     }
     
     function registerComponent($cmp) {
@@ -451,7 +476,6 @@ class TemplaterApi {
 
 class Component {
     
-    static $settings;
     static $components = false;
     static $dataSource = false;
     static $api = false;
@@ -504,16 +528,6 @@ class Component {
             function ($matches) use (&$me) {
                 if (!preg_match('|id\s*=\s*|',$matches[0])) {
                     return "<".$matches[1].' id="'.$me->value->id.'"'.$matches[2].">";
-                }
-                return $matches[0];
-            },
-            $html
-        );
-        if ($me->value->class) $html = preg_replace_callback(
-            '|^\s*<(\w+)(.*?)>|',
-            function ($matches) use (&$me) {
-                if (!preg_match('|class\s*=\s*?|',$matches[0])) {
-                    return "<".$matches[1].' class="'.$me->value->class.'"'.$matches[2].">";
                 }
                 return $matches[0];
             },

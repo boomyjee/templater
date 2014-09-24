@@ -31,7 +31,7 @@
         height: auto;
     }
     
-    select, input[type="file"] {
+    input[type="file"] {
         height: 2.1em;
         line-height: 2.1em;
         margin-right: 0;
@@ -77,7 +77,18 @@
         display: block;
         top: -0.8em;
         font-style: italic;
+        
+        @ if (data.floatErrors) {
+            margin-bottom: -1000em;
+            top: -1.4em;
+            float: right;
+            padding: 0.1em 0.3em;
+            background: white;
+            border: 1px solid @darken('red',10);
+            border-radius: 0.3em;
+        @ }
     }
+    
     
     input.error {
         background: @lighten('red',40);

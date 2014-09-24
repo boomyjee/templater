@@ -566,7 +566,7 @@ class uploader {
             return false;
 
         // Save thumbnail
-        return $gd->imagejpeg($thumb, $this->config['jpegQuality']);
+        return $gd->imagepng($thumb); //, $this->config['jpegQuality']);
     }
 
     protected function localize($langCode) {

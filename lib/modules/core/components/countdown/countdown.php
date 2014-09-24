@@ -9,16 +9,11 @@ TemplaterApi::addAction('getComponents',function($api,&$components) {
         'update' => function ($val) {
 
             $time = @$val['time'] ?: time()+5000;
-            $html = "<div data-timestamp='$time'></div>";
-            
-            $form_html = "
-                <label>Finish date</label>
-                <input name='time' value='$time'>
-            ";
+            $html = "<div data-time='$time'></div>";
 
             return array(
                 'html' => $html,
-                'form' => $form_html,
+                'form' => array('control'=>'ui.countdownEditor'),
                 'value' => $val
             );
         }

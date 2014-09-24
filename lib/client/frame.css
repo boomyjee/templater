@@ -161,6 +161,8 @@ body:hover .component-handle.selected {
     opacity: 0;
     color: #000;
     z-index: 5;
+    white-space: nowrap;
+    max-width: 100%;
 }
 
 .component-handle .component-heading.draggable {

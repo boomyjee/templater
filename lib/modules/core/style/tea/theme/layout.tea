@@ -40,10 +40,7 @@
         border-radius: @data.borderRadius;
         
     .box_sizing('border-box');
-    
-    .background(data.background);
-    .typography(data.typography,true);
-    .clearfix();
+    .background(data.background,data);
     
     > .container {
         position: relative;
@@ -58,7 +55,7 @@
 
 .layout.default(data) {
     body {
-        .background(data.background);
+        .background(data.background,data);
     }
     
     @ eachComponent(function(cmp,id,parent,type){ 
@@ -70,7 +67,8 @@
     
         @ if (type=="container" || type=="form") {
             #@{id} {
-                .layout.container(data.cmp[id]);
+                @ var cnt = data.cmp[id] || {};
+                .layout.container(cnt);
                 @ if (!parent) {
                     > .container {
                         width: @data.sheet.width;
@@ -94,23 +92,29 @@
                     var sub = data.cmp[sid] ? (data.cmp[sid].layout || {}) : {};
                     var dw = total;
                     var position = false;
+                    var auto = false;
 
                     if (sub.type=="part") {
-                        if (sub.part=="of") dw = (total - pg*3)/4;
-                        else if (sub.part=="ot") dw = (total - pg*2)/3;
-                        else if (sub.part=="oh") dw = (total - pg*1)/2;
-                        else if (sub.part=="tt") dw = (total - pg*2)/3*2 + pg;
-                        else if (sub.part=="tf") dw = (total - pg*3)/4*3 + pg*2;
+                        if (sub.part=="of") dw = (total)/4;
+                        else if (sub.part=="ot") dw = (total)/3;
+                        else if (sub.part=="oh") dw = (total)/2;
+                        else if (sub.part=="tt") dw = (total)/3*2;
+                        else if (sub.part=="tf") dw = (total)/4*3;
                     } 
                     else if (sub.type!='absolute') {
                         if (sub.column) {
                             var count = sub.column || col_num;
                             dw = count * col_w + pg * (count - 1);
+                        } else {
+                            auto = true;
                         }
                     }
 
                     if (w + dw > total) w = 0;
                     var margin = w==0 ? 0 : pg;
+                    
+                    if (sub.type=="part") margin = 0;
+                    
                     w += dw;
 
                     componentWidth[sid] = dw;
@@ -128,25 +132,32 @@
                         @ if (sub.width)
                             width: @sub.width;
                             
-                        @ if (pos.z)
-                            z-index: @pos.z;
-                            
                         left: @{pos.x || 0};
                         top: @{pos.y || 0};
                     
-                    @ } else {
-                
-                        display: @{ dw==total ? 'block':'inline-block' };
-                        margin-left: @{relativeMargin}%;
-
-                        @ if (relativeWidth!=100)
-                            width: @{relativeWidth}%;
+                    @ } else if (sub.type=='centered') {
                         
+                        width: auto;
+                        display: block;
+                        margin-left: auto;
+                        margin-right: auto;
+                        
+                    @ } else {
+                        position: relative;
+                        @ if (auto) {
+                            display: block;
+                        @ } else {
+                            display: inline-block;
+                            width: @{relativeWidth}%;
+                            margin-left: @{relativeMargin}%;
+                        @ }
                     @ }
 
                     vertical-align: top;
                     @ if (sub.margin)
                         margin-top: @sub.margin;
+                    @ if (pos.z)
+                        z-index: @pos.z;
                 }
 
                 @ if (sub.overflow) {

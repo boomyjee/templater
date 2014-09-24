@@ -7,9 +7,12 @@ TemplaterApi::addAction('getComponents',function($api,&$components) {
         'area' => ">form",
         'category' => 'Forms',
         'update' => function ($val) {
+            
+            $html = '<div><form method="POST"><br class="component-area" /></form></div>';
+            
             return array(
-                'html' => '<div><form><br class="component-area" /></form></div>',
-                'form' => '<label>Success message</label><input name="success" value="'.@$val['success'].'" />',
+                'html' => $html,
+                'form' => array('control'=>'ui.formEditor'),
                 'value' => $val
             );
         }

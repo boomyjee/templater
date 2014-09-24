@@ -11,16 +11,17 @@
             @append donut_root + "lib/countdown/county.js";
             @append {
                 $(function(){
-                    $(document).ready(function(){
-                        $("@sel").empty().county({
-                            endDateTime: new Date('2015/12/27 10:00:00'), 
-                            animation: "@{data.animation}", 
-                            days: false
-                        });
-                    });                
+                    $div = $("@sel");
+                    time = $div.attr("data-time");
+                    time = time ? new Date(time) : false;
+                    $div.empty().county({
+                        endDateTime: time,
+                        animation: "@{data.animation}", 
+                        days: false
+                    });
                 })
             }
-            @ reloadScript(sel,{animation:data.animation||false});
+            @ reloadScript(sel,{time:data.time,animation:data.animation||false});
         }
     @ }
     
