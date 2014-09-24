@@ -1,0 +1,2723 @@
+{
+  "color1": "#8dcf3c",
+  "color2": "#f5b60a",
+  "color3": "#f7ff00",
+  "sheet": {
+    "width": "990px"
+  },
+  "cmp": {
+    "id1392132704070": {
+      "background": {
+        "type": "gradient",
+        "pattern": "http://uxcandy.com/~boomyjee/templater/lib/modules/core/ui/controls/../../assets/patterns/new-retro-07b.jpg",
+        "pattern_color": [
+          1,
+          10
+        ],
+        "pattern_color_2": [
+          1,
+          12
+        ],
+        "transparency": 30,
+        "color": [
+          1,
+          8
+        ],
+        "color_2": [
+          1,
+          5
+        ]
+      },
+      "shadow": false,
+      "layout": {
+        "height": "49px"
+      },
+      "typography": {
+        "type": "default",
+        "textColor": false,
+        "linkColor": "#ffffff",
+        "linkColorHover": [
+          2,
+          8
+        ]
+      },
+      "border": {
+        "width": "2px",
+        "top": false,
+        "left": false,
+        "right": false,
+        "color": [
+          1,
+          6
+        ]
+      }
+    },
+    "id1392132170503": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "-14px",
+          "y": "38px"
+        }
+      }
+    },
+    "id1392146568866": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "448px",
+          "y": "14px"
+        },
+        "width": "474px",
+        "height": "163px"
+      }
+    },
+    "id1392132170502": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "24px",
+          "y": "-21px"
+        }
+      }
+    },
+    "id1392132704069": {
+      "layout": {
+        "height": "433px",
+        "overflow": "0px"
+      }
+    },
+    "id1392166668979": {
+      "layout": {
+        "column": 6,
+        "height": "480px"
+      },
+      "background": {
+        "type": "color",
+        "color": "#ffffff",
+        "pattern": false,
+        "pattern_color": [
+          1,
+          13
+        ],
+        "pattern_color_2": "white",
+        "transparency": 0,
+        "_id": false
+      },
+      "border": {
+        "width": "3px",
+        "color": [
+          1,
+          8
+        ]
+      },
+      "borderRadius": "20px 20px 20px 20px",
+      "padding": "20px 20px 20px 20px",
+      "typography": {
+        "type": "default",
+        "fontSize": 20,
+        "textColor": [
+          1,
+          6
+        ]
+      }
+    },
+    "id1392166668980": {
+      "layout": {
+        "type": "column",
+        "column": 6,
+        "height": "480px"
+      },
+      "form": {
+        "layout": {
+          "type": "default",
+          "labelWidth": "100px"
+        },
+        "style": {
+          "type": "default",
+          "controlPadding": "1em",
+          "floatErrors": true
+        }
+      },
+      "padding": "20px 20px 20px 20px",
+      "background": {
+        "type": "color",
+        "color": "rgba(255, 255, 255, 0.48)",
+        "pattern": false,
+        "pattern_color": [
+          1,
+          13
+        ],
+        "pattern_color_2": "white",
+        "transparency": 0,
+        "_id": 1392237183182
+      },
+      "border": {
+        "width": "3px",
+        "color": [
+          1,
+          8
+        ]
+      },
+      "typography": {
+        "type": "default",
+        "textColor": [
+          1,
+          3
+        ]
+      },
+      "borderRadius": "20px 20px 20px 20px"
+    },
+    "id1392165795364": {
+      "padding": "20px 0px 20px 0px",
+      "background": {
+        "type": "pattern",
+        "pattern": "http://uxcandy.com/~boomyjee/templater/lib/modules/core/ui/controls/../../assets/patterns/new-retro-03b.jpg",
+        "pattern_color": [
+          1,
+          10
+        ],
+        "pattern_color_2": "#ffffff",
+        "transparency": 64,
+        "color": [
+          1,
+          8
+        ],
+        "_id": 1392236897285,
+        "color_2": [
+          1,
+          6
+        ]
+      },
+      "mask": {
+        "type": "spikes",
+        "size": "15px",
+        "position": "both"
+      },
+      "layout": {
+        "height": "520px"
+      },
+      "shadow": false
+    },
+    "id1392166668984": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "343px",
+          "y": "-53px",
+          "z": 2
+        }
+      },
+      "smart_image": {
+        "type": "default",
+        "image": "lib/server/upload/files/fitline_form_circle.png",
+        "src_1": "#72ab09",
+        "dst_1": [
+          1,
+          5
+        ],
+        "delta_1": 20
+      }
+    },
+    "id1392166668982": {
+      "layout": {
+        "column": 3
+      },
+      "validation": {
+        "rules": [
+          {
+            "type": "required",
+            "test": true,
+            "message": "Обязательное поле"
+          },
+          {
+            "type": "size",
+            "min": "10",
+            "max": "10",
+            "test": false,
+            "message": "Ровно 10 цифр в виде 0551234567"
+          }
+        ],
+        "test": false
+      }
+    },
+    "id1392166668983": {
+      "layout": {
+        "column": 3
+      },
+      "validation": {
+        "test": false,
+        "rules": []
+      }
+    },
+    "id1392167764997": {
+      "layout": {
+        "column": 3
+      }
+    },
+    "id1392167764998": {
+      "layout": {
+        "column": 3
+      }
+    },
+    "id1392166668981": {
+      "button": {
+        "style": {
+          "type": "apple",
+          "fontSize": "36px",
+          "color": [
+            2,
+            9
+          ],
+          "_id": 1393594129590
+        },
+        "align": "fill",
+        "margin": "32px"
+      }
+    },
+    "id1392168200133": {
+      "background": {
+        "type": "color",
+        "color": "#f2f2f2",
+        "pattern": false,
+        "pattern_color": [
+          1,
+          13
+        ],
+        "pattern_color_2": "white",
+        "transparency": 0
+      },
+      "layout": {
+        "type": "column",
+        "column": 4,
+        "height": false
+      },
+      "border": {
+        "width": false,
+        "color": "#000000"
+      },
+      "padding": "0px 0px 10px 0px",
+      "typography": {
+        "type": "default",
+        "fontSize": 20
+      },
+      "shadow": {
+        "x": 1,
+        "y": 1,
+        "blur": 2,
+        "color": "rgba(0,0,0,0.5)"
+      }
+    },
+    "id1392168200134": {
+      "background": {
+        "type": "color",
+        "color": "#f2f2f2",
+        "pattern": false,
+        "pattern_color": [
+          1,
+          13
+        ],
+        "pattern_color_2": "white",
+        "transparency": 0,
+        "_id": 1392168200660
+      },
+      "layout": {
+        "column": 4,
+        "height": "300px"
+      }
+    },
+    "id1392168200135": {
+      "background": {
+        "type": "color",
+        "color": "#f2f2f2",
+        "pattern": false,
+        "pattern_color": [
+          1,
+          13
+        ],
+        "pattern_color_2": "white",
+        "transparency": 0,
+        "_id": 1392168200660
+      },
+      "layout": {
+        "column": 4,
+        "height": "300px"
+      }
+    },
+    "id1392329972521": {
+      "logo": {
+        "type": "default",
+        "bullet": {
+          "type": "default",
+          "symbol": "ok"
+        }
+      }
+    },
+    "id1392623452680": {
+      "layout": {
+        "type": "column",
+        "column": 12
+      }
+    },
+    "id1392623452681": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "528px",
+          "y": "196px"
+        },
+        "width": "402px",
+        "height": "203px"
+      },
+      "typography": {
+        "type": "default",
+        "fontSize": 24,
+        "textColor": [
+          2,
+          5
+        ]
+      }
+    },
+    "id1392623652115": {
+      "list": {
+        "type": "default",
+        "bullet": {
+          "type": "image",
+          "symbol": "glass",
+          "image": "lib/server/upload/bullets/1392624362_5301c2ea8464c.png",
+          "indent": false
+        }
+      }
+    },
+    "id1392625556695": {
+      "layout": {
+        "height": "300px"
+      }
+    },
+    "id1392630852081": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "439px",
+          "y": "24px"
+        },
+        "width": false,
+        "height": false
+      },
+      "canvas": {
+        "text": "ПОХУДЕЙ НА 100%\nна 1000 кг за 5 часов",
+        "styles": {
+          "1": {
+            "3": {
+              "fontFamily": "Comic Sans MS",
+              "fillValue": [
+                2,
+                7
+              ],
+              "fontSize": 64
+            },
+            "4": {
+              "fontFamily": "Comic Sans MS",
+              "fillValue": [
+                2,
+                7
+              ],
+              "fontSize": 64
+            },
+            "5": {
+              "fontFamily": "Comic Sans MS",
+              "fillValue": [
+                2,
+                7
+              ],
+              "fontSize": 64
+            },
+            "6": {
+              "fontFamily": "Comic Sans MS",
+              "fillValue": [
+                2,
+                7
+              ],
+              "fontSize": 64
+            },
+            "7": {
+              "fontSize": 64
+            }
+          }
+        },
+        "fontFamily": "Impact",
+        "width": 481,
+        "height": 148,
+        "fillValue": [
+          1,
+          6
+        ],
+        "fontSize": 48,
+        "strokeWidth": 2,
+        "strokeValue": "#ffffff",
+        "shadowColorValue": "rgba(0, 0, 0, 0.16)",
+        "lineHeight": 1.3
+      }
+    },
+    "id1392800686317": {
+      "canvas": {
+        "styles": {},
+        "width": 216,
+        "height": 104,
+        "text": "< enter text >\n555"
+      },
+      "layout": {
+        "type": "column",
+        "column": 12
+      }
+    },
+    "id1392804270129": {
+      "layout": {
+        "type": "absolute",
+        "height": "188px",
+        "width": "531px",
+        "position": {
+          "x": "-31px",
+          "y": "224px",
+          "z": 1
+        }
+      },
+      "smart_image": {
+        "type": "horizontal",
+        "left": 9,
+        "right": 50,
+        "width": 115,
+        "height": 97,
+        "image": "http://uxcandy.com/~boomyjee/templater/lib/modules/core/ui/controls/../../assets/smart/arrow1.png",
+        "color1": "#e4a424",
+        "_id": false,
+        "colors": [
+          {}
+        ],
+        "dst_1": [
+          2,
+          3
+        ],
+        "src_1": "#e4a424",
+        "delta_1": 20
+      }
+    },
+    "id1392817132596": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "50px",
+          "y": "247px",
+          "z": 2
+        },
+        "height": "53px"
+      },
+      "smart_text": {
+        "styles": {},
+        "width": 315,
+        "height": 42,
+        "text": "ХУДЕЙ С FITLINE БЫСТРО",
+        "fontSize": 32,
+        "fontFamily": "Impact",
+        "fillValue": "#ffffff",
+        "strokeValue": "#626262"
+      }
+    },
+    "id1392817549829": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "-6px",
+          "y": "30px"
+        }
+      }
+    },
+    "id1392817549830": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "89px",
+          "y": "40px"
+        },
+        "width": "320px"
+      }
+    },
+    "id1392817549831": {
+      "layout": {
+        "type": "column",
+        "margin": "100px",
+        "height": "132px",
+        "column": false
+      },
+      "typography": {
+        "type": "default",
+        "textColor": "#fc0000",
+        "fontSize": 18,
+        "lineHeight": 1.2
+      }
+    },
+    "header": {
+      "background": {
+        "type": "color",
+        "color": "#ffffff",
+        "pattern": false,
+        "pattern_color": [
+          1,
+          13
+        ],
+        "pattern_color_2": "white",
+        "transparency": 0
+      },
+      "layout": {
+        "height": "433px"
+      },
+      "border": {
+        "width": false,
+        "color": [
+          1,
+          7
+        ]
+      }
+    },
+    "logo": {
+      "layout": {
+        "type": "absolute",
+        "height": false,
+        "column": 10,
+        "width": false,
+        "position": {
+          "x": "8px",
+          "y": "-19px",
+          "z": 2
+        }
+      },
+      "smart_image": {
+        "type": "default",
+        "image": "lib/server/upload/files/fitline_logo.png",
+        "src_1": "#f5b01b",
+        "delta_1": 20,
+        "dst_1": [
+          2,
+          6
+        ],
+        "src_2": "#8de610",
+        "dst_2": [
+          1,
+          5
+        ],
+        "delta_2": 20,
+        "_id": 1393261839965
+      }
+    },
+    "header_girl": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "-4px",
+          "y": "38px"
+        }
+      }
+    },
+    "header_slogan": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "476px",
+          "y": "14px"
+        }
+      },
+      "smart_text": {
+        "styles": {
+          "0": {
+            "10": {
+              "fontSize": 80,
+              "fillValue": [
+                2,
+                8
+              ]
+            },
+            "11": {
+              "fontSize": 80,
+              "fillValue": [
+                2,
+                8
+              ]
+            },
+            "12": {
+              "fontSize": 80,
+              "fillValue": [
+                2,
+                8
+              ]
+            },
+            "13": {
+              "fontSize": 80,
+              "fillValue": [
+                2,
+                8
+              ]
+            },
+            "14": {
+              "fontSize": 80,
+              "fillValue": [
+                2,
+                8
+              ]
+            }
+          },
+          "1": {
+            "3": {
+              "fillValue": [
+                2,
+                8
+              ],
+              "fontSize": 80
+            },
+            "4": {
+              "fillValue": [
+                2,
+                8
+              ],
+              "fontSize": 80
+            },
+            "5": {
+              "fillValue": [
+                2,
+                8
+              ],
+              "fontSize": 80
+            },
+            "6": {
+              "fillValue": [
+                2,
+                8
+              ],
+              "fontSize": 80
+            },
+            "7": {
+              "fillValue": [
+                2,
+                8
+              ],
+              "fontSize": 80
+            }
+          }
+        },
+        "width": 476,
+        "height": 168,
+        "text": "ПОХУДЕЙ НА 100%\nдо -8 кг в неделю",
+        "fontFamily": "Impact",
+        "fontSize": 56,
+        "fillValue": [
+          1,
+          6
+        ],
+        "strokeValue": "#ffffff",
+        "strokeWidth": 2,
+        "shadowColorValue": "rgba(0, 0, 0, 0.21)",
+        "lineHeight": 1
+      }
+    },
+    "header_benefits": {
+      "layout": {
+        "type": "column",
+        "width": "376px",
+        "position": {
+          "x": "36px",
+          "y": "48px"
+        },
+        "column": false
+      },
+      "logo": {
+        "type": "default",
+        "bullet": {
+          "type": "default",
+          "symbol": "leaf",
+          "color": [
+            2,
+            8
+          ]
+        }
+      },
+      "list": {
+        "type": "default",
+        "bullet": {
+          "type": "default",
+          "symbol": "leaf",
+          "size": 36,
+          "indent": 0.4,
+          "color": [
+            2,
+            7
+          ]
+        },
+        "itemMargin": "1.1em"
+      }
+    },
+    "id1392909848923": {
+      "smart_text": {
+        "styles": {},
+        "width": 289,
+        "height": 39,
+        "text": "ДО ЗАВЕРШЕНИЯ АКЦИИ",
+        "fontSize": 30,
+        "strokeWidth": 1,
+        "strokeValue": "#3a3a3a",
+        "fillValue": "#ffffff",
+        "shadowColorValue": false,
+        "shadowY": 0,
+        "shadowX": 0,
+        "shadowBlur": 1,
+        "fontFamily": "Impact"
+      },
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "85px",
+          "y": "338px"
+        }
+      }
+    },
+    "counter_top": {
+      "layout": {
+        "type": "column",
+        "height": "69px",
+        "margin": "60px",
+        "column": false
+      },
+      "countdown": {
+        "type": "default",
+        "color1": [
+          1,
+          13
+        ],
+        "color2": false,
+        "animation": "false",
+        "_id": 1393263459172
+      }
+    },
+    "id1393263951071": {
+      "typography": {
+        "type": "default",
+        "fontSize": 16,
+        "lineHeight": false
+      },
+      "padding": "360px 0px 0px 0px",
+      "border": {
+        "width": false,
+        "color": "#ebebeb"
+      },
+      "layout": {
+        "margin": "0px"
+      }
+    },
+    "id1393263951073": {
+      "layout": {
+        "type": "absolute",
+        "column": false,
+        "position": {
+          "x": "-17px",
+          "y": "-366px"
+        }
+      }
+    },
+    "id1393263951074": {
+      "padding": "15px 15px 15px 15px",
+      "border": {
+        "color": "#ebebeb",
+        "width": "3px"
+      },
+      "background": {
+        "type": "color",
+        "color": "#ffffff",
+        "pattern": false,
+        "pattern_color": [
+          1,
+          13
+        ],
+        "pattern_color_2": "white",
+        "transparency": 0,
+        "_id": 1392234610864
+      },
+      "layout": {
+        "type": "column",
+        "position": {
+          "z": 3
+        }
+      },
+      "typography": {
+        "type": "default",
+        "headingsColor": [
+          2,
+          8
+        ]
+      }
+    },
+    "id1393309682077": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "394px",
+          "y": "-335px"
+        }
+      }
+    },
+    "id1393309682078": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "229px",
+          "y": "-335px"
+        },
+        "height": false,
+        "width": "762px"
+      },
+      "border": {
+        "width": "1px",
+        "color": "#ebebeb"
+      },
+      "borderRadius": "25px 25px 25px 25px",
+      "padding": "15px 25px 15px 25px",
+      "typography": {
+        "type": "default",
+        "textColor": "#626262",
+        "headingsColor": false
+      },
+      "background": {
+        "type": "color",
+        "color": "#f2f2f2",
+        "pattern": false,
+        "pattern_color": [
+          1,
+          13
+        ],
+        "pattern_color_2": "white",
+        "transparency": 0,
+        "_id": 1392168200660
+      }
+    },
+    "id1393311570932": {
+      "layout": {
+        "type": "column",
+        "column": false
+      }
+    },
+    "id1393311954385": {
+      "smart_image": {
+        "type": "default",
+        "image": "lib/server/upload/files/fitline_table.png",
+        "src_1": "#ba8e09",
+        "dst_1": [
+          2,
+          7
+        ],
+        "delta_1": 20,
+        "src_2": "#5f8a03",
+        "dst_2": [
+          1,
+          5
+        ],
+        "delta_2": 20
+      }
+    },
+    "id1393312800558": {
+      "typography": {
+        "type": "default",
+        "fontSize": 24,
+        "lineHeight": 1
+      }
+    },
+    "id1393314061771": {
+      "typography": {
+        "type": "default",
+        "fontSize": 22
+      }
+    },
+    "id1393314061772": {
+      "typography": {
+        "type": "default",
+        "fontSize": false,
+        "textColor": [
+          2,
+          8
+        ]
+      },
+      "layout": {
+        "type": "column",
+        "margin": "-10px",
+        "column": false
+      }
+    },
+    "id1393314061773": {
+      "typography": {
+        "type": "default",
+        "fontSize": 22
+      }
+    },
+    "id1393317551424": {
+      "layout": {
+        "type": "column",
+        "column": 3
+      }
+    },
+    "id1393317551425": {
+      "layout": {
+        "type": "column",
+        "column": 3
+      }
+    },
+    "id1393317551426": {
+      "layout": {
+        "type": "column",
+        "column": 3
+      }
+    },
+    "id1393317551427": {
+      "layout": {
+        "type": "column",
+        "column": 3
+      }
+    },
+    "id1393317551432": {
+      "layout": {
+        "height": "500px"
+      },
+      "padding": "20px 0px"
+    },
+    "id1393317551428": {
+      "layout": {
+        "type": "column",
+        "column": false
+      }
+    },
+    "id1393317551433": {
+      "layout": {
+        "type": "column",
+        "column": 3
+      }
+    },
+    "id1393330422770": {
+      "layout": {
+        "type": "column",
+        "column": 3
+      },
+      "padding": "0px"
+    },
+    "id1393330422773": {
+      "layout": {
+        "type": "column",
+        "column": 3
+      },
+      "padding": "0px"
+    },
+    "id1393330422772": {
+      "layout": {
+        "type": "column",
+        "column": 3
+      },
+      "padding": "0px"
+    },
+    "id1393330422771": {
+      "layout": {
+        "type": "column",
+        "column": 3
+      },
+      "padding": "0px"
+    },
+    "id1393330422774": {
+      "layout": {
+        "type": "centered"
+      }
+    },
+    "id1393330422775": {
+      "layout": {
+        "type": "centered"
+      }
+    },
+    "id1393330422776": {
+      "layout": {
+        "type": "centered"
+      }
+    },
+    "id1393330422777": {
+      "layout": {
+        "type": "centered"
+      }
+    },
+    "id1393331078854": {
+      "typography": {
+        "type": "default",
+        "fontSize": 16
+      }
+    },
+    "id1393331078855": {
+      "typography": {
+        "type": "default",
+        "fontSize": 18
+      }
+    },
+    "id1393331078856": {
+      "typography": {
+        "type": "default",
+        "fontSize": 18
+      }
+    },
+    "id1393331078857": {
+      "typography": {
+        "type": "default",
+        "fontSize": 18
+      }
+    },
+    "id1393331078859": {
+      "typography": {
+        "type": "default",
+        "fontSize": 14,
+        "headingsColor": [
+          2,
+          7
+        ]
+      },
+      "layout": {
+        "margin": "30px"
+      }
+    },
+    "id1393331078860": {
+      "typography": {
+        "type": "default",
+        "headingsColor": [
+          1,
+          7
+        ]
+      },
+      "layout": {
+        "margin": "-20px"
+      }
+    },
+    "id1393339983111": {
+      "layout": {
+        "column": 6,
+        "height": "480px"
+      },
+      "form": {
+        "layout": {
+          "type": "default"
+        },
+        "style": {
+          "type": "default",
+          "controlPadding": "1em"
+        }
+      },
+      "padding": "20px 20px 20px 20px",
+      "background": {
+        "type": "color",
+        "color": [
+          1,
+          13
+        ],
+        "pattern": false,
+        "pattern_color": [
+          1,
+          13
+        ],
+        "pattern_color_2": "white",
+        "transparency": 0,
+        "_id": 1393340179523
+      },
+      "border": {
+        "width": "3px",
+        "color": [
+          1,
+          8
+        ]
+      },
+      "typography": {
+        "type": "default",
+        "textColor": [
+          1,
+          3
+        ]
+      },
+      "borderRadius": "20px 20px 20px 20px"
+    },
+    "id1393339983112": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "343px",
+          "y": "-53px",
+          "z": 2
+        }
+      },
+      "smart_image": {
+        "type": "default",
+        "image": "lib/server/upload/files/fitline_form_circle.png",
+        "src_1": "#72ab09",
+        "dst_1": [
+          1,
+          5
+        ],
+        "delta_1": 20
+      }
+    },
+    "id1393339983113": {},
+    "id1393339983114": {
+      "layout": {
+        "column": 3
+      }
+    },
+    "id1393339983115": {
+      "layout": {
+        "column": 3
+      }
+    },
+    "id1393339983116": {
+      "layout": {
+        "column": 3
+      }
+    },
+    "id1393339983117": {
+      "layout": {
+        "column": 3
+      }
+    },
+    "id1393339983118": {
+      "button": {
+        "style": {
+          "type": "apple",
+          "fontSize": "36px",
+          "color": [
+            2,
+            9
+          ],
+          "_id": 1393594129590
+        },
+        "align": "fill",
+        "margin": "32px"
+      }
+    },
+    "id1393339983119": {
+      "smart_text": {
+        "styles": {},
+        "width": 289,
+        "height": 39,
+        "text": "ДО ЗАВЕРШЕНИЯ АКЦИИ",
+        "fontSize": 30,
+        "strokeWidth": 1,
+        "strokeValue": "#3a3a3a",
+        "fillValue": "#ffffff",
+        "shadowColorValue": false,
+        "shadowY": 0,
+        "shadowX": 0,
+        "shadowBlur": 1,
+        "fontFamily": "Impact"
+      },
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "85px",
+          "y": "338px"
+        }
+      }
+    },
+    "id1393339983120": {
+      "layout": {
+        "type": "column",
+        "height": "69px",
+        "margin": "60px",
+        "column": false
+      },
+      "countdown": {
+        "type": "default",
+        "color1": [
+          1,
+          13
+        ],
+        "color2": false,
+        "animation": "false",
+        "_id": 1393263459172
+      }
+    },
+    "id1393340178747": {
+      "layout": {
+        "type": "column",
+        "column": 6,
+        "height": "478px"
+      }
+    },
+    "id1393340178748": {
+      "smart_image": {
+        "type": "default",
+        "image": "lib/server/upload/files/fitline_how_we_work.png",
+        "dst_1": [
+          1,
+          7
+        ],
+        "delta_1": 20,
+        "src_1": "#7fc240",
+        "dst_2": [
+          2,
+          6
+        ],
+        "delta_2": 20,
+        "src_2": "#c79230"
+      }
+    },
+    "id1393340178749": {
+      "typography": {
+        "type": "default",
+        "headingsColor": [
+          2,
+          7
+        ]
+      }
+    },
+    "id1393340178750": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "120px",
+          "y": "66px"
+        }
+      },
+      "typography": {
+        "type": "default",
+        "textColor": [
+          1,
+          7
+        ],
+        "fontSize": 24,
+        "lineHeight": 1.2
+      }
+    },
+    "id1393340905982": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "120px",
+          "y": "184px"
+        }
+      },
+      "typography": {
+        "type": "default",
+        "textColor": [
+          1,
+          7
+        ],
+        "fontSize": 24,
+        "lineHeight": 1.2
+      }
+    },
+    "id1393340905983": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "120px",
+          "y": "299px"
+        }
+      },
+      "typography": {
+        "type": "default",
+        "textColor": [
+          1,
+          7
+        ],
+        "fontSize": 24,
+        "lineHeight": 1.2
+      }
+    },
+    "id1393340905984": {
+      "smart_text": {
+        "styles": {},
+        "width": 356,
+        "height": 47,
+        "text": "ОПЛАТА ПРИ ПОЛУЧЕНИИ",
+        "fillValue": "#ff442b",
+        "fontFamily": "Impact",
+        "strokeWidth": 1,
+        "strokeValue": "rgba(0, 0, 0, 0.23)",
+        "shadowColorValue": "rgba(0, 0, 0, 0.25)",
+        "fontSize": 36
+      },
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "94px",
+          "y": "402px"
+        }
+      }
+    },
+    "id1393340905985": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "10px",
+          "y": "394px"
+        }
+      }
+    },
+    "id1393341412881": {
+      "background": {
+        "type": "pattern",
+        "color": [
+          1,
+          9
+        ],
+        "pattern_color": [
+          1,
+          10
+        ],
+        "pattern": "http://uxcandy.com/~boomyjee/templater/lib/modules/core/ui/controls/../../assets/patterns/new-retro-18b.jpg",
+        "transparency": 70
+      }
+    },
+    "id1393341412882": {
+      "layout": {
+        "type": "part",
+        "column": 4,
+        "height": "400px",
+        "margin": false,
+        "overflow": "0px",
+        "part": "ot"
+      },
+      "background": {
+        "type": "color",
+        "color": [
+          2,
+          13
+        ],
+        "pattern": false,
+        "pattern_color": [
+          1,
+          13
+        ],
+        "pattern_color_2": "white",
+        "transparency": 0,
+        "_id": 1393341413649
+      },
+      "padding": "20px",
+      "typography": {
+        "type": "default",
+        "fontSize": 16
+      }
+    },
+    "id1393341412883": {
+      "layout": {
+        "type": "column",
+        "column": 4
+      }
+    },
+    "id1393341412884": {
+      "layout": {
+        "type": "column",
+        "column": 4
+      }
+    },
+    "id1393341412885": {
+      "layout": {
+        "type": "part",
+        "column": 4,
+        "height": "297px",
+        "part": "ot"
+      }
+    },
+    "id1393341412886": {
+      "layout": {
+        "type": "part",
+        "column": 4,
+        "height": "297px",
+        "part": "ot"
+      },
+      "background": {
+        "type": "color",
+        "color": [
+          2,
+          13
+        ],
+        "pattern": false,
+        "pattern_color": [
+          1,
+          13
+        ],
+        "pattern_color_2": "white",
+        "transparency": 0,
+        "_id": 1393341413649
+      }
+    },
+    "id1393342807283": {
+      "typography": {
+        "type": "default",
+        "fontSize": 28,
+        "lineHeight": 1.2,
+        "textColor": [
+          1,
+          4
+        ]
+      }
+    },
+    "id1393342807284": {
+      "layout": {
+        "type": "part",
+        "column": 4,
+        "height": "400px",
+        "margin": false,
+        "overflow": "0px",
+        "part": "ot"
+      },
+      "background": {
+        "type": "color",
+        "color": false,
+        "pattern": false,
+        "pattern_color": [
+          1,
+          13
+        ],
+        "pattern_color_2": "white",
+        "transparency": 0
+      },
+      "padding": "20px",
+      "typography": {
+        "type": "default",
+        "fontSize": 18,
+        "textColor": false
+      }
+    },
+    "id1393342807285": {
+      "typography": {
+        "type": "default",
+        "fontSize": 28,
+        "lineHeight": 1.2,
+        "textColor": [
+          1,
+          4
+        ]
+      }
+    },
+    "id1393342807286": {
+      "layout": {
+        "type": "part",
+        "column": 4,
+        "height": "400px",
+        "margin": false,
+        "overflow": "0px",
+        "part": "ot"
+      },
+      "background": {
+        "type": "color",
+        "color": [
+          2,
+          13
+        ],
+        "pattern": false,
+        "pattern_color": [
+          1,
+          13
+        ],
+        "pattern_color_2": "white",
+        "transparency": 0,
+        "_id": 1393341413649
+      },
+      "padding": "20px"
+    },
+    "id1393342807287": {
+      "typography": {
+        "type": "default",
+        "fontSize": 28,
+        "lineHeight": 1.2,
+        "textColor": [
+          1,
+          4
+        ]
+      }
+    },
+    "id1393342807288": {
+      "typography": {
+        "type": "default",
+        "fontSize": 18,
+        "lineHeight": 1.2
+      }
+    },
+    "id1393342807289": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "15px",
+          "y": "164px"
+        }
+      }
+    },
+    "id1393342807290": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "137px",
+          "y": "232px"
+        }
+      }
+    },
+    "id1393343404515": {
+      "typography": {
+        "type": "default",
+        "fontSize": 18,
+        "lineHeight": 1.2
+      },
+      "layout": {
+        "type": "column",
+        "column": 4
+      }
+    },
+    "id1393343404516": {
+      "list": {
+        "type": "default",
+        "bullet": {
+          "type": "default",
+          "symbol": "ok-sign",
+          "size": 34,
+          "indent": 0.2,
+          "color": [
+            1,
+            3
+          ]
+        },
+        "itemMargin": "1.5em"
+      },
+      "layout": {
+        "type": "column",
+        "margin": "20px",
+        "column": 3
+      }
+    },
+    "id1393343404517": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "216px",
+          "y": "142px"
+        }
+      }
+    },
+    "id1393343404518": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "215px",
+          "y": "247px"
+        }
+      }
+    },
+    "id1393344027371": {
+      "typography": {
+        "type": "default",
+        "fontSize": 20,
+        "headingsColor": [
+          1,
+          6
+        ]
+      }
+    },
+    "id1393344027372": {
+      "layout": {
+        "type": "column",
+        "column": 4,
+        "height": "450px"
+      },
+      "background": {
+        "type": "pattern",
+        "pattern": "http://uxcandy.com/~boomyjee/templater/lib/modules/core/ui/controls/../../assets/patterns/new-retro-07b.jpg",
+        "pattern_color": [
+          1,
+          3
+        ],
+        "pattern_color_2": [
+          1,
+          5
+        ],
+        "transparency": 81,
+        "color": false,
+        "_id": 1393344027935
+      },
+      "typography": {
+        "type": "default",
+        "textColor": "#ffffff",
+        "headingsColor": [
+          2,
+          8
+        ],
+        "fontSize": 14
+      },
+      "padding": "10px",
+      "borderRadius": "10px"
+    },
+    "id1393344027375": {
+      "layout": {
+        "type": "column",
+        "column": 4,
+        "height": "450px"
+      },
+      "background": {
+        "type": "pattern",
+        "pattern": "http://uxcandy.com/~boomyjee/templater/lib/modules/core/ui/controls/../../assets/patterns/new-retro-07b.jpg",
+        "pattern_color": [
+          1,
+          3
+        ],
+        "pattern_color_2": [
+          1,
+          5
+        ],
+        "transparency": 81,
+        "color": false,
+        "_id": 1393344027935
+      },
+      "typography": {
+        "type": "default",
+        "textColor": "#ffffff",
+        "headingsColor": [
+          2,
+          8
+        ],
+        "fontSize": 14
+      },
+      "padding": "10px",
+      "borderRadius": "10px"
+    },
+    "id1393344027376": {},
+    "id1393344027377": {},
+    "id1393344027378": {
+      "layout": {
+        "type": "column",
+        "column": 4,
+        "height": "450px"
+      },
+      "background": {
+        "type": "pattern",
+        "pattern": "http://uxcandy.com/~boomyjee/templater/lib/modules/core/ui/controls/../../assets/patterns/new-retro-07b.jpg",
+        "pattern_color": [
+          1,
+          3
+        ],
+        "pattern_color_2": [
+          1,
+          5
+        ],
+        "transparency": 81,
+        "color": false,
+        "_id": 1393344027935
+      },
+      "typography": {
+        "type": "default",
+        "textColor": "#ffffff",
+        "headingsColor": [
+          2,
+          8
+        ],
+        "fontSize": 14
+      },
+      "padding": "10px",
+      "borderRadius": "10px"
+    },
+    "id1393344027379": {},
+    "id1393344027380": {},
+    "id1393350016842": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "0px",
+          "y": "76px"
+        }
+      },
+      "smart_image": {
+        "type": "default",
+        "image": "lib/server/upload/files/fitline_effect.png",
+        "delta_1": 20,
+        "dst_1": [
+          1,
+          6
+        ],
+        "src_1": "#7ab324"
+      }
+    },
+    "id1393350165829": {
+      "typography": {
+        "type": "default",
+        "fontSize": 16,
+        "lineHeight": 6.4
+      },
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "4px",
+          "y": "91px"
+        }
+      }
+    },
+    "id1393350301162": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "0px",
+          "y": "133px"
+        }
+      }
+    },
+    "id1393350301163": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "0px",
+          "y": "220px"
+        }
+      }
+    },
+    "id1393350301164": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "0px",
+          "y": "338px"
+        }
+      }
+    },
+    "id1393352243316": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "305px",
+          "y": "-16px"
+        }
+      }
+    },
+    "id1393396944273": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "-193px",
+          "y": "98px"
+        }
+      }
+    },
+    "id1393396944274": {
+      "layout": {
+        "type": "column",
+        "column": 4,
+        "part": "full"
+      }
+    },
+    "id1393416583053": {
+      "background": {
+        "type": "color",
+        "color": "#f2f2f2",
+        "pattern": false,
+        "pattern_color": [
+          1,
+          13
+        ],
+        "pattern_color_2": "white",
+        "transparency": 0,
+        "_id": 1392168200660
+      },
+      "layout": {
+        "type": "column",
+        "column": 4,
+        "height": false
+      },
+      "border": {
+        "width": false,
+        "color": "#000000"
+      },
+      "padding": "0px 0px 10px 0px",
+      "typography": {
+        "type": "default",
+        "fontSize": 20
+      },
+      "shadow": {
+        "x": 1,
+        "y": 1,
+        "blur": 2,
+        "color": "rgba(0,0,0,0.5)"
+      }
+    },
+    "id1393416583054": {
+      "layout": {
+        "type": "column",
+        "column": 4,
+        "part": "full"
+      }
+    },
+    "id1393416583055": {},
+    "id1393416583056": {
+      "background": {
+        "type": "color",
+        "color": "#f2f2f2",
+        "pattern": false,
+        "pattern_color": [
+          1,
+          13
+        ],
+        "pattern_color_2": "white",
+        "transparency": 0,
+        "_id": 1392168200660
+      },
+      "layout": {
+        "type": "column",
+        "column": 4,
+        "height": false
+      },
+      "border": {
+        "width": false,
+        "color": "#000000"
+      },
+      "padding": "0px 0px 10px 0px",
+      "typography": {
+        "type": "default",
+        "fontSize": 20
+      },
+      "shadow": {
+        "x": 1,
+        "y": 1,
+        "blur": 2,
+        "color": "rgba(0,0,0,0.5)"
+      }
+    },
+    "id1393416583057": {
+      "layout": {
+        "type": "column",
+        "column": 4,
+        "part": "full"
+      }
+    },
+    "id1393416583058": {},
+    "id1393344027381": {
+      "background": {
+        "type": "pattern",
+        "pattern": "http://uxcandy.com/~boomyjee/templater/lib/modules/core/ui/controls/../../assets/patterns/new-retro-03b.jpg",
+        "pattern_color": [
+          1,
+          4
+        ],
+        "pattern_color_2": [
+          1,
+          5
+        ],
+        "transparency": 30,
+        "color": false
+      },
+      "border": {
+        "width": "2px",
+        "color": [
+          1,
+          6
+        ],
+        "top": false,
+        "left": false,
+        "right": false
+      },
+      "layout": {
+        "height": "180px"
+      },
+      "mask": {
+        "type": "spikes"
+      }
+    },
+    "id1393587140424": {
+      "background": {
+        "type": "pattern",
+        "pattern": "http://uxcandy.com/~boomyjee/templater/lib/modules/core/ui/controls/../../assets/patterns/new-retro-18b.jpg",
+        "pattern_color": [
+          1,
+          3
+        ],
+        "pattern_color_2": [
+          1,
+          4
+        ],
+        "transparency": 30,
+        "color": false
+      },
+      "layout": {
+        "height": "359px"
+      },
+      "mask": {
+        "type": "spikes",
+        "position": "bottom"
+      }
+    },
+    "id1393587140425": {
+      "smart_text": {
+        "styles": {
+          "0": {
+            "0": {
+              "fontFamily": "Impact"
+            },
+            "1": {
+              "fontFamily": "Impact"
+            },
+            "2": {
+              "fontFamily": "Impact"
+            },
+            "3": {
+              "fontFamily": "Impact"
+            },
+            "4": {
+              "fontFamily": "Impact"
+            },
+            "5": {
+              "fontFamily": "Impact"
+            },
+            "6": {
+              "fontFamily": "Impact"
+            },
+            "7": {
+              "fontFamily": "Impact"
+            },
+            "8": {
+              "fontFamily": "Impact"
+            },
+            "9": {
+              "fontFamily": "Impact"
+            },
+            "10": {
+              "fontFamily": "Impact"
+            },
+            "11": {
+              "fontFamily": "Impact"
+            },
+            "12": {
+              "fontFamily": "Impact"
+            },
+            "13": {
+              "fontFamily": "Impact"
+            },
+            "14": {
+              "fontFamily": "Impact"
+            },
+            "15": {
+              "fontFamily": "Impact"
+            },
+            "16": {
+              "fontFamily": "Impact"
+            },
+            "17": {
+              "fontFamily": "Impact"
+            },
+            "18": {
+              "fontFamily": "Impact"
+            },
+            "19": {
+              "fontFamily": "Impact"
+            },
+            "20": {
+              "fontFamily": "Impact"
+            },
+            "21": {
+              "fontFamily": "Impact"
+            },
+            "22": {
+              "fontFamily": "Impact"
+            },
+            "23": {
+              "fontFamily": "Impact"
+            },
+            "24": {
+              "fontFamily": "Impact"
+            },
+            "25": {
+              "fontFamily": "Impact"
+            },
+            "26": {
+              "fontFamily": "Impact"
+            },
+            "27": {
+              "fontFamily": "Impact"
+            },
+            "28": {
+              "fontFamily": "Impact"
+            },
+            "29": {
+              "fontFamily": "Impact"
+            },
+            "30": {
+              "fontFamily": "Impact"
+            },
+            "31": {
+              "fontFamily": "Impact"
+            },
+            "32": {
+              "fontFamily": "Impact"
+            },
+            "33": {
+              "fontFamily": "Impact"
+            }
+          }
+        },
+        "width": 622,
+        "height": 107,
+        "text": "НАЧНИ ПРЯМО СЕЙЧАС!",
+        "fillValue": "#ffffff",
+        "fontSize": 64,
+        "strokeWidth": 3,
+        "strokeValue": [
+          1,
+          4
+        ],
+        "shadowColorValue": "#9ced2b",
+        "shadowX": 0,
+        "shadowY": 0,
+        "shadowBlur": 10
+      },
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "176px",
+          "y": "61px"
+        }
+      }
+    },
+    "id1393587140426": {
+      "smart_text": {
+        "styles": {},
+        "width": 853,
+        "height": 58,
+        "text": "FIT Line - быстрый путь к стройности и здоровью",
+        "fillValue": [
+          2,
+          9
+        ],
+        "fontFamily": "Impact",
+        "strokeWidth": 1,
+        "strokeValue": [
+          2,
+          3
+        ],
+        "shadowColorValue": "#3a3a3a",
+        "shadowY": 2,
+        "shadowX": 2,
+        "shadowBlur": 3
+      },
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "56px",
+          "y": "17px"
+        }
+      }
+    },
+    "id1393594127315": {
+      "padding": "40px 20px 20px 20px"
+    },
+    "id1393594127316": {
+      "typography": {
+        "type": "default",
+        "textColor": "#b0b0b0"
+      }
+    },
+    "id1393594127317": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "735px",
+          "y": "61px"
+        }
+      }
+    },
+    "id1393594127318": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "316px",
+          "y": "-13px"
+        }
+      }
+    },
+    "id1393594127319": {
+      "button": {
+        "style": {
+          "type": "apple",
+          "fontSize": "36px",
+          "color": [
+            2,
+            9
+          ],
+          "_id": 1393594129590
+        },
+        "align": "fill"
+      },
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "312px",
+          "y": "274px"
+        },
+        "width": "377px"
+      }
+    },
+    "id1393596170885": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "1px",
+          "y": "27px"
+        },
+        "width": "315px",
+        "height": "209px"
+      },
+      "typography": {
+        "type": "default",
+        "textColor": "#ffffff",
+        "fontSize": 20,
+        "lineHeight": 0.4,
+        "headingsColor": [
+          2,
+          12
+        ]
+      }
+    },
+    "id1393596170886": {
+      "layout": {
+        "type": "absolute",
+        "width": "308px",
+        "height": "352px",
+        "position": {
+          "x": "1px",
+          "y": "7px"
+        }
+      },
+      "typography": {
+        "type": "default",
+        "textColor": "#ebebeb",
+        "fontSize": 20,
+        "lineHeight": 0.8,
+        "headingsColor": [
+          2,
+          12
+        ]
+      }
+    },
+    "id1393596170887": {
+      "smart_image": {
+        "type": "default",
+        "image": "lib/server/upload/files/fitline_circle.png",
+        "dst_1": [
+          2,
+          8
+        ],
+        "src_1": "#e3b016",
+        "delta_1": 60
+      },
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "116px",
+          "y": "80px"
+        }
+      }
+    },
+    "id1393597371187": {
+      "typography": {
+        "type": "default",
+        "textColor": [
+          1,
+          4
+        ],
+        "fontSize": 50,
+        "lineHeight": 1
+      },
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "127px",
+          "y": "86px"
+        }
+      }
+    },
+    "id1393597371188": {
+      "smart_image": {
+        "type": "default",
+        "image": "lib/server/upload/files/fitline_circle.png",
+        "dst_1": [
+          2,
+          8
+        ],
+        "src_1": "#e3b016",
+        "delta_1": 60
+      },
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "-205px",
+          "y": "-55px"
+        },
+        "width": false
+      }
+    },
+    "id1393597371189": {
+      "smart_image": {
+        "type": "default",
+        "image": "lib/server/upload/files/fitline_circle_small.png",
+        "dst_1": [
+          2,
+          4
+        ],
+        "src_1": "#c79220",
+        "delta_1": 30
+      },
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "156px",
+          "y": "219px"
+        }
+      }
+    },
+    "id1393600772587": {
+      "typography": {
+        "type": "default",
+        "textColor": [
+          1,
+          4
+        ],
+        "fontSize": 40,
+        "lineHeight": 1
+      },
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "169px",
+          "y": "215px"
+        }
+      }
+    },
+    "id1393600969609": {
+      "layout": {
+        "type": "absolute",
+        "width": "174px",
+        "height": "352px",
+        "position": {
+          "x": "532px",
+          "y": "158px"
+        }
+      },
+      "typography": {
+        "type": "default",
+        "textColor": "#ebebeb",
+        "fontSize": 20,
+        "lineHeight": 1.2,
+        "headingsColor": [
+          2,
+          12
+        ]
+      }
+    },
+    "id1393600969610": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "532px",
+          "y": "86px"
+        }
+      }
+    },
+    "id1393600969611": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "542px",
+          "y": "6px"
+        }
+      }
+    },
+    "id1393600969612": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "770px",
+          "y": "-1px"
+        }
+      }
+    },
+    "id1393601888184": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "329px",
+          "y": "-19px"
+        }
+      },
+      "menu": {
+        "type": "text",
+        "inverse": false
+      }
+    },
+    "feedback": {
+      "padding": "30px 0px 40px 0px"
+    },
+    "id1394057152049": {
+      "padding": "40px 0px 0px 0px"
+    },
+    "about": {
+      "padding": "0px 20px 20px 20px",
+      "typography": {
+        "type": "default",
+        "headingsColor": [
+          1,
+          8
+        ]
+      },
+      "mask": {
+        "type": "spikes",
+        "size": "10px",
+        "position": "bottom"
+      },
+      "shadow": {
+        "x": 1,
+        "y": 1,
+        "blur": 2,
+        "color": "rgba(0,0,0,0.5)"
+      },
+      "background": {
+        "type": "color",
+        "color": "#ffffff"
+      }
+    },
+    "why": {
+      "background": {
+        "type": "gradient",
+        "color": "#ffffff",
+        "pattern": false,
+        "pattern_color": [
+          1,
+          13
+        ],
+        "pattern_color_2": "white",
+        "transparency": 0,
+        "_id": 1392168200660,
+        "color_2": "#ebebeb"
+      },
+      "padding": "50px 0px 40px 0px",
+      "mask": {
+        "type": "spikes",
+        "position": "bottom",
+        "size": "10px"
+      },
+      "shadow": {
+        "x": 1,
+        "y": 1,
+        "blur": 2,
+        "color": "rgba(0,0,0,0.5)"
+      }
+    },
+    "order": {
+      "padding": "25px 0px 15px 0px"
+    },
+    "id1394410515635": {
+      "layout": {
+        "type": "column",
+        "column": 6,
+        "height": "480px"
+      },
+      "form": {
+        "layout": {
+          "type": "default",
+          "labelWidth": "100px"
+        },
+        "style": {
+          "type": "default",
+          "controlPadding": "1em",
+          "floatErrors": true
+        }
+      },
+      "padding": "20px 20px 20px 20px",
+      "background": {
+        "type": "color",
+        "color": [
+          1,
+          13
+        ],
+        "pattern": false,
+        "pattern_color": [
+          1,
+          13
+        ],
+        "pattern_color_2": "white",
+        "transparency": 0,
+        "_id": 1393340179523
+      },
+      "border": {
+        "width": "3px",
+        "color": [
+          1,
+          8
+        ]
+      },
+      "typography": {
+        "type": "default",
+        "textColor": [
+          1,
+          3
+        ]
+      },
+      "borderRadius": "20px 20px 20px 20px"
+    },
+    "id1394410515636": {
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "343px",
+          "y": "-53px",
+          "z": 2
+        }
+      },
+      "smart_image": {
+        "type": "default",
+        "image": "lib/server/upload/files/fitline_form_circle.png",
+        "src_1": "#72ab09",
+        "dst_1": [
+          1,
+          5
+        ],
+        "delta_1": 20
+      }
+    },
+    "id1394410515637": {},
+    "id1394410515638": {
+      "layout": {
+        "column": 3
+      },
+      "validation": {
+        "rules": [
+          {
+            "type": "required",
+            "test": true,
+            "message": "Обязательное поле"
+          },
+          {
+            "type": "size",
+            "min": "10",
+            "max": "10",
+            "test": false,
+            "message": "Ровно 10 цифр в виде 0551234567"
+          }
+        ],
+        "test": false
+      }
+    },
+    "id1394410515639": {
+      "layout": {
+        "column": 3
+      },
+      "validation": {
+        "test": false,
+        "rules": []
+      }
+    },
+    "id1394410515640": {
+      "layout": {
+        "column": 3
+      }
+    },
+    "id1394410515641": {
+      "layout": {
+        "column": 3
+      }
+    },
+    "id1394410515642": {
+      "button": {
+        "style": {
+          "type": "apple",
+          "fontSize": "36px",
+          "color": [
+            2,
+            9
+          ],
+          "_id": 1393594129590
+        },
+        "align": "fill",
+        "margin": "32px"
+      }
+    },
+    "id1394410515643": {
+      "smart_text": {
+        "styles": {},
+        "width": 289,
+        "height": 39,
+        "text": "ДО ЗАВЕРШЕНИЯ АКЦИИ",
+        "fontSize": 30,
+        "strokeWidth": 1,
+        "strokeValue": "#3a3a3a",
+        "fillValue": "#ffffff",
+        "shadowColorValue": false,
+        "shadowY": 0,
+        "shadowX": 0,
+        "shadowBlur": 1,
+        "fontFamily": "Impact"
+      },
+      "layout": {
+        "type": "absolute",
+        "position": {
+          "x": "85px",
+          "y": "338px"
+        }
+      }
+    },
+    "id1394410515644": {
+      "layout": {
+        "type": "column",
+        "height": "69px",
+        "margin": "60px",
+        "column": false
+      },
+      "countdown": {
+        "type": "default",
+        "color1": [
+          1,
+          13
+        ],
+        "color2": false,
+        "animation": "false",
+        "_id": 1393263459172
+      }
+    }
+  },
+  "presets": {
+    "backgrounds": [
+      {
+        "group": "My Bgs",
+        "presets": true,
+        "disabled": true,
+        "preset": true
+      },
+      {
+        "value": {
+          "type": "color",
+          "color": [
+            1,
+            13
+          ],
+          "pattern": false,
+          "pattern_color": [
+            1,
+            13
+          ],
+          "pattern_color_2": "white",
+          "transparency": 0,
+          "_id": 1393340179523
+        },
+        "preset": true
+      },
+      {
+        "value": {
+          "type": "color",
+          "color": [
+            2,
+            13
+          ],
+          "pattern": false,
+          "pattern_color": [
+            1,
+            13
+          ],
+          "pattern_color_2": "white",
+          "transparency": 0,
+          "_id": 1393341413649
+        },
+        "preset": true
+      },
+      {
+        "value": {
+          "type": "pattern",
+          "pattern": "http://uxcandy.com/~boomyjee/templater/lib/modules/core/ui/controls/../../assets/patterns/new-retro-07b.jpg",
+          "pattern_color": [
+            1,
+            3
+          ],
+          "pattern_color_2": [
+            1,
+            5
+          ],
+          "transparency": 81,
+          "color": false,
+          "_id": 1393344027935
+        },
+        "preset": true
+      }
+    ],
+    "colorThemes": [
+      {
+        "group": "My Themes",
+        "presets": true,
+        "disabled": true,
+        "preset": true
+      },
+      {
+        "value": {
+          "color1": "#8dcf3c",
+          "color2": "#f5b60a",
+          "color3": "#f7ff00",
+          "themeColors": [],
+          "_id": 1392953011117
+        },
+        "label": "Custom",
+        "preset": true
+      }
+    ],
+    "buttons": [
+      {
+        "group": "My Buttons",
+        "presets": true,
+        "disabled": true,
+        "preset": true
+      },
+      {
+        "value": {
+          "type": "apple",
+          "fontSize": "36px",
+          "color": [
+            2,
+            9
+          ],
+          "_id": 1393594129590
+        },
+        "preset": true
+      }
+    ]
+  },
+  "typography": {
+    "type": "default",
+    "textFont": "Georgia",
+    "headingsFont": "Century Gothic"
+  },
+  "counter": [
+    {
+      "group": "My Counters",
+      "presets": true,
+      "disabled": true,
+      "preset": true
+    },
+    {
+      "value": {
+        "type": "default",
+        "color1": [
+          1,
+          13
+        ],
+        "color2": false,
+        "animation": "false",
+        "_id": 1393263459172
+      },
+      "preset": true
+    },
+    {
+      "value": {
+        "type": "default",
+        "color1": [
+          1,
+          3
+        ],
+        "color2": false,
+        "animation": "scroll",
+        "_id": 1393263459171
+      },
+      "preset": true
+    }
+  ],
+  "extra_js": "$(function(){\n  $(\"select[name='qty']\")\n    .unbind(\"change.qty\")\n    .bind(\"change.qty\",function(){\n      var form = $(this).closest(\"form\");\n      form\n        .find(\"[name='total']\")\n        .prop(\"disabled\",true)\n        .val(\n          $(this).val()\n        );\n    })\n    .trigger(\"change.qty\");\n});"
+}

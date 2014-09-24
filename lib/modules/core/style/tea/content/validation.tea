@@ -1,0 +1,15 @@
+.validation(config) {
+    @ if (!config || !config.rules || !config.rules.length) return;
+    @ var sel = this.selector;
+    
+    Script {
+        @append donut_root + "lib/jquery.js";
+        @append donut_root + "lib/validation.js";
+        @append {
+            $(function(){
+                $("@sel").validation(@{JSON.stringify(config)});
+            })
+        }
+        @ reloadScript(sel,config);
+    }
+}

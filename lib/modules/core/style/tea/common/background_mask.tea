@@ -1,0 +1,109 @@
+@ global.background_mask = type_mixin();
+
+.background_mask.spikes(mask,data,canvas_or_color) {
+    @{
+        if (!mask) return;
+        
+        mask = mask || {};
+        
+        var size = parseFloat(mask.size) || 15;
+        var h = size + 20;
+        
+        var top, bottom;
+        if (mask.position=="both") {
+            top = bottom = true;
+        } else if (mask.position=="bottom") {
+            bottom = true;
+        } else {
+            top = true;
+        }
+        
+        var bg_pos = (bottom && !top) ? "left bottom" : "left top";
+        @{
+            position: relative;
+            background-position: @bg_pos;
+            box-shadow: none !important;
+        }
+        
+        function draw(pos) {
+            if (pos=='bottom') {
+                var y0 = 0;
+                var dy = size;
+                var where = 'after';
+                
+                if (top) {
+                    var ch = 0;
+                    if (data.layout && data.layout.height) {
+                        ch = parseFloat(data.layout.height);
+                    }
+                    var off = ch;
+                } else {
+                    var off = 0;
+                }
+            } else {
+                var y0 = h;
+                var dy = -size;
+                var where = 'before';
+                var off = -h;
+            }
+            
+            @{
+                &:@{where} {
+                    z-index: 1;
+                    content: "";
+                    position: absolute;
+                    display: block;
+                    left: 0; right: 0;
+                    !@pos: -@{h}px; 
+                    height: @{h}px;
+                    
+                    @{
+                        var key = {mask:mask,bg:data.background,shadow:data.shadow,layout:data.layout};
+                        var canvas = teacss.cache(key,true,function(){
+                            var canvas = new Canvas(1920,h);
+                            canvas.draw2D(function(ctx){
+                                ctx.translate(0,-off);
+
+                                ctx.beginPath();
+                                ctx.moveTo(0,y0-dy+off);
+
+                                for (var i=0;i<1920;i+=size*2) {
+                                    ctx.lineTo(i,y0+off);
+                                    ctx.lineTo(i+size,y0+dy+off);
+                                    ctx.lineTo(i+size*2,y0+off);
+                                }
+                                ctx.lineTo(i+size*2,y0-dy+off);
+                                ctx.lineTo(0,y0-dy+off);
+
+                                if (canvas_or_color instanceof Canvas) {
+                                    var pat = ctx.createPattern(canvas_or_color.backgroundCanvas,"repeat");
+                                    ctx.fillStyle = pat;
+                                } else {
+                                    var fill = canvas_or_color;
+                                    
+                                    if (fill[pos])
+                                        ctx.fillStyle = fill[pos];
+                                    else
+                                        ctx.fillStyle = fill;
+                                }
+
+                                if (data.shadow) {
+                                    ctx.shadowColor = color(data.shadow.color) || 'rgba(0,0,0,0.3)';
+                                    ctx.shadowBlur = data.shadow.blur || 2;
+                                    ctx.shadowOffsetX = data.shadow.x || 3;
+                                    ctx.shadowOffsetY = data.shadow.y || 3;   
+                                }
+                                ctx.fill();
+                            });
+                            return canvas.preview();
+                        });
+                        canvas.background();
+                    }
+                }
+            }
+        }
+        
+        if (top) draw.call(this,'top');
+        if (bottom) draw.call(this,'bottom');
+    }
+}

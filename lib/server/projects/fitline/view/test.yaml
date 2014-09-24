@@ -1,0 +1,288 @@
+---
+container#id1392132704070:
+    image#id1393600969612:
+        src: fitline_tv.png
+    menu#id1393601888184:
+        items:
+        -   label: О FIT LINE
+            sublabel: ""
+            link: '#about'
+        -   label: ПОЧЕМУ МЫ
+            sublabel: ""
+            link: '#why'
+        -   label: ОТЗЫВЫ
+            sublabel: ""
+            link: '#feedback'
+        -   label: ЗАКАЗАТЬ
+            sublabel: ""
+            link: '#order'
+container#header:
+    smart_image#logo: []
+    image#header_girl:
+        src: fitline_girl.png
+    smart_text#header_slogan: []
+    container#id1392623452681:
+        list#header_benefits:
+            items:
+            -   text: <p>Быстро сжигает лишний вес</p>
+            -   text: <p>Препятствует старению кожи</p>
+            -   text: <p>Улучшает иммунитет</p>
+            -   text: <p>Стимулирует работу мозга</p>
+            -   text: <p>Закрепляет результат</p>
+container#id1392165795364:
+    container#id1392166668979:
+        html#id1392623652114: <h4>Турбоэффективность FIT Line:</h4>
+        list#id1392623652115:
+            items:
+            -   text: <p>Традиционный японский чай Матча ускоряет обмен веществ</p>
+            -   text: <p>Измельченный натуральный имбирь &ndash; помогает эффективно
+                    сжигать жир</p>
+            -   text: <p>Результат превосходен! FIT Line &ndash; потеря веса до -8
+                    кг в неделю.</p>
+        smart_image#id1392804270129: []
+        smart_text#id1392817132596: []
+        container#id1392817549831:
+            image#id1392817549829:
+                src: fitline_original.png
+            wysiwyg#id1392817549830:
+                html: '<p>Приобрести <span style="color: #99cc00;">Оригинальный напиток</span>
+                    Вы можете только на этом сайте</p>'
+    form#id1392166668980:
+        smart_image#id1392166668984: []
+        wysiwyg#id1392167764996:
+            html: <h2>ФОРМА ЗАКАЗА</h2>
+        form_text#id1392166668982:
+            label: 'Телефонный номер:'
+            name: phone
+        form_text#id1392166668983:
+            label: E-mail
+            name: email
+        form_select#id1392167764997:
+            label: Количество
+            options:
+            -   label: 1 пачка
+                value: 300 грн.
+            -   label: 2 пачки
+                value: 500 грн.
+            -   label: 3 пачки
+                value: 600 грн.
+            value: "1"
+            name: qty
+        form_text#id1392167764998:
+            label: К оплате
+            name: total
+        form_button#id1392166668981:
+            label: ЗАКАЗАТЬ
+        smart_text#id1392909848923: []
+        countdown#counter_top:
+            time: 2015/12/27 09:00:00 UTC
+container#id1394057152049:
+    container#id1392168200133:
+        image#id1393416583057:
+            src: fitline_top_2.png
+        wysiwyg#id1393397689436:
+            html: '<p style="text-align: center;">Лена Иванова, 29 лет</p>'
+    container#id1393416583056:
+        image#id1393396944274:
+            src: fitline_top_1.png
+        wysiwyg#id1393416583058:
+            html: '<p style="text-align: center;">Лена Иванова, 29 лет</p>'
+    container#id1393416583053:
+        image#id1393416583054:
+            src: fitline_top_3.png
+        wysiwyg#id1393416583055:
+            html: '<p style="text-align: center;">Лена Иванова, 29 лет</p>'
+container#about:
+    container#id1393263951071:
+        image#id1393263951073:
+            src: fitline_doctor.jpg
+        container#id1393263951074:
+            wysiwyg#id1393263951072:
+                html: |-
+                    <h3>А знаете ли вы?</h3>
+                    <p><em>Интересный факт: Родина одного из лучших в мире сортов чая Матча &ndash; остров Окинава. Средняя продолжительность жизни на этом острове &ndash; почти 90 лет! Большинство населения острова слышали о многих онкозаболеваниях или, к примеру, о варикозном расширении вен, лишь по телевизору. Совпадение? Научный факт! Медики доказали, что чай Матча &ndash; отличное профилактическое средство, помогающее навсегда забыть о многих серьезных заболеваниях. </em></p>
+                    <p><em>Кроме того, этот волшебный напиток помогает быстро похудеть и сбросить лишние килограммы</em></p>
+        container#id1393309682078:
+            wysiwyg#id1393309824765:
+                html: |-
+                    <h3>Иннокентий Велюнский, профессор УАНМ:</h3>
+                    <p>Уникальность FIT Line просто поражает! Напиток на основе традиционного японского чая Матча не только бодрит, дает силы телу и ясность мозгу, но и эффективно борется с лишним весом. FIT Line незаменим в качестве источника витаминов, микроэлементов и антиоксидантов. Имбирь в строго определенной пропорции многократно усиливает эффект чая, улучшает иммунитет, снимает синдром усталости, уменьшает нервозность и раздражительность. И эффективно борется с лишними килограммами!</p>
+                    <h3>FIT Line будет полезен и мужчинам:</h3>
+                    <p>напиток быстро избавляет от похмельного синдрома, повышает тонус, ускоряет обмен веществ и даже помогает раскрыть свой мужской потенциал!</p>
+    html#id1393312800555: <h2>Невероятный эффект, подтвержденнный наукой</h2>
+    smart_image#id1393311954385: []
+container#why:
+    wysiwyg#id1393314061773:
+        html: '<p style="text-align: center;">Мы приложили максимум усилий, чтобы
+            защитить FIT Line от подделок.</p>'
+    wysiwyg#id1393314061772:
+        html: '<h1 style="text-align: center;"><strong>Только оригинальный напиток
+            имеет четыре степени защиты:</strong></h1>'
+    container#id1393330422770:
+        image#id1393330422774:
+            src: fitline_shield_1.png
+        wysiwyg#id1393331078854:
+            html: '<p style="text-align: center;">Уникальный двойной понтонный принт
+                логотипа</p>'
+    container#id1393330422773:
+        image#id1393330422775:
+            src: fitline_shield_2.png
+        wysiwyg#id1393331078855:
+            html: '<p style="text-align: center;">Фирменная герметическая упаковка
+                </p>'
+    container#id1393330422772:
+        image#id1393330422776:
+            src: fitline_shield_3.png
+        wysiwyg#id1393331078856:
+            html: '<p style="text-align: center;">Печать с датой расфасовки и номером
+                партии</p>'
+    container#id1393330422771:
+        image#id1393330422777:
+            src: fitline_shield_4.png
+        wysiwyg#id1393331078857:
+            html: '<p style="text-align: center;">Уникальная голограмма</p>'
+    wysiwyg#id1393331078859:
+        html: '<h3 style="text-align: center;">Заказав FIT Line обязательно проверьте
+            соответствие всех этих элементов оригиналу!</h3>'
+    wysiwyg#id1393331078860:
+        html: '<h2 style="text-align: center;">Только ОРИГИНАЛЬНЫЙ FIT Line даст ФАНТАСТИЧЕСКИЙ
+            РЕЗУЛЬТАТ!</h2>'
+container#order:
+    container#id1393340178747:
+        wysiwyg#id1393340178749:
+            html: <h2>Как мы работаем:</h2>
+        smart_image#id1393340178748: []
+        smart_text#id1393340905984: []
+        wysiwyg#id1393340178750:
+            html: <p>Вы заказываете <br />FIT Line на нашем сайте</p>
+        wysiwyg#id1393340905982:
+            html: <p>С вами связывается<br />наш оператор</p>
+        wysiwyg#id1393340905983:
+            html: <p>Мы доставляем вам<br />заказ и вы начинаете худеть!</p>
+        image#id1393340905985:
+            src: fitline_sign.png
+    form#id1394410515635:
+        smart_image#id1394410515636: []
+        wysiwyg#id1394410515637:
+            html: <h2>ФОРМА ЗАКАЗА</h2>
+        form_text#id1394410515638:
+            label: 'Телефонный номер:'
+            name: phone
+        form_text#id1394410515639:
+            label: E-mail
+            name: email
+        form_select#id1394410515640:
+            label: Количество
+            options:
+            -   label: 1 пачка
+                value: "1"
+            -   label: 2 пачки
+                value: "2"
+            -   label: 3 пачки
+                value: "3"
+            value: "1"
+            name: qty
+        form_text#id1394410515641:
+            label: К оплате
+            name: total
+        form_button#id1394410515642:
+            label: ЗАКАЗАТЬ
+        smart_text#id1394410515643: []
+        countdown#id1394410515644:
+            time: 2015/12/27 09:00:00 UTC
+container#id1393341412881:
+    container#id1393341412882:
+        wysiwyg#id1393342807283:
+            html: <p><strong>Эффективность<br /></strong>до -8 кг в неделю</p>
+        smart_image#id1393350016842: []
+        html#id1393350301162: 'Заваривай 3-4 чашки FIT Line в день. '
+        html#id1393350301163: Пей дома, на работе, в дороге.
+        html#id1393350301164: 'Худей: теряй 5, 10, 15, кг.'
+    container#id1393342807284:
+        wysiwyg#id1393342807285:
+            html: <p><strong>Сертифицирован<br /></strong>Минздравом</p>
+        wysiwyg#id1393343404515:
+            html: <p>FIT Line - натуральный продукт,<br />который не содержит:</p>
+        list#id1393343404516:
+            items:
+            -   text: <p><strong>Добавок</strong></p>
+            -   text: <p><strong>Красителей</strong></p>
+            -   text: <p><strong>Консервантов</strong></p>
+            -   text: <p><strong>Ароматизаторов</strong></p>
+        image#id1393343404517:
+            src: fitline_cert_1.png
+        image#id1393343404518:
+            src: fitline_cert_2.png
+    container#id1393342807286:
+        wysiwyg#id1393342807287:
+            html: <p><strong>100%<br /></strong>NATURAL</p>
+        wysiwyg#id1393342807288:
+            html: <p>FIT Line - абсолютно натуральный и экологический продукт высшего
+                качества</p>
+        image#id1393342807289:
+            src: fitline_quality.png
+        image#id1393342807290:
+            src: fitline_rio.png
+container#feedback:
+    wysiwyg#id1393344027371:
+        html: '<h1 style="text-align: center;">ОНИ УЖЕ ИЗМЕНИЛИ СВОЮ ЖИЗНЬ</h1>'
+    container#id1393344027372:
+        image#id1393344027374:
+            src: fitline_changed_1.png
+        wysiwyg#id1393344027373:
+            html: |-
+                <h3>Марина Егорова</h3>
+                <p>&laquo;В прошлом году родила ребенка и сразу же начала набирать вес. Перепробовала, наверное, все, что только продавалось в магазинах и интернете. Но ничего не помогало. С FIT Line результат пришел почти сразу: за две недели минус 6 кг!&raquo;</p>
+    container#id1393344027375:
+        image#id1393344027376:
+            src: fitline_changed_2.png
+        wysiwyg#id1393344027377:
+            html: |-
+                <h3>Наталья Куревина</h3>
+                <p>&laquo;FIT Line &ndash; отличный напиток! Красивая упаковка, отличный вкус, впечатляющие результаты. Очень хороший жиросжигающий комплекс &ndash; все лучшее собрано в одном месте!&raquo;</p>
+    container#id1393344027378:
+        image#id1393344027379:
+            src: fitline_changed_3.png
+        wysiwyg#id1393344027380:
+            html: |-
+                <h3>София Нестерук</h3>
+                <p>&laquo;С детства испытывала дискомфорт из-за лишнего веса. Никогда не могла чувствовать себя по-настоящему уверенно. Но Фит Лэйн полностью изменил мою жизнь. Уже после месяца применения я похудела на 15 кг! Рекомендую всем!&raquo;</p>
+container#id1393344027381:
+    smart_text#id1393587140425: []
+    smart_text#id1393587140426: []
+container#id1393587140424:
+    image#id1393594127317:
+        src: fitline_disk.png
+    image#id1393594127318:
+        src: fitline_package.png
+    form_button#id1393594127319:
+        label: Заказать
+        link: '#order'
+    wysiwyg#id1393596170886:
+        html: |-
+            <h3 style="text-align: center;">Внимание!</h3>
+            <p style="text-align: center;">На складе осталось</p>
+            <p style="text-align: center;"><br /><br /><br /><br /><br />упаковок</p>
+            <p style="text-align: center;">До ближайшей поставки</p>
+            <p style="text-align: center;">из Окинавы&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; недель</p>
+            <h3 style="text-align: center;">Спешите<br />Сделать заказ!</h3>
+    smart_image#id1393596170887: []
+    html#id1393597371187: "99"
+    smart_image#id1393597371189: []
+    html#id1393600772587: "9"
+    wysiwyg#id1393600969609:
+        html: '<p style="text-align: right;"><strong>+ в подарок</strong><br />инструкция
+            по<br />применению<br /><strong>FIT Line</strong></p>'
+    image#id1393600969610:
+        src: fitline_old_price.png
+    image#id1393600969611:
+        src: fitline_price.png
+container#id1393594127315:
+    wysiwyg#id1393594127316:
+        html: <p>Результаты согласования по отзывам покупателей, употреблявших продукт
+            во время похудения. Самолечение может быть вредно для вашего здоровья.
+            Злоупотребление диетами и иными программами может быть опасно для вашего
+            здоровья. Статистические данные взяты из открытых источников а так же
+            интернет сайтов России и США. Продукт сертифицирован. не является БФД
+            или пищевой добавкой. Лучшее предложение ООО &laquo;Виктория&raquo;</p>
+...

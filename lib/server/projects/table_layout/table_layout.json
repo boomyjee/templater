@@ -1,0 +1,162 @@
+{
+  "color1": "blue",
+  "color2": "green",
+  "color3": "yellow",
+  "sheet": {
+    "width": "800px"
+  },
+  "background": {
+    "type": "pattern",
+    "color": "#ebebeb",
+    "pattern": "http://uxcandy.com/~boomyjee/templater/lib/modules/core/ui/controls/../../assets/patterns/new-retro-07b.jpg",
+    "pattern_color": "#ffffff",
+    "pattern_color_2": "#ebebeb",
+    "transparency": 28,
+    "_id": 1392129450914
+  },
+  "layout": {
+    "id1391102247307": {
+      "type": "part",
+      "column": 6
+    },
+    "id1391166237492": {
+      "type": "part",
+      "column": 6
+    },
+    "id1392000899214": {
+      "type": "part",
+      "column": 6
+    },
+    "id1392001635709": {
+      "type": "column",
+      "column": 12
+    },
+    "id1392000899213": {
+      "type": "column",
+      "column": 12
+    },
+    "col_6": {
+      "type": "absolute",
+      "column": 5,
+      "part": "oh",
+      "columns": 6,
+      "width": "283.5px",
+      "position": {
+        "x": "53px",
+        "y": "29px"
+      }
+    },
+    "id1392034806737": {
+      "type": "part",
+      "part": "oh"
+    }
+  },
+  "container": {
+    "id1392000899213": {
+      "height": "200px",
+      "border": {
+        "width": "10px",
+        "color": [
+          1,
+          5
+        ],
+        "right": false,
+        "left": false,
+        "top": false,
+        "bottom": false
+      }
+    },
+    "id1391102156271": {
+      "background": {
+        "type": "color",
+        "color": false,
+        "pattern": "http://uxcandy.com/~boomyjee/templater/lib/modules/core/ui/controls/../../assets/patterns/new-retro-16b.jpg",
+        "pattern_color": "#ebebeb",
+        "pattern_color_2": "white",
+        "transparency": 0
+      }
+    }
+  },
+  "typography": {
+    "type": "default",
+    "headingsFont": "Georgia",
+    "textFont": "Lucida Grande",
+    "_id": 1392123846677,
+    "headingFont": "Comic Sans MS"
+  },
+  "presets": {
+    "typographyFonts": [
+      {
+        "group": "My Fonts",
+        "presets": true,
+        "disabled": true,
+        "preset": true
+      },
+      {
+        "value": {
+          "type": "default",
+          "headingsFont": "Palatino Linotype",
+          "textFont": "Verdana",
+          "_id": 1392123846677
+        },
+        "preset": true
+      }
+    ],
+    "backgrounds": [
+      {
+        "group": "My Bg",
+        "presets": true,
+        "disabled": true,
+        "preset": true
+      },
+      {
+        "value": {
+          "type": "pattern",
+          "color": "#ebebeb",
+          "pattern": "http://uxcandy.com/~boomyjee/templater/lib/modules/core/ui/controls/../../assets/patterns/new-retro-07b.jpg",
+          "pattern_color": "#ffffff",
+          "pattern_color_2": "#ebebeb",
+          "transparency": 28,
+          "_id": 1392129450914
+        },
+        "preset": true
+      },
+      {
+        "value": {
+          "type": "color",
+          "color": [
+            1,
+            14
+          ],
+          "pattern": false,
+          "pattern_color": [
+            1,
+            13
+          ],
+          "pattern_color_2": "white",
+          "transparency": 0,
+          "_id": 1392129450916
+        },
+        "preset": true
+      },
+      {
+        "value": {
+          "type": "color",
+          "color": [
+            1,
+            9
+          ],
+          "pattern": false,
+          "pattern_color": [
+            1,
+            13
+          ],
+          "pattern_color_2": "white",
+          "transparency": 0,
+          "_id": 1392129450915
+        },
+        "preset": true
+      }
+    ]
+  }
+}
