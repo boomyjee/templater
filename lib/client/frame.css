@@ -207,6 +207,10 @@ body.edit-layout:hover .component-handle.selected-parent > .component-heading {
 }
 
 .controls-root .add-section {
+    box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    
     height: 100px;
     background-color: white;
     text-align: center;
@@ -373,9 +377,14 @@ body.edit-layout:hover .parent-component-handle.selected-parent {
 
 /* drop marker */
 .drop-marker {
-    border: 2px dashed black;
+    border: 4px dashed #f80;
     position: absolute;
     z-index:1000;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
+}
+
+.drop-marker.flat {
+    border-right: none;
+    border-bottom: none;
 }

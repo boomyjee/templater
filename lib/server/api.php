@@ -84,7 +84,7 @@ class TemplaterApi {
     }
     
     function component($values = false,$ret = false) {
-        if (!$values) $values = $_REQUEST['values'];
+        if (!$values) $values = json_decode($_REQUEST['values'],true);
         $components = $this->getComponents();
         $res = array();
         
@@ -310,17 +310,28 @@ class TemplaterApi {
             }
         }
         
-        $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(realpath(__DIR__."/../modules"),
-                RecursiveDirectoryIterator::SKIP_DOTS));
-        
         $cache = true;
         if (isset($_POST['cache']) && !$_POST['cache']) $cache = false;
         
-        if ($cache) foreach ($files as $name => $file) {
-            $ext = pathinfo($name, PATHINFO_EXTENSION);
-            if ($ext=="js" || $ext=="tea" || $ext=='css') {
-                $url = str_replace($this->base_dir,$this->base_url,$name)."\n";
-                $res['cached'][$url] = file_get_contents($name);
+        if ($cache) {
+            
+            $dirs = new DirectoryIterator(realpath(__DIR__."/../modules"));
+            
+            foreach ($dirs as $dir) {
+                if (!$dir->isDir() || $dir->isDot()) continue;
+                $dirname = $dir->getBasename();
+                if (!in_array($dirname,$this->modules)) continue;
+                
+                $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(realpath(__DIR__."/../modules/".$dirname),
+                        RecursiveDirectoryIterator::SKIP_DOTS));
+                
+                foreach ($files as $name => $file) {
+                    $ext = pathinfo($name, PATHINFO_EXTENSION);
+                    if ($ext=="js" || $ext=="tea" || $ext=='css') {
+                        $url = str_replace($this->base_dir,$this->base_url,$name)."\n";
+                        $res['cached'][$url] = file_get_contents($name);
+                    }
+                }
             }
         }
         $this->compress(json_encode($res));
@@ -404,6 +415,9 @@ class TemplaterApi {
     }
     
     function view($name,$dataSource,$ret) {
+        
+        $this->includeModules($this->modules);
+        
         $templates = $this->getTemplates(true);
         $templates = json_decode($templates);
         
