@@ -417,6 +417,31 @@ body.view-layout #teacss-layer > .editor-panel > .frame-panel {
     margin-right: 2px;
 }
 
+.teacss-ui .ui-widget-overlay {
+    opacity: 0.7;
+    background: #333;
+}
+
+.teacss-ui .ui-dialog.alert .ui-dialog-buttonpane .ui-button-text {
+    padding: 0.1em 1em;
+}
+
+.teacss-ui .ui-dialog.alert .ui-dialog-content {
+    padding: 1em;
+}
+
+.teacss-ui .ui-dialog.alert p {
+    line-height: 1.5em;
+    margin-left: 24px;
+}
+
+.teacss-ui .ui-dialog.alert i {
+    position: absolute;
+    left: 1.0em; 
+    top: 1.0em;
+    /*margin-top: -8px;*/
+}
+
 /* some styles to refactor */
 .teacss-ui .mce-tinymce.mce-panel {
     height: 100% !important;

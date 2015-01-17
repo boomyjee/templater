@@ -477,7 +477,7 @@ class TemplaterApi {
             }
         };
         $createComponents($root,$root_data,$inherit); 
-        $root_html = "<body>".$root->render()."</body>";
+        $root_html = $root->render();
         
         if ($ret) return $root_html;
         echo $root_html;
