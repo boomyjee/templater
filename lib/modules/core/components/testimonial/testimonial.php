@@ -6,7 +6,7 @@ TemplaterApi::addAction('getComponents',function($api,&$components) {
         'description' => 'To raise page trust',
         'category' => 'Landing page',
         'static' => true,
-        'update' => function ($val,$dataSource) use ($me,$api) {
+        'update' => function ($val,$dataSource) use ($api) {
     
             if (!$val) $val = array();
             $val['name'] = @$val['name'] ?: "Customer name";

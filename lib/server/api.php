@@ -456,7 +456,7 @@ class TemplaterApi {
         $component_values = array();
         
         $createComponents = function($parent,$data,$inherit) use (&$templates,&$components,&$component_values,&$hash,&$createComponents) {
-            if ($data->children) foreach ($data->children as $child) {
+            if (isset($data->children) && $data->children) foreach ($data->children as $child) {
                 $ch_data = $child;
                 $ch_inherit = $inherit;
                 
@@ -519,7 +519,7 @@ class Component {
             self::$components = self::$api->getComponents();
         }
         
-        $type = $this->value->type;
+        $type = @$this->value->type;
         $html = "";
         if (!$type) {
             $html = '<br class="component-area">';
@@ -537,7 +537,7 @@ class Component {
         }
         
         $me = $this;
-        if ($me->value->id) $html = preg_replace_callback(
+        if (isset($me->value->id)) $html = preg_replace_callback(
             '|^\s*<(\w+)(.*?)>|',
             function ($matches) use (&$me) {
                 if (!preg_match('|id\s*=\s*|',$matches[0])) {
