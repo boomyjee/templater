@@ -1,7 +1,5 @@
 ---
 container#header:
-    logo#logo: []
-    logo#id1390299543588: []
     image#header_image:
         src: instaimage.png
     wysiwyg#slogan:
