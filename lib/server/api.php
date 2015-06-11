@@ -418,9 +418,10 @@ class TemplaterApi {
         
         $this->includeModules($this->modules);
         
-        $templates = $this->getTemplates(true);
-        $templates = json_decode($templates);
-        
+        //$templates = $this->getTemplates(true);
+        //$templates = json_decode($templates);
+        $templates = $this->getTemplates(false);
+
         $tpl = $templates->$name;
         
         Component::$api = $this;
