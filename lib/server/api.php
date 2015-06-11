@@ -36,7 +36,7 @@ class TemplaterApi {
         $this->settingsPath = __DIR__."/settings.json";
         $this->templatePath = false;
         
-        $this->base_url = dirname(dirname($_SERVER['SCRIPT_URL']));
+        $this->base_url = dirname(dirname($_SERVER['REQUEST_URI']));
         $this->base_dir = dirname(__DIR__);
         
         $this->modules = array("core");

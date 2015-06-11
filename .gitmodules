@@ -1,0 +1,9 @@
+[submodule "dayside"]
+	path = dayside
+	url = https://github.com/boomyjee/dayside
+[submodule "teacss"]
+	path = teacss
+	url = https://github.com/boomyjee/teacss
+[submodule "teacss-ui"]
+	path = teacss-ui
+	url = https://github.com/boomyjee/teacss-ui
